@@ -1,0 +1,163 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PHP_VERSION: "8.4"
+  NODE_VERSION: "20"
+
+jobs:
+  lint-and-static:
+    name: Lint & static analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          extensions: mbstring, intl, pdo_mysql, redis, gd, imagick
+          coverage: none
+          tools: composer:v2
+
+      - name: Composer cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/composer/files
+          key: composer-${{ hashFiles('**/composer.lock') }}
+
+      - run: composer install --prefer-dist --no-interaction --no-progress
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+
+      - run: npm ci
+
+      - name: PHP linter (Pint)
+        run: ./vendor/bin/pint --test
+
+      - name: PHPStan (level 8)
+        run: ./vendor/bin/phpstan analyse --memory-limit=2G
+
+      - name: ESLint
+        run: npm run lint:js
+
+      - name: Stylelint
+        run: npm run lint:css
+
+  test:
+    name: Pest (PHP ${{ matrix.php }} × DB ${{ matrix.db }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        php: ["8.4"]
+        db: ["mysql"]
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: testing
+        ports: ["3306:3306"]
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -uroot -proot"
+          --health-interval=10s --health-timeout=5s --health-retries=5
+      redis:
+        image: valkey/valkey:8-alpine
+        ports: ["6379:6379"]
+        options: --health-cmd="valkey-cli ping" --health-interval=10s --health-retries=5
+      meili:
+        image: getmeili/meilisearch:v1.11
+        env:
+          MEILI_MASTER_KEY: test_key
+          MEILI_NO_ANALYTICS: "true"
+        ports: ["7700:7700"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php }}
+          extensions: mbstring, intl, pdo_mysql, redis, gd, imagick
+          coverage: pcov
+      - run: composer install --prefer-dist --no-interaction --no-progress
+      - run: cp .env.example .env
+      - run: php artisan key:generate
+      - run: php artisan migrate --force
+        env:
+          DB_HOST: 127.0.0.1
+          DB_DATABASE: testing
+          DB_USERNAME: root
+          DB_PASSWORD: root
+      - run: ./vendor/bin/pest --parallel --coverage --min=70
+        env:
+          DB_HOST: 127.0.0.1
+          DB_DATABASE: testing
+          DB_USERNAME: root
+          DB_PASSWORD: root
+          REDIS_HOST: 127.0.0.1
+          MEILISEARCH_KEY: test_key
+
+  build-assets:
+    name: Build assets + bundle size
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: Bundle size report
+        run: |
+          set -e
+          for f in public/build/assets/*.{css,js}; do
+            sz=$(wc -c < "$f")
+            gz=$(gzip -c "$f" | wc -c)
+            echo "::notice::$f raw=${sz}B gz=${gz}B"
+          done
+
+  security:
+    name: Security audit + secrets
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ env.PHP_VERSION }}
+          tools: composer:v2
+      - run: composer install --prefer-dist --no-interaction
+      - run: composer audit --no-dev --abandoned=report
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm audit --omit=dev || true
+      - name: Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  a11y-and-perf:
+    # Faz 6'da aktif — şimdilik skipped placeholder
+    name: Lighthouse + axe (Faz 6)
+    runs-on: ubuntu-latest
+    if: false
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo "TODO: Lighthouse-CI + axe runner against staging URL"

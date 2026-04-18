@@ -1,0 +1,22 @@
+includes:
+    - vendor/larastan/larastan/extension.neon
+
+parameters:
+    paths:
+        - app
+        - config
+        - database
+        - routes
+        - tests
+    level: 8
+
+    ignoreErrors:
+        # Laravel facade magic
+        - '#Call to an undefined method .*?::(driver|extend|store|table|macro|query|raw|connection|channel)\(\)#'
+
+    excludePaths:
+        - vendor
+        - storage
+        - bootstrap/cache
+
+    checkMissingIterableValueType: false

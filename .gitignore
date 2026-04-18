@@ -1,0 +1,69 @@
+# Dependencies
+/node_modules
+/vendor
+/public/build
+/public/hot
+/public/storage
+/storage/*.key
+/storage/app/public/*
+!/storage/app/public/.gitkeep
+/storage/framework/cache/data/*
+/storage/framework/sessions/*
+/storage/framework/testing/*
+/storage/framework/views/*
+/storage/logs/*
+!/storage/logs/.gitkeep
+
+# Environment
+.env
+.env.backup
+.env.production
+.env.*.local
+auth.json
+
+# IDE
+.idea
+.vscode
+.fleet
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.phpunit.cache
+.phpunit.result.cache
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Build
+.vite
+*.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Testing & coverage
+/coverage
+.phpunit.cache/
+.psalm/
+.phpstan/
+
+# Backups
+*.bak
+*.tmp
+backup/
+*.sql.gz
+
+# Secrets / scans
+.secrets.baseline
+gitleaks-report.json
+
+# Misc
+homestead.json
+homestead.yaml
+Homestead.yaml
+Homestead.json
+.user.ini
