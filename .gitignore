@@ -21,6 +21,17 @@
 .env.*.local
 auth.json
 
+# Database (local dev only — production uses MySQL/PostgreSQL)
+/database/database.sqlite
+/database/database.sqlite-journal
+/database/*.sqlite
+/database/*.sqlite-shm
+/database/*.sqlite-wal
+
+# Backups
+/storage/app/private/backups
+/storage/app/backups
+
 # IDE
 .idea
 .vscode

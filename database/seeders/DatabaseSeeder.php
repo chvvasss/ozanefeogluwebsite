@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             SettingSeeder::class,
             PublicationSeeder::class,
             WritingSeeder::class,
+            PageSeeder::class,
+            LegalPageSeeder::class,
         ]);
     }
 }

@@ -52,7 +52,7 @@
             >
         </div>
 
-        <button type="submit" class="btn btn--accent btn--lg justify-center">Doğrula</button>
+        <button type="submit" class="btn btn--lg justify-center">Doğrula</button>
     </form>
 
     <button

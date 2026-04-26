@@ -7,17 +7,28 @@
     $locationUpper = strtoupper((string) ($writing->location ?? ''));
     $dateShort = optional($writing->published_at)->format('Y-m');
     $dateLong = optional($writing->published_at)->translatedFormat('d F Y');
-    $coverRadius = $variant === 'hero' ? 'var(--radius-lg)' : 'var(--radius-md)';
+    $hasCover = method_exists($writing, 'hasCover') && $writing->hasCover();
 @endphp
 
 <a href="{{ $href }}"
-   class="writing-card {{ $variant === 'hero' ? 'writing-card--hero block' : 'scroll-reveal' }}"
+   class="writing-card {{ $variant === 'hero' ? 'writing-card--hero block' : '' }}"
    aria-label="{{ $writing->title }}">
-    <figure class="cover-placeholder"
-            style="--hue-a: {{ $writing->cover_hue_a }}; --hue-b: {{ $writing->cover_hue_b }}; border-radius: {{ $coverRadius }};">
-        <span class="cover-label">{{ $locationUpper }} · {{ $dateShort }}</span>
-        <span class="cover-kind">{{ $kindLabel }}</span>
-    </figure>
+    @if ($hasCover)
+        <figure class="writing-cover {{ $variant === 'hero' ? 'writing-cover--hero' : '' }}">
+            <img src="{{ $writing->coverUrl('w1280') ?? $writing->coverUrl() }}"
+                 srcset="{{ $writing->coverSrcset() }}"
+                 sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                 alt="{{ $writing->title }}"
+                 loading="lazy"
+                 width="1280" height="{{ $variant === 'hero' ? 720 : 960 }}">
+            <figcaption>{{ $locationUpper }} · {{ $dateShort }} · {{ $kindLabel }}</figcaption>
+        </figure>
+    @else
+        <figure class="cover-skeleton {{ $variant === 'hero' ? 'cover-skeleton--hero' : '' }}">
+            <span class="cover-skeleton-mark">Fotoğraf eklenmedi</span>
+            <span class="cover-skeleton-meta">{{ $locationUpper }} · {{ $dateShort }} · {{ $kindLabel }}</span>
+        </figure>
+    @endif
 
     @if ($variant === 'hero')
         <div class="writing-card-body md:grid md:grid-cols-[2fr_1fr] md:gap-10 md:items-start md:pt-6">

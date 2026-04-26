@@ -14,7 +14,7 @@ class ContactMessagesController extends Controller
 {
     public function index(Request $request): View
     {
-        abort_unless($request->user()->hasAnyRole(['super-admin', 'admin', 'editor']), 403);
+        $this->authorize('viewAny', ContactMessage::class);
 
         $messages = ContactMessage::query()
             ->when($request->string('status')->value(), function ($q, $status) {
@@ -26,26 +26,26 @@ class ContactMessagesController extends Controller
             ->paginate(25);
 
         $counts = [
-            'new'     => ContactMessage::query()->where('status', 'new')->count(),
-            'read'    => ContactMessage::query()->where('status', 'read')->count(),
+            'new' => ContactMessage::query()->where('status', 'new')->count(),
+            'read' => ContactMessage::query()->where('status', 'read')->count(),
             'replied' => ContactMessage::query()->where('status', 'replied')->count(),
-            'spam'    => ContactMessage::query()->where('status', 'spam')->count(),
+            'spam' => ContactMessage::query()->where('status', 'spam')->count(),
         ];
 
         return view('admin.contact.index', [
             'messages' => $messages,
-            'filter'   => $request->string('status')->value(),
-            'counts'   => $counts,
+            'filter' => $request->string('status')->value(),
+            'counts' => $counts,
         ]);
     }
 
     public function show(Request $request, ContactMessage $contactMessage): View
     {
-        abort_unless($request->user()->hasAnyRole(['super-admin', 'admin', 'editor']), 403);
+        $this->authorize('view', $contactMessage);
 
         if ($contactMessage->status === 'new') {
             $contactMessage->forceFill([
-                'status'  => 'read',
+                'status' => 'read',
                 'read_at' => now(),
             ])->save();
         }
@@ -55,13 +55,13 @@ class ContactMessagesController extends Controller
 
     public function update(Request $request, ContactMessage $contactMessage): RedirectResponse
     {
-        abort_unless($request->user()->hasAnyRole(['super-admin', 'admin', 'editor']), 403);
+        $this->authorize('update', $contactMessage);
 
         $status = (string) $request->input('status');
         abort_unless(in_array($status, ContactMessage::STATUSES, true), 422);
 
         $contactMessage->forceFill([
-            'status'  => $status,
+            'status' => $status,
             'read_at' => $status !== 'new' ? ($contactMessage->read_at ?? now()) : null,
         ])->save();
 
@@ -70,7 +70,7 @@ class ContactMessagesController extends Controller
 
     public function destroy(Request $request, ContactMessage $contactMessage): RedirectResponse
     {
-        abort_unless($request->user()->hasAnyRole(['super-admin', 'admin']), 403);
+        $this->authorize('delete', $contactMessage);
 
         $contactMessage->delete();
 

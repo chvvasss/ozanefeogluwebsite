@@ -15,7 +15,7 @@
 
 {{-- Filter bar --}}
 <form method="GET" action="{{ route('admin.writings.index') }}"
-      class="admin-card flex flex-wrap items-end gap-4 mb-6">
+      class="admin-card admin-filter-bar flex flex-wrap items-end gap-4 mb-6">
     <div class="field flex-1 min-w-[12rem]">
         <label for="q" class="field-label">Ara</label>
         <input id="q" name="q" type="text" value="{{ $filters['q'] ?? '' }}"
@@ -57,10 +57,30 @@
         @endcan
     </div>
 @else
+    <div x-data="{
+            selected: [],
+            toggle(id) {
+                const i = this.selected.indexOf(id);
+                if (i === -1) { this.selected.push(id); } else { this.selected.splice(i, 1); }
+            },
+            selectAll(ids, checked) {
+                this.selected = checked ? [...ids] : [];
+            },
+        }">
     <div class="admin-card p-0 overflow-hidden">
+        @php
+            $pageIds = $writings->pluck('id')->map(fn ($id) => (int) $id)->values()->all();
+        @endphp
         <table class="admin-table">
             <thead>
                 <tr>
+                    <th class="w-8">
+                        <input type="checkbox"
+                               class="input-checkbox"
+                               aria-label="{{ __('Tümünü seç') }}"
+                               @change="selectAll(@js($pageIds), $event.target.checked)"
+                               :checked="selected.length === {{ count($pageIds) }} && selected.length > 0">
+                    </th>
                     <th>Başlık</th>
                     <th class="w-28">Tür</th>
                     <th class="w-28">Durum</th>
@@ -75,6 +95,14 @@
                         $isTrashed = method_exists($writing, 'trashed') && $writing->trashed();
                     @endphp
                     <tr class="{{ $isTrashed ? 'opacity-50' : '' }}">
+                        <td>
+                            <input type="checkbox"
+                                   class="input-checkbox"
+                                   value="{{ $writing->id }}"
+                                   aria-label="{{ __('Satırı seç') }}"
+                                   @change="toggle({{ $writing->id }})"
+                                   :checked="selected.includes({{ $writing->id }})">
+                        </td>
                         <td>
                             <a href="{{ route('admin.writings.edit', $writing) }}"
                                class="no-underline text-[var(--color-ink)] hover:text-[var(--color-accent)] font-medium">
@@ -159,6 +187,9 @@
 
     <div class="mt-6">
         {{ $writings->links() }}
+    </div>
+
+    @include('admin.writings._bulk-bar')
     </div>
 @endif
 

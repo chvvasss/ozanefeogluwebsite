@@ -19,6 +19,7 @@ class DashboardController extends Controller
                 'users' => User::query()->count(),
                 'sessions_open' => UserDevice::query()->count(),
                 'recent_logins' => Activity::query()
+                    ->with('causer')
                     ->where('log_name', 'auth')
                     ->where('event', 'login.success')
                     ->latest()

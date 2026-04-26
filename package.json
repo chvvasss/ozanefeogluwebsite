@@ -26,11 +26,9 @@
     "dependencies": {
         "@alpinejs/focus": "^3.15.11",
         "@alpinejs/persist": "^3.15.11",
-        "@fontsource-variable/fraunces": "^5.2.9",
-        "@fontsource-variable/geist": "^5.2.8",
         "@fontsource-variable/ibm-plex-sans": "^5.2.8",
+        "@fontsource-variable/source-serif-4": "^5.2.8",
         "@fontsource/ibm-plex-mono": "^5.2.7",
-        "@fontsource/jetbrains-mono": "^5.2.8",
         "@tailwindcss/typography": "^0.5.19",
         "@tiptap/core": "^3.22.4",
         "@tiptap/extension-link": "^3.22.4",

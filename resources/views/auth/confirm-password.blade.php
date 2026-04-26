@@ -19,7 +19,7 @@
         @if ($errors->any())
             <div class="flash flash--danger">Şifre eşleşmedi.</div>
         @endif
-        <button type="submit" class="btn btn--accent btn--lg justify-center">Onayla</button>
+        <button type="submit" class="btn btn--lg justify-center">Onayla</button>
     </form>
 </div>
 @endsection

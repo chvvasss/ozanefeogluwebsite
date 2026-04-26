@@ -6,7 +6,7 @@ it('renders the landing page for anonymous visitors', function () {
     $response = $this->get('/');
 
     $response->assertOk();
-    $response->assertSee('Builds', false);
+    $response->assertSee('Ozan Efeoğlu', false);
 });
 
 it('returns a useful 404 for unknown routes', function () {

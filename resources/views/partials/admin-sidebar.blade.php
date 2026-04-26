@@ -15,10 +15,20 @@
        class="admin-nav-item">
         <span aria-hidden="true">✎</span> Yazılar
     </a>
+    <a href="{{ route('admin.publications.index') }}"
+       aria-current="{{ request()->routeIs('admin.publications.*') ? 'page' : 'false' }}"
+       class="admin-nav-item">
+        <span aria-hidden="true">⎈</span> Yayınlar
+    </a>
     <a href="{{ route('admin.pages.index') }}"
        aria-current="{{ request()->routeIs('admin.pages.*') ? 'page' : 'false' }}"
        class="admin-nav-item">
         <span aria-hidden="true">☰</span> Sayfalar
+    </a>
+    <a href="{{ route('admin.photos.index') }}"
+       aria-current="{{ request()->routeIs('admin.photos.*') ? 'page' : 'false' }}"
+       class="admin-nav-item">
+        <span aria-hidden="true">◨</span> Fotoğraflar
     </a>
 
     <p class="admin-nav-group">Gelen kutusu</p>
@@ -38,6 +48,27 @@
             </span>
         @endif
     </a>
+
+    <p class="admin-nav-group">Site</p>
+    <a href="{{ route('admin.settings.index') }}"
+       aria-current="{{ request()->routeIs('admin.settings.*') ? 'page' : 'false' }}"
+       class="admin-nav-item">
+        <span aria-hidden="true">⚙</span> Ayarlar
+    </a>
+    @can('manage-backups')
+        <a href="{{ route('admin.backup.index') }}"
+           aria-current="{{ request()->routeIs('admin.backup.*') ? 'page' : 'false' }}"
+           class="admin-nav-item">
+            <span aria-hidden="true">⬒</span> Yedekleme
+        </a>
+    @endcan
+    @can('viewAny', App\Models\User::class)
+        <a href="{{ route('admin.users.index') }}"
+           aria-current="{{ request()->routeIs('admin.users.*') ? 'page' : 'false' }}"
+           class="admin-nav-item">
+            <span aria-hidden="true">☺</span> Kullanıcılar
+        </a>
+    @endcan
 
     <p class="admin-nav-group">Hesap</p>
     <a href="{{ route('admin.profile.show') }}"

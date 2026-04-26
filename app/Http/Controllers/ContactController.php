@@ -31,14 +31,16 @@ class ContactController extends Controller
                 ->with('contact_status', __('Mesajın alındı. 72 saat içinde dönüş yapılacak.'));
         }
 
+        // Source protection: no IP, no user-agent, no fingerprint persisted.
+        // Rate limiting handled at route layer (throttle:3,10). See Owner
+        // Decision Dossier (docs/MASTER_PLAN_2026.md §II).
         ContactMessage::create([
-            'name'       => $data['name'],
-            'email'      => $data['email'],
-            'subject'    => $data['subject'] ?? null,
-            'body'       => $data['body'],
-            'ip_address' => $request->ip(),
-            'user_agent' => substr((string) $request->userAgent(), 0, 500),
-            'status'     => 'new',
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'subject' => $data['subject'] ?? null,
+            'body' => $data['body'],
+            'status' => 'new',
+            'retention_expires_at' => now()->addDays(90),
         ]);
 
         return redirect()

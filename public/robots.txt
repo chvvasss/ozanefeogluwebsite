@@ -1,2 +1,52 @@
+# ozanefeoglu.com — robots policy
+# KVKK + AI training opt-out (EBU / Basın Konseyi 2024 position).
+# Admin + auth surfaces are disallowed to all bots.
+
 User-agent: *
-Disallow:
+Disallow: /admin
+Disallow: /admin/
+Disallow: /login
+Disallow: /password/
+Disallow: /reset-password
+Disallow: /forgot-password
+Disallow: /two-factor-challenge
+Disallow: /confirm-password
+
+# Generative AI / training crawlers — full disallow.
+User-agent: GPTBot
+Disallow: /
+
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: OAI-SearchBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Claude-Web
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: PerplexityBot
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: Amazonbot
+Disallow: /
+
+Sitemap: /sitemap.xml

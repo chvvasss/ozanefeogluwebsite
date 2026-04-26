@@ -18,16 +18,16 @@ class ContactMessage extends Model
         'email',
         'subject',
         'body',
-        'ip_address',
-        'user_agent',
         'status',
         'read_at',
+        'retention_expires_at',
     ];
 
     protected function casts(): array
     {
         return [
             'read_at' => 'datetime',
+            'retention_expires_at' => 'datetime',
         ];
     }
 }

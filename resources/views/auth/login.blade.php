@@ -64,7 +64,7 @@
             <span class="text-[var(--color-ink-muted)]">Beni hatırla</span>
         </label>
 
-        <button type="submit" class="btn btn--accent btn--lg justify-center mt-2">
+        <button type="submit" class="btn btn--lg justify-center mt-2">
             Devam et
             <span aria-hidden="true">→</span>
         </button>

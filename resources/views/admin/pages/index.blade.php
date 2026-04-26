@@ -13,6 +13,34 @@
     @endcan
 </header>
 
+@php
+    $legalSlugs  = ['kvkk', 'gizlilik', 'kunye'];
+    $legalLabels = ['kvkk' => 'KVKK', 'gizlilik' => 'Gizlilik', 'kunye' => 'Künye'];
+    $legalPages  = \App\Models\Page::query()
+        ->where('template', 'legal')
+        ->whereIn('slug', $legalSlugs)
+        ->get()
+        ->keyBy('slug');
+@endphp
+
+@if ($legalPages->isNotEmpty())
+    <div class="admin-card p-5 mb-6">
+        <p class="eyebrow mb-3">Hukuki sayfalar</p>
+        <div class="flex flex-wrap gap-2">
+            @foreach ($legalSlugs as $slug)
+                @if ($page = $legalPages->get($slug))
+                    <a href="{{ route('admin.pages.edit', $page) }}" class="btn btn--ghost btn--sm">
+                        {{ $legalLabels[$slug] }}
+                        @unless ($page->is_published)
+                            <span class="ml-2 text-[var(--color-ink-subtle)]">· gizli</span>
+                        @endunless
+                    </a>
+                @endif
+            @endforeach
+        </div>
+    </div>
+@endif
+
 <div class="admin-card p-0 overflow-hidden">
     <table class="admin-table">
         <thead>

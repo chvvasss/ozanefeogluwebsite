@@ -1,88 +1,78 @@
-@extends('layouts.public', ['title' => 'Yazılar · Ozan Efeoğlu'])
+@extends('layouts.public', ['title' => 'Yazılar · '.site_setting('identity.name')])
 
 @section('content')
 
-<section class="max-w-[var(--container-wide)] mx-auto px-[clamp(1rem,4vw,3rem)] pt-14 md:pt-24 pb-12 md:pb-16">
-    <p class="eyebrow mb-4">Arşiv</p>
-    <h1 class="display-fraunces text-[clamp(2.5rem,7vw,5rem)] leading-[0.98]" style="letter-spacing: var(--tracking-tightest);">
-        Tüm <em class="italic text-[var(--color-accent)]">yazılar</em>.
-    </h1>
-    <p class="mt-6 max-w-[60ch] text-[var(--text-md)] leading-relaxed text-[var(--color-ink-muted)]">
-        Saha yazıları, röportajlar, köşe denemeleri ve kısa notlar.
-        Türe göre süz, tarihe göre göz at.
-        <a href="/feed.xml" class="underline underline-offset-4 decoration-[var(--color-accent)] decoration-2">RSS</a> ile takip edebilirsin.
-    </p>
+@php
+    /** @var \Illuminate\Support\Collection<string, \Illuminate\Support\Collection<int, \App\Models\Writing>> $writingsByYear */
+    /** @var int $totalCount */
+    /** @var string|null $filter */
+    /** @var array<int, array{value: string|null, label: string}> $kinds */
+    $activeKindLabel = collect($kinds)->firstWhere('value', $filter)['label'] ?? 'tümü';
+@endphp
+
+{{-- =============================== INDEX HEADER =============================== --}}
+<section class="border-b border-[var(--color-rule)]">
+    <div class="page-wrap pt-12 md:pt-20 pb-10 md:pb-14">
+        <p class="eyebrow mb-4">Arşiv</p>
+        <h1 class="display-headline" style="font-size: clamp(var(--text-4xl), 6vw, var(--text-6xl));">
+            Tüm yazılar
+        </h1>
+        <p class="mt-6 max-w-[58ch] text-[var(--text-md)] leading-relaxed text-[var(--color-ink-muted)]">
+            Saha yazıları, röportajlar, denemeler ve kısa notlar — yayım tarihine göre, yıl yıl.
+        </p>
+        <p class="mt-6 dateline tabular-nums">
+            {{ $totalCount }} yazı
+            <span class="dateline-separator">·</span>
+            tür: {{ $activeKindLabel }}
+        </p>
+    </div>
 </section>
 
-{{-- Filter bar --}}
-<section class="max-w-[var(--container-wide)] mx-auto px-[clamp(1rem,4vw,3rem)] py-6 border-y border-[var(--color-rule)]">
-    <nav class="flex flex-wrap items-center gap-3 gap-y-2" aria-label="Tür filtresi">
-        <span class="eyebrow">Tür:</span>
-        @foreach ($kinds as $option)
-            @php
-                $isActive = ($option['value'] === $filter);
-                $href = $option['value']
-                    ? route('writing.index', ['tur' => $option['value']])
-                    : route('writing.index');
-            @endphp
-            <a href="{{ $href }}"
-               class="inline-flex items-center px-3 py-1.5 rounded-full border text-xs uppercase tracking-[0.15em] no-underline transition-colors duration-[var(--duration-fast)]
-                      {{ $isActive
-                            ? 'border-[var(--color-ink)] bg-[var(--color-ink)] text-[var(--color-bg)]'
-                            : 'border-[var(--color-rule-strong)] text-[var(--color-ink-muted)] hover:border-[var(--color-ink)] hover:text-[var(--color-ink)]' }}">
-                {{ $option['label'] }}
-            </a>
-        @endforeach
+{{-- =============================== ARCHIVE BODY =============================== --}}
+<section class="page-wrap py-12 md:py-16">
+    <div class="dossier-grid">
 
-        <span class="ml-auto font-mono text-xs text-[var(--color-ink-subtle)] tabular-nums">
-            {{ $writings->total() }} yazı
-        </span>
-    </nav>
-</section>
+        {{-- Filter rail --}}
+        <aside class="dg-3 lg:sticky lg:top-32 lg:self-start">
+            <p class="eyebrow mb-4">Tür</p>
+            <ul class="space-y-1.5 text-sm">
+                @foreach ($kinds as $option)
+                    @php
+                        $isActive = $option['value'] === $filter;
+                        $href = $option['value']
+                            ? route('writing.index', ['tur' => $option['value']])
+                            : route('writing.index');
+                    @endphp
+                    <li>
+                        <a href="{{ $href }}"
+                           class="no-underline {{ $isActive ? 'text-[var(--color-ink)] border-b border-[var(--color-ink)]' : 'text-[var(--color-ink-muted)] hover:text-[var(--color-ink)]' }} pb-0.5"
+                           @if ($isActive) aria-current="page" @endif>
+                            {{ $option['label'] }}
+                        </a>
+                    </li>
+                @endforeach
+            </ul>
+        </aside>
 
-<section class="max-w-[var(--container-wide)] mx-auto px-[clamp(1rem,4vw,3rem)] py-14 md:py-20">
-    @if ($writings->isEmpty())
-        <div class="min-h-[40dvh] flex flex-col items-center justify-center text-center">
-            <p class="display-fraunces text-[clamp(2rem,4vw,3rem)] max-w-[22ch]" style="letter-spacing: var(--tracking-tighter);">
-                Bu türde <em class="italic text-[var(--color-accent)]">henüz</em> bir yazı yok.
-            </p>
-            <p class="mt-4 text-sm text-[var(--color-ink-muted)]">
-                Başka bir türü dene, ya da
-                <a href="{{ route('writing.index') }}" class="underline underline-offset-4 decoration-[var(--color-accent)] decoration-2">tüm arşive</a>
-                dön.
-            </p>
+        {{-- Year-grouped chronological list --}}
+        <div class="dg-9">
+            @if ($writingsByYear->isEmpty())
+                <p class="dateline">
+                    Bu türde yayımlanmış bir yazı yok.
+                    @if ($filter)
+                        <a href="{{ route('writing.index') }}" class="link-quiet ml-2">Tüm türlere dön →</a>
+                    @endif
+                </p>
+            @else
+                @foreach ($writingsByYear as $year => $entries)
+                    <h2 class="year-label tabular-nums">{{ $year }}</h2>
+                    @foreach ($entries as $writing)
+                        @include('partials._writing-row', ['writing' => $writing])
+                    @endforeach
+                @endforeach
+            @endif
         </div>
-    @else
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10">
-            @foreach ($writings as $writing)
-                @include('partials._writing-card', ['writing' => $writing, 'variant' => 'default'])
-            @endforeach
-        </div>
-
-        @if ($writings->hasPages())
-            <div class="mt-16 flex items-center justify-between border-t border-[var(--color-rule)] pt-6 text-sm">
-                @if ($writings->onFirstPage())
-                    <span class="font-mono text-xs text-[var(--color-ink-subtle)] tracking-[0.15em] uppercase">← önceki</span>
-                @else
-                    <a href="{{ $writings->previousPageUrl() }}" class="font-mono text-xs text-[var(--color-ink)] tracking-[0.15em] uppercase no-underline border-b border-[var(--color-ink)] pb-0.5">
-                        ← önceki
-                    </a>
-                @endif
-
-                <span class="font-mono text-xs text-[var(--color-ink-muted)] tabular-nums">
-                    sayfa {{ $writings->currentPage() }} / {{ $writings->lastPage() }}
-                </span>
-
-                @if ($writings->hasMorePages())
-                    <a href="{{ $writings->nextPageUrl() }}" class="font-mono text-xs text-[var(--color-ink)] tracking-[0.15em] uppercase no-underline border-b border-[var(--color-ink)] pb-0.5">
-                        sonraki →
-                    </a>
-                @else
-                    <span class="font-mono text-xs text-[var(--color-ink-subtle)] tracking-[0.15em] uppercase">sonraki →</span>
-                @endif
-            </div>
-        @endif
-    @endif
+    </div>
 </section>
 
 @endsection

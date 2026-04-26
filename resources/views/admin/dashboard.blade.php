@@ -77,4 +77,10 @@
         </ul>
     </aside>
 </section>
+
+@include('admin.partials._content-overview')
+
+@role('super-admin|admin')
+    @include('admin.partials._security-overview')
+@endrole
 @endsection

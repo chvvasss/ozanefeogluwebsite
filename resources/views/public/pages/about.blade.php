@@ -1,91 +1,143 @@
+@php
+    $rawTitle = $page->meta_title ?: $page->title;
+    $siteName = site_setting('identity.name');
+    $finalTitle = str_contains((string) $rawTitle, (string) $siteName) ? $rawTitle : $rawTitle.' · '.$siteName;
+@endphp
 @extends('layouts.public', [
-    'title' => ($page->meta_title ?: $page->title).' · Ozan Efeoğlu',
+    'title' => $finalTitle,
     'description' => $page->meta_description ?: $page->intro,
 ])
 
 @section('content')
 
 @php
-    $credentials = $page->extra('credentials', []);
-    $timeline = $page->extra('timeline', []);
-    $awards = $page->extra('awards', []);
-    $cvUrl = $page->extra('cv_url', '#');
+    /** @var \App\Models\Page $page */
+    /** @var \Illuminate\Support\Collection $recentWritings */
+
+    $identities  = $page->extra('identities', []);
+    $affiliation = $page->extra('affiliation');
+    $workareas   = $page->extra('workareas', []);
+    $timeline    = $page->extra('timeline', []);
+    $methodology = $page->extra('methodology');
+    $research    = $page->extra('research');
+
+    $portraitUrl    = site_setting('identity.portrait_url');
+    $portraitCredit = site_setting('identity.portrait_credit');
 @endphp
 
-<article class="about-page">
+<article>
 
-    {{-- =========================== MASTHEAD =========================== --}}
-    <header class="about-masthead">
-        <div class="max-w-[var(--container-wide)] mx-auto px-[clamp(1rem,4vw,3rem)] pt-12 md:pt-20 pb-10 md:pb-16">
-            <p class="eyebrow reveal reveal-1 mb-6">Hakkında · kısa biyografi</p>
+    {{-- ════════════════════════════════════════════════════════════════════
+         SCENE 1 — PORTRAIT OVERTURE
+         ════════════════════════════════════════════════════════════════════ --}}
+    <section class="scene scene--overture">
+        <div class="page-wrap">
+            <div class="dossier-grid items-center gap-y-12">
 
-            <div class="grid gap-8 lg:grid-cols-[1.5fr_1fr] items-end">
-                <h1 class="display-fraunces reveal reveal-2 leading-[0.98]"
-                    style="font-size: clamp(3rem, 8vw, 6.5rem); letter-spacing: var(--tracking-tightest);">
-                    <span class="block">Ozan</span>
-                    <em class="italic text-[var(--color-accent)] block">Efeoğlu</em>
-                </h1>
+                <div class="{{ $portraitUrl ? 'dg-5' : 'dg-12 max-w-[68ch]' }}">
+                    <div class="editorial-plate">
+                        <p class="eyebrow">Hakkında</p>
 
-                @if ($page->intro)
-                    <p class="text-[var(--text-md)] leading-relaxed text-[var(--color-ink-muted)] max-w-[44ch] reveal reveal-3 mb-2">
-                        {{ $page->intro }}
-                    </p>
+                        <h1 class="display-statuesque">{{ site_setting('identity.name') }}</h1>
+
+                        @if (! empty($identities))
+                            <ul class="plate-roles" aria-label="Kimlik">
+                                @foreach ($identities as $i => $identity)
+                                    @php
+                                        $cls = $i === 0 ? 'plate-role--primary'
+                                             : ($i === 1 ? 'plate-role--secondary' : 'plate-role--tertiary');
+                                    @endphp
+                                    <li class="{{ $cls }}">{{ $identity }}</li>
+                                @endforeach
+                            </ul>
+                        @endif
+
+                        @if ($affiliation && site_setting('identity.affiliation_approved'))
+                            <p class="plate-affiliation">{{ $affiliation }}</p>
+                        @endif
+
+                        @if ($page->intro)
+                            <p class="standfirst mt-2">{{ $page->intro }}</p>
+                        @endif
+                    </div>
+                </div>
+
+                @if ($portraitUrl)
+                    <figure class="dg-7 m-0">
+                        <img class="overture-portrait"
+                             src="{{ $portraitUrl }}"
+                             alt="{{ site_setting('identity.name') }} — portre"
+                             width="900" height="1200"
+                             loading="eager"
+                             fetchpriority="high">
+                        @if ($portraitCredit)
+                            <figcaption class="portrait-caption">{{ $portraitCredit }}</figcaption>
+                        @endif
+                    </figure>
                 @endif
             </div>
         </div>
-    </header>
+    </section>
 
-    {{-- =========================== BIO + CREDENTIALS =========================== --}}
-    <section class="border-t border-[var(--color-rule)]">
-        <div class="max-w-[var(--container-wide)] mx-auto px-[clamp(1rem,4vw,3rem)] py-16 md:py-24 grid gap-12 lg:grid-cols-[20rem_1fr]">
+    {{-- ════════════════════════════════════════════════════════════════════
+         SCENE 2 — THE ESSAY
+         Sticky year-marks (left rail) + running prose body (right).
+         Chronology is woven into the reading, not a separate "timeline file".
+         ════════════════════════════════════════════════════════════════════ --}}
+    <section class="scene scene--muted">
+        <div class="page-wrap">
+            <div class="dossier-grid gap-y-10">
 
-            {{-- Sticky credentials sidebar --}}
-            <aside class="lg:sticky lg:top-28 lg:self-start">
-                <p class="eyebrow mb-4">Künye</p>
-                <dl class="font-mono text-xs space-y-2 tabular-nums border-t border-[var(--color-rule)] pt-4">
-                    @foreach ($credentials as $row)
-                        <div class="grid grid-cols-[6rem_1fr] gap-3 py-1">
-                            <dt class="text-[var(--color-ink-muted)]">{{ $row['label'] }}</dt>
-                            <dd class="text-[var(--color-ink)]">{{ $row['value'] }}</dd>
-                        </div>
-                    @endforeach
-                </dl>
+                <aside class="dg-3 lg:sticky lg:top-32 lg:self-start">
+                    <p class="eyebrow mb-5">Yol</p>
+                    @if (! empty($timeline))
+                        <ol class="year-marks">
+                            @foreach ($timeline as $entry)
+                                <li>
+                                    <time datetime="{{ $entry['year'] }}">{{ $entry['year'] }}</time>
+                                    <span>{{ $entry['text'] }}</span>
+                                </li>
+                            @endforeach
+                        </ol>
+                    @endif
+                </aside>
 
-                <div class="mt-6 flex flex-wrap gap-2">
-                    <a href="{{ $cvUrl }}" class="btn btn--ghost btn--sm">CV (PDF) ↗</a>
-                    <a href="{{ route('contact') }}" class="btn btn--ghost btn--sm">İletişim →</a>
+                <div class="dg-9 prose-article">
+                    {!! $page->body !!}
                 </div>
-            </aside>
-
-            {{-- Long-form bio --}}
-            <div class="prose-article">
-                {!! $page->body !!}
             </div>
         </div>
     </section>
 
-    {{-- =========================== TIMELINE =========================== --}}
-    @if (! empty($timeline))
-        <section class="bg-[var(--color-bg-muted)] border-t border-[var(--color-rule)]">
-            <div class="max-w-[var(--container-wide)] mx-auto px-[clamp(1rem,4vw,3rem)] py-20 md:py-28">
-                <div class="flex items-baseline justify-between mb-12">
+    {{-- ════════════════════════════════════════════════════════════════════
+         SCENE 3 — ATÖLYE
+         Work areas as paragraphs (not stat grid). Alternating 3/5 columns;
+         nth-child(even) flips meta to the right (CSS in _components.css).
+         ════════════════════════════════════════════════════════════════════ --}}
+    @if (! empty($workareas))
+        <section class="scene">
+            <div class="page-wrap">
+                <header class="flex items-baseline justify-between gap-6 mb-10">
                     <div>
-                        <p class="eyebrow mb-3">Kronoloji</p>
-                        <h2 class="display-fraunces text-[clamp(2rem,4vw,3rem)] leading-[1.05]"
-                            style="letter-spacing: var(--tracking-tighter);">
-                            On yılın <em class="italic text-[var(--color-accent)]">kilometre taşları</em>
-                        </h2>
+                        <p class="eyebrow mb-2">Nerede ne yapar</p>
+                        <h2 class="display-editorial">Atölye</h2>
                     </div>
-                </div>
+                </header>
 
-                <ol class="timeline-rail">
-                    @foreach ($timeline as $i => $entry)
-                        <li class="timeline-row">
-                            <div class="timeline-year">{{ $entry['year'] }}</div>
-                            <div class="timeline-mark" aria-hidden="true">
-                                <span class="timeline-dot"></span>
+                <ol class="atolye-list">
+                    @foreach ($workareas as $area)
+                        <li class="atolye-scene">
+                            <div class="atolye-scene-inner">
+                                <div class="atolye-scene-meta">
+                                    <p class="atolye-scene-label">{{ $area['label'] ?? '' }}</p>
+                                    <h3 class="atolye-scene-title">{{ $area['title'] ?? '' }}</h3>
+                                </div>
+                                <div class="atolye-scene-body">
+                                    @if (! empty($area['lines']))
+                                        {{ implode(' · ', $area['lines']) }}
+                                    @endif
+                                </div>
                             </div>
-                            <div class="timeline-text">{{ $entry['text'] }}</div>
                         </li>
                     @endforeach
                 </ol>
@@ -93,63 +145,81 @@
         </section>
     @endif
 
-    {{-- =========================== AWARDS =========================== --}}
-    @if (! empty($awards))
-        <section class="border-t border-[var(--color-rule)]">
-            <div class="max-w-[var(--container-wide)] mx-auto px-[clamp(1rem,4vw,3rem)] py-20 md:py-24 grid gap-10 md:grid-cols-[1fr_2fr] items-start">
-                <div>
-                    <p class="eyebrow mb-3">Ödüller &amp; anma</p>
-                    <h2 class="display-fraunces text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05]">
-                        Dergi ve jürilerin <em class="italic text-[var(--color-accent)]">notları</em>
-                    </h2>
+    {{-- ════════════════════════════════════════════════════════════════════
+         SCENE 4 — RESEARCH POSTER
+         Single-cell composition. Italic display title + mono cite footer.
+         ════════════════════════════════════════════════════════════════════ --}}
+    @if ($research)
+        <section class="scene scene--darker">
+            <div class="page-wrap">
+                <div class="research-poster">
+                    <p class="research-poster-kicker">
+                        Akademi
+                        <span class="dateline-separator">·</span>
+                        Yüksek lisans araştırması
+                    </p>
+                    @if (! empty($research['title']))
+                        <p class="research-poster-question">{{ $research['title'] }}</p>
+                    @endif
+                    @if (! empty($research['note']))
+                        <p class="research-poster-note">{{ $research['note'] }}</p>
+                    @endif
+                    @if (! empty($research['place']))
+                        <p class="research-poster-cite">{{ $research['place'] }}</p>
+                    @endif
                 </div>
-                <ol class="divide-y divide-[var(--color-rule)]">
-                    @foreach ($awards as $award)
-                        <li class="py-4 grid grid-cols-[5rem_1fr] gap-6">
-                            <span class="font-mono text-sm tabular-nums text-[var(--color-ink-subtle)]">{{ $award['year'] }}</span>
-                            <span class="display-fraunces text-lg leading-snug">{{ $award['title'] }}</span>
-                        </li>
-                    @endforeach
-                </ol>
             </div>
         </section>
     @endif
 
-    {{-- =========================== RECENT WRITINGS =========================== --}}
-    @if ($recentWritings->isNotEmpty())
-        <section class="bg-[var(--color-bg-muted)] border-t border-[var(--color-rule)]">
-            <div class="max-w-[var(--container-wide)] mx-auto px-[clamp(1rem,4vw,3rem)] py-20 md:py-24">
-                <div class="flex items-baseline justify-between mb-10">
-                    <div>
-                        <p class="eyebrow mb-3">Son üç yazı</p>
-                        <h2 class="display-fraunces text-[clamp(1.75rem,3vw,2.5rem)] leading-[1.05]">
-                            Şu sıralar <em class="italic text-[var(--color-accent)]">ne yazıyor</em>
-                        </h2>
+    {{-- ════════════════════════════════════════════════════════════════════
+         SCENE 5 — METHODOLOGY (optional inline scene)
+         Short paragraph, quiet rhythm. Only renders if set in seeder.
+         ════════════════════════════════════════════════════════════════════ --}}
+    @if ($methodology)
+        <section class="scene scene--tight">
+            <div class="page-wrap">
+                <div class="dossier-grid gap-y-6">
+                    <div class="dg-3">
+                        <p class="eyebrow">Metot</p>
                     </div>
-                    <a href="{{ route('writing.index') }}" class="hidden md:inline-flex items-center gap-2 text-sm no-underline border-b border-[var(--color-ink)] pb-1">
-                        Tüm arşiv <span aria-hidden="true">↗</span>
-                    </a>
-                </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    @foreach ($recentWritings as $writing)
-                        @include('partials._writing-card', ['writing' => $writing, 'variant' => 'default'])
-                    @endforeach
+                    <p class="dg-9 text-[var(--text-md)] leading-[1.7] text-[var(--color-ink)] max-w-[62ch]">
+                        {{ $methodology }}
+                    </p>
                 </div>
             </div>
         </section>
     @endif
 
-    {{-- =========================== CTA =========================== --}}
-    <section class="max-w-[var(--container-wide)] mx-auto px-[clamp(1rem,4vw,3rem)] py-24 md:py-32 border-t border-[var(--color-rule)]">
-        <p class="display-fraunces text-[clamp(1.75rem,4vw,3rem)] leading-[1.1] max-w-[28ch]"
-           style="letter-spacing: var(--tracking-tighter);">
-            Bir iş, bir basın sorusu, bir ipucu — <em class="italic text-[var(--color-accent)]">yaz</em>.
-        </p>
-        <div class="mt-8 flex flex-wrap gap-3">
-            <a href="{{ route('contact') }}" class="btn btn--accent btn--lg">İletişim kanalları <span aria-hidden="true">→</span></a>
-            <a href="{{ route('writing.index') }}" class="btn btn--ghost btn--lg">Yazıları oku</a>
-        </div>
-    </section>
+    {{-- ════════════════════════════════════════════════════════════════════
+         SCENE 6 — CLOSING (recent dispatches + contact invitation)
+         ════════════════════════════════════════════════════════════════════ --}}
+    @if ($recentWritings->isNotEmpty())
+        <section class="scene scene--closing border-t border-[var(--color-rule)]">
+            <div class="page-wrap">
+                <header class="flex items-baseline justify-between gap-6 mb-8">
+                    <div>
+                        <p class="eyebrow mb-2">Son dispatches</p>
+                        <h2 class="display-quiet">Şu sıralar yazdıkları</h2>
+                    </div>
+                    <a href="{{ route('writing.index') }}" class="link-quiet text-sm">
+                        Tüm arşiv <span aria-hidden="true">→</span>
+                    </a>
+                </header>
+                <div class="border-t border-[var(--color-ink)]">
+                    @foreach ($recentWritings as $writing)
+                        @include('partials._writing-row', ['writing' => $writing])
+                    @endforeach
+                </div>
+
+                <p class="mt-10 text-sm">
+                    <a href="{{ route('contact') }}" class="link-quiet">
+                        İletişim kanalları <span aria-hidden="true">→</span>
+                    </a>
+                </p>
+            </div>
+        </section>
+    @endif
 
 </article>
 

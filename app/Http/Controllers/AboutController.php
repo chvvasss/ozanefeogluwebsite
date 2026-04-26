@@ -29,7 +29,7 @@ class AboutController extends Controller
             ->get();
 
         return view('public.pages.about', [
-            'page'           => $page,
+            'page' => $page,
             'recentWritings' => $recentWritings,
         ]);
     }

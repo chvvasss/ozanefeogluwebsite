@@ -17,7 +17,7 @@ it('respects the published scope', function () {
     Writing::factory()->draft()->create();
     Writing::factory()->scheduled()->create();
     $published = Writing::factory()->create([
-        'status'       => 'published',
+        'status' => 'published',
         'published_at' => now()->subHour(),
     ]);
 

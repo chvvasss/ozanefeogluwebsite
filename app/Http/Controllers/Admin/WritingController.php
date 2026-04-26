@@ -52,10 +52,10 @@ class WritingController extends Controller
 
         return view('admin.writings.index', [
             'writings' => $writings,
-            'filters'  => [
+            'filters' => [
                 'status' => $status,
-                'kind'   => $kind,
-                'q'      => $search,
+                'kind' => $kind,
+                'q' => $search,
             ],
         ]);
     }
@@ -65,15 +65,15 @@ class WritingController extends Controller
         $this->authorize('create', Writing::class);
 
         $writing = new Writing([
-            'kind'        => 'deneme',
-            'status'      => 'draft',
+            'kind' => 'deneme',
+            'status' => 'draft',
             'cover_hue_a' => 24,
             'cover_hue_b' => 200,
             'is_featured' => false,
         ]);
 
         return view('admin.writings.create', [
-            'writing'      => $writing,
+            'writing' => $writing,
             'publications' => Publication::query()->orderBy('sort_order')->get(),
             'selectedPubs' => [],
         ]);
@@ -102,7 +102,7 @@ class WritingController extends Controller
         $this->authorize('update', $writing);
 
         return view('admin.writings.edit', [
-            'writing'      => $writing,
+            'writing' => $writing,
             'publications' => Publication::query()->orderBy('sort_order')->get(),
             'selectedPubs' => $writing->publications()->pluck('publications.id')->all(),
         ]);
@@ -163,7 +163,7 @@ class WritingController extends Controller
         $this->authorize('publish', $writing);
 
         $writing->forceFill([
-            'status'       => 'published',
+            'status' => 'published',
             'published_at' => $writing->published_at ?? now(),
         ])->save();
 
@@ -186,8 +186,8 @@ class WritingController extends Controller
     private function fill(Writing $writing, array $data, Request $request): void
     {
         $title = trim((string) ($data['title_tr'] ?? ''));
-        $slug  = $data['slug_tr'] ?? '';
-        $slug  = $slug !== '' ? $slug : SlugGenerator::uniqueForWriting($title, $writing->id);
+        $slug = $data['slug_tr'] ?? '';
+        $slug = $slug !== '' ? $slug : SlugGenerator::uniqueForWriting($title, $writing->id);
 
         $writing->title = ['tr' => $title];
         $writing->slug = ['tr' => $slug];

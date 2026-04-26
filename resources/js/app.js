@@ -5,31 +5,30 @@ import persist from "@alpinejs/persist";
 Alpine.plugin(focus);
 Alpine.plugin(persist);
 
+// Theme toggle — light/dark only (no system follow-along).
 Alpine.data("themeToggle", () => ({
-  preference: Alpine.$persist("system").as("theme-pref"),
+  preference: Alpine.$persist("light").as("theme-pref"),
   resolved: "light",
 
   init() {
-    this.apply();
-    if (window.matchMedia) {
-      window
-        .matchMedia("(prefers-color-scheme: dark)")
-        .addEventListener("change", () => this.apply());
+    // Migrate legacy "system" preference → resolve once + persist explicit choice.
+    if (this.preference === "system") {
+      const sysDark = window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+      this.preference = sysDark ? "dark" : "light";
     }
+    this.apply();
   },
 
   apply() {
-    const sys = window.matchMedia("(prefers-color-scheme: dark)").matches
-      ? "dark"
-      : "light";
-    this.resolved = this.preference === "system" ? sys : this.preference;
+    if (this.preference !== "light" && this.preference !== "dark") {
+      this.preference = "light";
+    }
+    this.resolved = this.preference;
     document.documentElement.dataset.theme = this.resolved;
   },
 
   cycle() {
-    const order = ["system", "light", "dark"];
-    const idx = order.indexOf(this.preference);
-    this.preference = order[(idx + 1) % order.length];
+    this.preference = this.preference === "dark" ? "light" : "dark";
     this.apply();
   },
 }));

@@ -21,15 +21,15 @@ class PageRequest extends FormRequest
         $pageId = $this->route('page')?->id;
 
         return [
-            'title_tr'        => ['required', 'string', 'max:255'],
-            'slug'            => ['required', 'string', 'max:160', 'regex:/^[a-z0-9][a-z0-9\-]*$/', Rule::unique('pages', 'slug')->ignore($pageId)],
-            'template'        => ['required', Rule::in(Page::TEMPLATES)],
-            'intro_tr'        => ['nullable', 'string', 'max:500'],
-            'body_tr'         => ['nullable', 'string', 'max:200000'],
-            'meta_title_tr'   => ['nullable', 'string', 'max:255'],
-            'meta_desc_tr'    => ['nullable', 'string', 'max:320'],
-            'extras_json'     => ['nullable', 'string', 'max:20000'],
-            'is_published'    => ['nullable', 'boolean'],
+            'title_tr' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:160', 'regex:/^[a-z0-9][a-z0-9\-]*$/', Rule::unique('pages', 'slug')->ignore($pageId)],
+            'template' => ['required', Rule::in(Page::TEMPLATES)],
+            'intro_tr' => ['nullable', 'string', 'max:500'],
+            'body_tr' => ['nullable', 'string', 'max:200000'],
+            'meta_title_tr' => ['nullable', 'string', 'max:255'],
+            'meta_desc_tr' => ['nullable', 'string', 'max:320'],
+            'extras_json' => ['nullable', 'string', 'max:20000'],
+            'is_published' => ['nullable', 'boolean'],
         ];
     }
 
@@ -37,8 +37,8 @@ class PageRequest extends FormRequest
     {
         return [
             'title_tr.required' => 'Başlık zorunludur.',
-            'slug.regex'        => 'Slug yalnız küçük harf, rakam ve tire içerebilir.',
-            'slug.unique'       => 'Bu slug başka bir sayfada kullanılıyor.',
+            'slug.regex' => 'Slug yalnız küçük harf, rakam ve tire içerebilir.',
+            'slug.unique' => 'Bu slug başka bir sayfada kullanılıyor.',
         ];
     }
 

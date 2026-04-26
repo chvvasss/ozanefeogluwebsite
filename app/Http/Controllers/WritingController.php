@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Models\Writing;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class WritingController extends Controller
@@ -17,19 +16,23 @@ class WritingController extends Controller
         $kind = $request->string('tur')->value() ?: null;
         $kind = in_array($kind, Writing::KINDS, true) ? $kind : null;
 
-        /** @var LengthAwarePaginator $writings */
+        // Editor's archive: chronological list, grouped by year in the view.
+        // Year-based archive routes (/yazilar/{year}) come in Faz 3 — no
+        // artificial cap here; sahibinin gerçek yazı sayısı çoğalana kadar
+        // tek sayfa kronolojik liste yeterli.
         $writings = Writing::query()
             ->published()
             ->ofKind($kind)
-            ->orderByDesc('is_featured')
-            ->orderByDesc('published_at')
-            ->paginate(9)
-            ->withQueryString();
+            ->with('media')
+            ->latest('published_at')
+            ->get()
+            ->groupBy(fn (Writing $w) => optional($w->published_at)->format('Y') ?? '—');
 
         return view('public.writing.index', [
-            'writings' => $writings,
-            'filter'   => $kind,
-            'kinds'    => $this->kindOptions(),
+            'writingsByYear' => $writings,
+            'totalCount' => Writing::query()->published()->ofKind($kind)->count(),
+            'filter' => $kind,
+            'kinds' => $this->kindOptions(),
         ]);
     }
 
@@ -67,8 +70,8 @@ class WritingController extends Controller
 
         return view('public.writing.show', [
             'writing' => $writing,
-            'prev'    => $prev,
-            'next'    => $next,
+            'prev' => $prev,
+            'next' => $next,
             'related' => $related,
         ]);
     }

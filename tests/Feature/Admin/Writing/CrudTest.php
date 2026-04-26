@@ -18,11 +18,11 @@ beforeEach(function (): void {
 
 it('creates a writing with minimal valid payload', function () {
     $response = $this->actingAs($this->editor)->post('/admin/writings', [
-        'title_tr'    => 'Deneme başlığı',
-        'slug_tr'     => '',
-        'kind'        => 'deneme',
-        'status'      => 'draft',
-        'body_tr'     => '<p>Bir gövde paragrafı.</p>',
+        'title_tr' => 'Deneme başlığı',
+        'slug_tr' => '',
+        'kind' => 'deneme',
+        'status' => 'draft',
+        'body_tr' => '<p>Bir gövde paragrafı.</p>',
         'cover_hue_a' => 24,
         'cover_hue_b' => 200,
     ]);
@@ -41,11 +41,11 @@ it('auto-generates unique slugs', function () {
     Writing::factory()->create(['slug' => ['tr' => 'deneme-basligi']]);
 
     $this->actingAs($this->editor)->post('/admin/writings', [
-        'title_tr'    => 'Deneme başlığı',
-        'slug_tr'     => '',
-        'kind'        => 'deneme',
-        'status'      => 'draft',
-        'body_tr'     => '<p>Gövde.</p>',
+        'title_tr' => 'Deneme başlığı',
+        'slug_tr' => '',
+        'kind' => 'deneme',
+        'status' => 'draft',
+        'body_tr' => '<p>Gövde.</p>',
         'cover_hue_a' => 24,
         'cover_hue_b' => 200,
     ])->assertRedirect();
@@ -56,11 +56,11 @@ it('auto-generates unique slugs', function () {
 
 it('transliterates Turkish characters into ASCII slugs', function () {
     $this->actingAs($this->editor)->post('/admin/writings', [
-        'title_tr'    => 'Şifre, güneş ve çiğ — İstanbul üstüne',
-        'slug_tr'     => '',
-        'kind'        => 'deneme',
-        'status'      => 'draft',
-        'body_tr'     => '<p>Kısa gövde.</p>',
+        'title_tr' => 'Şifre, güneş ve çiğ — İstanbul üstüne',
+        'slug_tr' => '',
+        'kind' => 'deneme',
+        'status' => 'draft',
+        'body_tr' => '<p>Kısa gövde.</p>',
         'cover_hue_a' => 24,
         'cover_hue_b' => 200,
     ])->assertRedirect();
@@ -73,15 +73,15 @@ it('transliterates Turkish characters into ASCII slugs', function () {
 it('updates an existing writing', function () {
     $writing = Writing::factory()->create([
         'title' => ['tr' => 'Eski başlık'],
-        'slug'  => ['tr' => 'eski-baslik'],
+        'slug' => ['tr' => 'eski-baslik'],
     ]);
 
     $this->actingAs($this->editor)->put("/admin/writings/{$writing->id}", [
-        'title_tr'    => 'Yeni başlık',
-        'slug_tr'     => 'eski-baslik',
-        'kind'        => $writing->kind,
-        'status'      => 'published',
-        'body_tr'     => '<p>Yenilenmiş gövde metni.</p>',
+        'title_tr' => 'Yeni başlık',
+        'slug_tr' => 'eski-baslik',
+        'kind' => $writing->kind,
+        'status' => 'published',
+        'body_tr' => '<p>Yenilenmiş gövde metni.</p>',
         'cover_hue_a' => $writing->cover_hue_a,
         'cover_hue_b' => $writing->cover_hue_b,
     ])->assertRedirect();
@@ -95,11 +95,11 @@ it('sanitizes script tags out of body on save', function () {
     $payload = '<p>Ok</p><script>alert(1)</script><p>Sonra</p>';
 
     $this->actingAs($this->editor)->post('/admin/writings', [
-        'title_tr'    => 'XSS deneme',
-        'slug_tr'     => '',
-        'kind'        => 'deneme',
-        'status'      => 'draft',
-        'body_tr'     => $payload,
+        'title_tr' => 'XSS deneme',
+        'slug_tr' => '',
+        'kind' => 'deneme',
+        'status' => 'draft',
+        'body_tr' => $payload,
         'cover_hue_a' => 24,
         'cover_hue_b' => 200,
     ])->assertRedirect();
@@ -145,11 +145,11 @@ it('forces draft status when contributor tries to publish directly', function ()
     $contributor->assignRole('contributor');
 
     $this->actingAs($contributor)->post('/admin/writings', [
-        'title_tr'    => 'Contributor hile',
-        'slug_tr'     => '',
-        'kind'        => 'deneme',
-        'status'      => 'published',
-        'body_tr'     => '<p>Gövde.</p>',
+        'title_tr' => 'Contributor hile',
+        'slug_tr' => '',
+        'kind' => 'deneme',
+        'status' => 'published',
+        'body_tr' => '<p>Gövde.</p>',
         'cover_hue_a' => 24,
         'cover_hue_b' => 200,
     ])->assertRedirect();

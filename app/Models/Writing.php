@@ -23,6 +23,15 @@ class Writing extends Model implements HasMedia
     use InteractsWithMedia;
     use SoftDeletes;
 
+    /**
+     * Writing kind taxonomy — press photographer + editor output categories.
+     * `saha_yazisi` retained for legacy data backward-compat but no longer
+     * seeded or surfaced in admin dropdowns (Phase A positioning correction).
+     */
+    public const KINDS = ['foto_notu', 'editoryal', 'analiz', 'roportaj', 'deneme', 'not'];
+
+    public const STATUSES = ['draft', 'scheduled', 'published'];
+
     /** @var array<int, string> */
     public array $translatable = [
         'title',
@@ -31,11 +40,8 @@ class Writing extends Model implements HasMedia
         'body',
         'meta_title',
         'meta_description',
+        'cover_caption',
     ];
-
-    public const KINDS = ['saha_yazisi', 'roportaj', 'deneme', 'not'];
-
-    public const STATUSES = ['draft', 'scheduled', 'published'];
 
     protected $fillable = [
         'author_id',
@@ -51,9 +57,11 @@ class Writing extends Model implements HasMedia
         'meta_description',
         'canonical_url',
         'read_minutes',
-        'cover_hue_a',
-        'cover_hue_b',
         'is_featured',
+        'is_demo',
+        'hero_eligible',
+        'photo_credit',
+        'cover_caption',
         'sort_order',
     ];
 
@@ -61,11 +69,11 @@ class Writing extends Model implements HasMedia
     {
         return [
             'published_at' => 'datetime',
-            'is_featured'  => 'boolean',
+            'is_featured' => 'boolean',
+            'is_demo' => 'boolean',
+            'hero_eligible' => 'boolean',
             'read_minutes' => 'integer',
-            'cover_hue_a'  => 'integer',
-            'cover_hue_b'  => 'integer',
-            'sort_order'   => 'integer',
+            'sort_order' => 'integer',
         ];
     }
 
@@ -129,12 +137,29 @@ class Writing extends Model implements HasMedia
     public function getKindLabelAttribute(): string
     {
         return match ($this->kind) {
-            'saha_yazisi' => 'saha yazısı',
-            'roportaj'    => 'röportaj',
-            'deneme'      => 'deneme',
-            'not'         => 'not',
-            default       => (string) $this->kind,
+            'foto_notu' => 'foto notu',
+            'editoryal' => 'editoryal',
+            'analiz' => 'analiz',
+            'roportaj' => 'röportaj',
+            'deneme' => 'deneme',
+            'not' => 'not',
+            'saha_yazisi' => 'saha yazısı', // legacy
+            default => (string) $this->kind,
         };
+    }
+
+    /**
+     * Resolved photo credit. Per-item override wins; otherwise global default
+     * from config('site.default_photo_credit'). Never null unless the
+     * writing has no cover at all (caller's responsibility to check).
+     */
+    public function resolvedPhotoCredit(): string
+    {
+        $override = trim((string) ($this->photo_credit ?? ''));
+
+        return $override !== ''
+            ? $override
+            : (string) config('site.default_photo_credit', 'Foto: Ozan Efeoğlu / AA');
     }
 
     public function url(): string

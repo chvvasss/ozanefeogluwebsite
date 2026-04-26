@@ -20,9 +20,9 @@ class PublicationFactory extends Factory
         $name = fake()->unique()->company();
 
         return [
-            'name'       => $name,
-            'slug'       => Str::slug($name),
-            'url'        => fake()->url(),
+            'name' => $name,
+            'slug' => Str::slug($name),
+            'url' => fake()->url(),
             'sort_order' => fake()->numberBetween(0, 100),
         ];
     }

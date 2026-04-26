@@ -1,0 +1,189 @@
+/* ==========================================================================
+   _tokens.css — design system tokens
+   ADR-016 Field Dossier · Emergency Rebuild edition
+   Owns: type families, scale, tracking, radius, motion, spacing, containers,
+         control surfaces, color palette, semantic theme.
+   ========================================================================== */
+
+@theme {
+  /* Type families — fallback face zinciri ile metric-aligned */
+  --font-display: "Source Serif 4 Variable", "Source Serif Fallback", "Charter", "Iowan Old Style", Georgia, serif;
+  --font-sans:    "IBM Plex Sans Variable", "IBM Plex Sans Fallback", "Helvetica Neue", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --font-mono:    "IBM Plex Mono", "IBM Plex Mono Fallback", "SF Mono", Menlo, Consolas, monospace;
+
+  /* Modular scale 1.2 */
+  --text-xs:   0.78rem;
+  --text-sm:   0.875rem;
+  --text-base: 1rem;
+  --text-md:   1.125rem;
+  --text-lg:   1.35rem;
+  --text-xl:   1.62rem;
+  --text-2xl:  1.95rem;
+  --text-3xl:  2.34rem;
+  --text-4xl:  2.81rem;
+  --text-5xl:  3.37rem;
+  --text-6xl:  4.05rem;
+  --text-7xl:  4.86rem;
+  --text-8xl:  5.83rem;
+
+  /* Tracking */
+  --tracking-tightest: -0.04em;
+  --tracking-tighter:  -0.02em;
+  --tracking-tight:    -0.01em;
+  --tracking-normal:   0;
+  --tracking-wide:     0.025em;
+  --tracking-wider:    0.1em;
+  --tracking-caps:     0.18em;
+
+  /* Radius — editorial near-square */
+  --radius-xs: 1px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+
+  /* Motion */
+  --ease-default:      cubic-bezier(0.25, 0.1, 0.25, 1);
+  --ease-out-quart:    cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+  --duration-instant:  60ms;
+  --duration-fast:     120ms;
+  --duration-normal:   200ms;
+  --duration-slow:     320ms;
+
+  /* Containers */
+  --container-prose:  62ch;
+  --container-narrow: 720px;
+  --container-base:   1100px;
+  --container-wide:   1320px;
+
+  /* Editorial rhythm — used by .page-section + grids */
+  --space-row:        clamp(1rem, 1.6vw, 1.5rem);
+  --space-section:    clamp(4rem, 9vw, 8rem);
+  --space-subsection: clamp(2rem, 4vw, 3.5rem);
+
+  /* Page chrome */
+  --page-pad:  clamp(1rem, 4vw, 3rem);
+  --gutter:    clamp(1rem, 1.6vw, 1.5rem);
+
+  /* Control surfaces — buttons, inputs, icon-btn share */
+  --control-h:        2.25rem;
+  --control-h-sm:     2rem;
+  --control-h-lg:     2.75rem;
+  --control-px:       1.1rem;
+  --control-px-sm:    0.75rem;
+  --control-px-lg:    1.5rem;
+
+  /* Paper neutrals — almost monochrome (less warm; closer to newsprint) */
+  --color-paper-50:  #faf9f5;
+  --color-paper-100: #f4f3ed;
+  --color-paper-200: #e8e6dc;
+  --color-paper-300: #d0cbbd;
+  --color-paper-400: #9f9889;
+  --color-paper-500: #686252;
+  --color-paper-600: #46413a;
+  --color-paper-700: #2e2a25;
+  --color-paper-800: #1c1915;
+  --color-paper-900: #14110d;
+  --color-paper-950: #08060a;
+
+  /* Accent — editorial cardinal red. Saturated, newspaper-grade; the
+     single colour that carries the whole site. Used in kickers, dateline
+     separators, indents, buttons, focus ring, link underlines. */
+  --color-red-200: #f0b5bb;
+  --color-red-300: #e37d85;
+  --color-red-400: #e64558;
+  --color-red-500: #c41e3a;
+  --color-red-600: #a31629;
+  --color-red-700: #7c0f1e;
+  --color-red-800: #550812;
+
+  /* Semantic — light defaults */
+  --color-bg:           var(--color-paper-100);
+  --color-bg-elevated:  #fffdf6;
+  --color-bg-muted:     var(--color-paper-200);
+  --color-bg-sunken:    var(--color-paper-300);
+  --color-ink:          #141310;
+  --color-ink-muted:    var(--color-paper-600);
+  --color-ink-subtle:   var(--color-paper-500);
+  --color-rule:         var(--color-paper-300);
+  --color-rule-strong:  var(--color-paper-400);
+  --color-accent:       var(--color-red-600);
+  --color-accent-hover: var(--color-red-700);
+  --color-accent-fg:    var(--color-paper-50);
+  --color-focus:        var(--color-red-600);
+
+  --color-success: #4a6b3a;
+  --color-warning: #8a6a2c;
+  --color-danger:  #883028;
+
+  /* Scene layer backgrounds — Pattern B Art-Directed Documentary (V.1).
+     Every scene picks ONE layer; layer shift alone is NOT a scene signal —
+     composition, type register, spacing must change in parallel (user rule). */
+  --layer-bg-default:  var(--color-paper-100);
+  --layer-bg-muted:    var(--color-paper-200);
+  --layer-bg-darker:   var(--color-paper-300);
+  --layer-bg-inverse:  var(--color-ink);
+  --layer-ink-inverse: var(--color-paper-50);
+
+  /* Brass indent bar — pull quotes, poster borders, research indent */
+  --indent-brass:      3px solid var(--color-accent);
+}
+
+/* Dark overrides */
+[data-theme="dark"] {
+  --color-bg:           #15140f;
+  --color-bg-elevated:  var(--color-paper-900);
+  --color-bg-muted:     var(--color-paper-800);
+  --color-bg-sunken:    var(--color-paper-950);
+
+  --layer-bg-default:  #15140f;
+  --layer-bg-muted:    var(--color-paper-800);
+  --layer-bg-darker:   var(--color-paper-700);
+  --layer-bg-inverse:  var(--color-paper-100);
+  --layer-ink-inverse: var(--color-paper-900);
+  --color-ink:          var(--color-paper-100);
+  --color-ink-muted:    var(--color-paper-400);
+  --color-ink-subtle:   var(--color-paper-500);
+  --color-rule:         var(--color-paper-800);
+  --color-rule-strong:  var(--color-paper-700);
+  --color-accent:       var(--color-red-400);
+  --color-accent-hover: var(--color-red-300);
+  --color-accent-fg:    var(--color-paper-50);
+  --color-focus:        var(--color-red-400);
+
+  --color-success: #8cbd72;
+  --color-warning: #d4a95c;
+  --color-danger:  #c67068;
+
+  color-scheme: dark;
+}
+:root { color-scheme: light; }
+
+/* Metric-aligned fallback faces (Session 3.5) */
+@font-face {
+  font-family: "Source Serif Fallback";
+  src: local("Charter"), local("Iowan Old Style"), local("Georgia");
+  font-display: swap;
+  size-adjust: 102%;
+  ascent-override: 95%;
+  descent-override: 28%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "IBM Plex Sans Fallback";
+  src: local("Helvetica Neue"), local("Helvetica"), local("Arial");
+  font-display: swap;
+  size-adjust: 100%;
+  ascent-override: 92%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: "IBM Plex Mono Fallback";
+  src: local("SF Mono"), local("Menlo"), local("Consolas"), local("Courier New");
+  font-display: swap;
+  size-adjust: 96%;
+  ascent-override: 90%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}

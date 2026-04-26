@@ -1,0 +1,135 @@
+/* ==========================================================================
+   _base.css — element resets, typography defaults, atmosphere
+   ========================================================================== */
+
+@layer base {
+  /* Alpine cloak — global FOUC guard */
+  [x-cloak] { display: none !important; }
+
+  /* Body scroll lock when modal/drawer open */
+  html.is-locked,
+  body.is-locked { overflow: hidden; }
+
+  html {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    line-height: 1.55;
+    min-height: 100dvh;
+    transition:
+      background-color var(--duration-fast) var(--ease-default),
+      color var(--duration-fast) var(--ease-default);
+  }
+
+  /* Paper grain — sole atmospheric texture */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.022;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch' seed='3'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+  [data-theme="dark"] body::before {
+    opacity: 0.045;
+    mix-blend-mode: screen;
+  }
+
+  /* Display headings — Source Serif 4. NEVER italic em accent in display.
+     Body italic (alıntı) OK; vurgu rengi hiçbir başlıkta YOK. */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--color-ink);
+    letter-spacing: var(--tracking-tight);
+    line-height: 1.18;
+    font-variation-settings: "opsz" 32;
+    text-wrap: balance;
+  }
+  h1 {
+    font-size: var(--text-6xl);
+    font-weight: 700;
+    letter-spacing: var(--tracking-tighter);
+    line-height: 1.04;
+    font-variation-settings: "opsz" 60;
+  }
+  h2 {
+    font-size: var(--text-4xl);
+    letter-spacing: var(--tracking-tighter);
+    font-variation-settings: "opsz" 48;
+  }
+  h3 { font-size: var(--text-2xl); }
+  h4 { font-size: var(--text-xl); }
+  h5 { font-size: var(--text-lg); }
+  h6 {
+    font-size: var(--text-base);
+    letter-spacing: var(--tracking-wide);
+    text-transform: uppercase;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    text-decoration-color: color-mix(in oklch, var(--color-accent) 60%, transparent);
+    transition:
+      text-decoration-thickness var(--duration-fast) var(--ease-default),
+      text-decoration-color var(--duration-fast) var(--ease-default),
+      color var(--duration-fast) var(--ease-default);
+  }
+  a:hover {
+    text-decoration-thickness: 2px;
+    text-decoration-color: var(--color-accent);
+  }
+
+  hr {
+    border: 0;
+    height: 1px;
+    background: var(--color-rule);
+  }
+
+  ::selection {
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+  }
+
+  *:focus { outline: none; }
+  *:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--color-rule-strong) transparent;
+  }
+}
+
+/* View transitions (Chromium default) */
+@view-transition { navigation: auto; }
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--duration-slow);
+  animation-timing-function: var(--ease-out-quart);
+}

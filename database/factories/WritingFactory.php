@@ -23,22 +23,22 @@ class WritingFactory extends Factory
         $body = '<p>'.implode("</p>\n<p>", fake()->paragraphs(5)).'</p>';
 
         return [
-            'author_id'        => User::factory(),
-            'kind'             => fake()->randomElement(Writing::KINDS),
-            'status'           => 'published',
-            'published_at'     => fake()->dateTimeBetween('-2 years', 'now'),
-            'location'         => fake()->city(),
-            'title'            => ['tr' => $title, 'en' => $title],
-            'slug'             => ['tr' => $slug, 'en' => $slug],
-            'excerpt'          => ['tr' => fake()->sentence(12), 'en' => fake()->sentence(12)],
-            'body'             => ['tr' => $body, 'en' => $body],
-            'meta_title'       => null,
+            'author_id' => User::factory(),
+            'kind' => fake()->randomElement(Writing::KINDS),
+            'status' => 'published',
+            'published_at' => fake()->dateTimeBetween('-2 years', 'now'),
+            'location' => fake()->city(),
+            'title' => ['tr' => $title, 'en' => $title],
+            'slug' => ['tr' => $slug, 'en' => $slug],
+            'excerpt' => ['tr' => fake()->sentence(12), 'en' => fake()->sentence(12)],
+            'body' => ['tr' => $body, 'en' => $body],
+            'meta_title' => null,
             'meta_description' => null,
-            'canonical_url'    => null,
-            'cover_hue_a'      => fake()->numberBetween(0, 255),
-            'cover_hue_b'      => fake()->numberBetween(0, 255),
-            'is_featured'      => false,
-            'sort_order'       => 0,
+            'canonical_url' => null,
+            'cover_hue_a' => fake()->numberBetween(0, 255),
+            'cover_hue_b' => fake()->numberBetween(0, 255),
+            'is_featured' => false,
+            'sort_order' => 0,
         ];
     }
 
@@ -55,7 +55,7 @@ class WritingFactory extends Factory
     public function scheduled(): static
     {
         return $this->state(fn (): array => [
-            'status'       => 'scheduled',
+            'status' => 'scheduled',
             'published_at' => now()->addDays(3),
         ]);
     }

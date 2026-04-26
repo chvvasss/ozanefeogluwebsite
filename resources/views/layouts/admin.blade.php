@@ -12,11 +12,14 @@
     <script>
         (function () {
             try {
-                var pref = localStorage.getItem('_x_theme-pref');
-                pref = pref ? JSON.parse(pref) : 'system';
-                var sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                var resolved = pref === 'system' ? (sysDark ? 'dark' : 'light') : pref;
-                document.documentElement.dataset.theme = resolved;
+                var stored = localStorage.getItem('_x_theme-pref');
+                var pref = stored ? JSON.parse(stored) : 'light';
+                if (pref === 'system') {
+                    pref = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                    localStorage.setItem('_x_theme-pref', JSON.stringify(pref));
+                }
+                if (pref !== 'light' && pref !== 'dark') pref = 'light';
+                document.documentElement.dataset.theme = pref;
             } catch (e) {}
         })();
     </script>
@@ -30,7 +33,7 @@
 
     <header class="admin-topbar">
         <button type="button"
-                class="btn btn--ghost btn--sm md:hidden"
+                class="admin-sidebar-toggle btn btn--ghost btn--sm md:hidden"
                 @click="toggleSidebar()"
                 aria-label="Menüyü aç">
             ≡
@@ -44,7 +47,7 @@
                         :title="'Tema: ' + preference">
                     <span x-show="resolved === 'light'" aria-hidden="true">◐</span>
                     <span x-show="resolved === 'dark'" aria-hidden="true">◑</span>
-                    <span class="hidden md:inline" x-text="preference === 'system' ? 'Sistem' : (preference === 'light' ? 'Aydınlık' : 'Karanlık')"></span>
+                    <span class="hidden md:inline" x-text="preference === 'light' ? 'Aydınlık' : 'Karanlık'"></span>
                 </button>
             </div>
 

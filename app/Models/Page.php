@@ -26,7 +26,7 @@ class Page extends Model
 
     public const KINDS = ['system', 'custom'];
 
-    public const TEMPLATES = ['default', 'about', 'contact'];
+    public const TEMPLATES = ['default', 'about', 'contact', 'legal'];
 
     protected $fillable = [
         'slug',
@@ -45,9 +45,9 @@ class Page extends Model
     protected function casts(): array
     {
         return [
-            'extras'       => 'array',
+            'extras' => 'array',
             'is_published' => 'boolean',
-            'sort_order'   => 'integer',
+            'sort_order' => 'integer',
         ];
     }
 

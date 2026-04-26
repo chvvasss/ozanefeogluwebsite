@@ -27,8 +27,8 @@ class PublicationSeeder extends Seeder
             Publication::query()->updateOrCreate(
                 ['name' => $row['name']],
                 [
-                    'slug'       => Str::slug($row['name']),
-                    'url'        => $row['url'],
+                    'slug' => Str::slug($row['name']),
+                    'url' => $row['url'],
                     'sort_order' => $index,
                 ]
             );

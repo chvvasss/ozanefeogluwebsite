@@ -1,0 +1,91 @@
+/* ==========================================================================
+   _grid.css — strict 12-col Field Dossier grid system
+   --------------------------------------------------------------------------
+   Replaces ad-hoc per-page grid declarations. Every page-level layout binds
+   to .dossier-grid (12-col, gap = --gutter). Mobile collapses to 1-col by
+   default; opt-in `dossier-grid--keep` keeps grid below md breakpoint.
+
+   Page wrap: max-width container + padding. Sections use --space-section
+   for vertical rhythm.
+   ========================================================================== */
+
+@utility page-wrap {
+  width: 100%;
+  max-width: var(--container-wide);
+  margin-inline: auto;
+  padding-inline: var(--page-pad);
+}
+
+@utility page-wrap-narrow {
+  width: 100%;
+  max-width: var(--container-base);
+  margin-inline: auto;
+  padding-inline: var(--page-pad);
+}
+
+@utility section-y {
+  padding-block: var(--space-section);
+}
+
+@utility subsection-y {
+  padding-block: var(--space-subsection);
+}
+
+/* The grid */
+.dossier-grid {
+  display: grid;
+  grid-template-columns: 1fr;          /* mobile: stack */
+  column-gap: var(--gutter);
+  row-gap: var(--space-row);
+}
+@media (min-width: 768px) {
+  .dossier-grid {
+    grid-template-columns: repeat(12, minmax(0, 1fr));
+  }
+}
+.dossier-grid--keep {
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+/* Column span helpers — .dg-N (dossier-grid) custom prefix avoids Tailwind v4
+   conflicts (.col-N is a Tailwind utility meaning grid-column: N / span N).
+   Use grid-column-end: span N so .dg-N + .dg-start-M combine correctly:
+   explicit start from .dg-start-M, explicit end from .dg-N. No cascade trap. */
+@media (min-width: 768px) {
+  .dg-1  { grid-column-end: span 1; }
+  .dg-2  { grid-column-end: span 2; }
+  .dg-3  { grid-column-end: span 3; }
+  .dg-4  { grid-column-end: span 4; }
+  .dg-5  { grid-column-end: span 5; }
+  .dg-6  { grid-column-end: span 6; }
+  .dg-7  { grid-column-end: span 7; }
+  .dg-8  { grid-column-end: span 8; }
+  .dg-9  { grid-column-end: span 9; }
+  .dg-10 { grid-column-end: span 10; }
+  .dg-11 { grid-column-end: span 11; }
+  .dg-12 { grid-column-end: span 12; }
+
+  .dg-start-1  { grid-column-start: 1; }
+  .dg-start-2  { grid-column-start: 2; }
+  .dg-start-3  { grid-column-start: 3; }
+  .dg-start-4  { grid-column-start: 4; }
+  .dg-start-5  { grid-column-start: 5; }
+  .dg-start-6  { grid-column-start: 6; }
+  .dg-start-7  { grid-column-start: 7; }
+  .dg-start-8  { grid-column-start: 8; }
+}
+
+/* Section break — single hairline rule with page-level rhythm */
+.section-rule {
+  border: 0;
+  height: 1px;
+  background: var(--color-rule);
+  margin-block: 0;
+}
+
+/* Editorial frame — full-bleed inside a wrap, used for strip backgrounds */
+@utility full-bleed-strip {
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  margin-right: calc(50% - 50vw);
+}

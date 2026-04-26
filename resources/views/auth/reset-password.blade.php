@@ -40,7 +40,7 @@
             </div>
         @endif
 
-        <button type="submit" class="btn btn--accent btn--lg justify-center">Şifreyi güncelle</button>
+        <button type="submit" class="btn btn--lg justify-center">Şifreyi güncelle</button>
     </form>
 </div>
 @endsection

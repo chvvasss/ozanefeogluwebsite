@@ -22,13 +22,13 @@ class BodySanitizer
             .'hr,'
             .'img[src|alt|width|height],'
             .'figure,figcaption',
-        'HTML.TargetBlank'   => true,
-        'HTML.Nofollow'      => false,
+        'HTML.TargetBlank' => true,
+        'HTML.Nofollow' => false,
         'Attr.AllowedFrameTargets' => ['_blank'],
         'URI.AllowedSchemes' => ['http' => true, 'https' => true, 'mailto' => true],
         'AutoFormat.RemoveEmpty' => true,
         'Core.EscapeInvalidTags' => false,
-        'HTML.Trusted'           => false,
+        'HTML.Trusted' => false,
     ];
 
     public static function clean(string $html): string

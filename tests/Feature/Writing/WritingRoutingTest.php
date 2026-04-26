@@ -7,11 +7,11 @@ use App\Models\Writing;
 it('lists published writings on the index', function () {
     $published = Writing::factory()->create([
         'title' => ['tr' => 'Yayında bir yazı'],
-        'slug'  => ['tr' => 'yayinda-bir-yazi'],
+        'slug' => ['tr' => 'yayinda-bir-yazi'],
     ]);
     Writing::factory()->draft()->create([
         'title' => ['tr' => 'Taslak yazı'],
-        'slug'  => ['tr' => 'taslak-yazi'],
+        'slug' => ['tr' => 'taslak-yazi'],
     ]);
 
     $response = $this->get('/yazilar');
@@ -46,10 +46,10 @@ it('ignores an unknown kind filter', function () {
 
 it('shows a single writing by slug', function () {
     $writing = Writing::factory()->create([
-        'title'   => ['tr' => 'Tek yazı'],
-        'slug'    => ['tr' => 'tek-yazi'],
+        'title' => ['tr' => 'Tek yazı'],
+        'slug' => ['tr' => 'tek-yazi'],
         'excerpt' => ['tr' => 'Kısa bir özet cümle.'],
-        'body'    => ['tr' => '<p>Uzun gövde metni...</p>'],
+        'body' => ['tr' => '<p>Uzun gövde metni...</p>'],
     ]);
 
     $response = $this->get('/yazilar/tek-yazi');
@@ -84,5 +84,5 @@ it('does not show future-scheduled writings', function () {
 it('renders an empty-state message when the filter has no results', function () {
     $response = $this->get('/yazilar?tur=not');
     $response->assertOk();
-    $response->assertSee('henüz', false);
+    $response->assertSee('yayımlanmış bir yazı yok', false);
 });

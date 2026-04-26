@@ -32,8 +32,8 @@ class PageController extends Controller
         $this->authorize('create', Page::class);
 
         $page = new Page([
-            'kind'         => 'custom',
-            'template'     => 'default',
+            'kind' => 'custom',
+            'template' => 'default',
             'is_published' => true,
         ]);
 

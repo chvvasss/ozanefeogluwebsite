@@ -20,7 +20,7 @@
             <label for="email" class="field-label">E-posta</label>
             <input id="email" name="email" type="email" autocomplete="username" required autofocus class="input" value="{{ old('email') }}">
         </div>
-        <button type="submit" class="btn btn--accent btn--lg justify-center">
+        <button type="submit" class="btn btn--lg justify-center">
             Sıfırlama bağlantısı gönder
         </button>
     </form>

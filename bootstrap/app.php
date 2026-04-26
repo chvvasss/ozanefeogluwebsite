@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Middleware\EnsureTwoFactorEnrolled;
+use App\Http\Middleware\PublicCacheHeaders;
 use App\Http\Middleware\RequestId;
 use App\Http\Middleware\SecurityHeaders;
 use App\Http\Middleware\SetAppLocale;
@@ -24,6 +25,7 @@ return Application::configure(basePath: dirname(__DIR__))
 
         $middleware->web(append: [
             SetAppLocale::class,
+            PublicCacheHeaders::class,
         ]);
 
         $middleware->alias([

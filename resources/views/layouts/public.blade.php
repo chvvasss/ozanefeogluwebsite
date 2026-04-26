@@ -6,24 +6,77 @@
     <meta name="color-scheme" content="light dark">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? 'Ozan Efeoğlu — Builds quietly ambitious software' }}</title>
-    <meta name="description" content="{{ $description ?? 'Kişisel portfolyo ve yazı sahnesi — sessiz ama iddialı yazılım.' }}">
+    @php
+        $pageTitle = $title ?? site_setting('identity.name').' — '.site_setting('identity.role_primary');
+        $pageDesc  = $description ?? site_setting('identity.description');
+        $pageOgImage = $ogImage ?? site_setting('seo.og_image_url') ?? null;
+        $pageOgType = $ogType ?? 'website';
+        $pageCanonical = $canonical ?? url()->current();
+    @endphp
+    <title>{{ $pageTitle }}</title>
+    <meta name="description" content="{{ $pageDesc }}">
+    <link rel="canonical" href="{{ $pageCanonical }}">
+
+    {{-- Open Graph --}}
+    <meta property="og:type" content="{{ $pageOgType }}">
+    <meta property="og:site_name" content="{{ site_setting('identity.name') }}">
+    <meta property="og:title" content="{{ $pageTitle }}">
+    <meta property="og:description" content="{{ $pageDesc }}">
+    <meta property="og:url" content="{{ $pageCanonical }}">
+    <meta property="og:locale" content="{{ str_replace('-', '_', str_replace('_', '-', app()->getLocale())) }}_TR">
+    @if ($pageOgImage)
+        <meta property="og:image" content="{{ $pageOgImage }}">
+        <meta property="og:image:width" content="1200">
+        <meta property="og:image:height" content="630">
+    @endif
+
+    {{-- Twitter / X --}}
+    <meta name="twitter:card" content="{{ $pageOgImage ? 'summary_large_image' : 'summary' }}">
+    <meta name="twitter:title" content="{{ $pageTitle }}">
+    <meta name="twitter:description" content="{{ $pageDesc }}">
+    @if ($pageOgImage)
+        <meta name="twitter:image" content="{{ $pageOgImage }}">
+    @endif
 
     <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="Writing — RSS">
 
-    {{-- Pre-hydration theme — avoids FOUC --}}
+    {{-- RSS alternate — only rendered when feed actually exists --}}
+    @if (site_setting('features.feed_enabled'))
+        <link rel="alternate" type="application/rss+xml" href="/feed.xml" title="{{ site_setting('identity.name') }} — Dispatches">
+    @endif
+
+    {{-- Pre-hydration theme — admin sets the default, user override via localStorage. light/dark only. --}}
+    @php
+        $themeDefault = site_setting('theme.dark_mode', 'light');
+        if (! in_array($themeDefault, ['light', 'dark'], true)) $themeDefault = 'light';
+    @endphp
     <script>
         (function () {
             try {
-                var pref = localStorage.getItem('_x_theme-pref');
-                pref = pref ? JSON.parse(pref) : 'system';
-                var sysDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-                var resolved = pref === 'system' ? (sysDark ? 'dark' : 'light') : pref;
-                document.documentElement.dataset.theme = resolved;
+                var adminDefault = @json($themeDefault);
+                var stored = localStorage.getItem('_x_theme-pref');
+                var pref = stored ? JSON.parse(stored) : adminDefault;
+                if (pref === 'system') {
+                    pref = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+                    localStorage.setItem('_x_theme-pref', JSON.stringify(pref));
+                }
+                if (pref !== 'light' && pref !== 'dark') pref = 'light';
+                document.documentElement.dataset.theme = pref;
             } catch (e) {}
         })();
     </script>
+
+    {{-- Critical font preload --}}
+    @php
+        $sourceSerifUrl = \App\Support\Fonts::url('source-serif-4-latin-wght-normal');
+        $plexSansUrl    = \App\Support\Fonts::url('ibm-plex-sans-latin-wght-normal');
+    @endphp
+    @if ($sourceSerifUrl)
+        <link rel="preload" as="font" type="font/woff2" href="{{ $sourceSerifUrl }}" crossorigin>
+    @endif
+    @if ($plexSansUrl)
+        <link rel="preload" as="font" type="font/woff2" href="{{ $plexSansUrl }}" crossorigin>
+    @endif
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>

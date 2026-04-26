@@ -6,7 +6,15 @@ it('returns ok on the health endpoint', function () {
     $response = $this->getJson('/health');
 
     $response->assertOk();
-    $response->assertJson(['app' => 'ok', 'db' => 'ok', 'cache' => 'ok']);
+    $response->assertJson(['app' => 'ok']);
+    $response->assertJsonPath('checks.db.status', 'ok');
+    $response->assertJsonPath('checks.cache.status', 'ok');
+    $response->assertJsonPath('checks.storage.status', 'ok');
+});
+
+it('exposes X-Frame-Options DENY on every response', function () {
+    $response = $this->get('/');
+    expect($response->headers->get('X-Frame-Options'))->toBe('DENY');
 });
 
 it('echoes a request id header', function () {
