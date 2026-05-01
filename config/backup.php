@@ -25,20 +25,35 @@ return [
                 /*
                  * The list of directories and files that will be included in the backup.
                  */
-                'include' => [
-                    base_path(),
-                    // storage_path(),  // Include if you use zero downtime deployments and don't follow symlinks
-                ],
+                /*
+                 * Data-only backup strategy:
+                 *   · SQLite DB file (when sqlite driver is active)
+                 *   · .env (secrets — careful with download permissions!)
+                 *   · storage/app/public — opt-in via BACKUP_INCLUDE_MEDIA
+                 *     (default false; production media lives in object storage
+                 *     and is replicated separately. Set true if you need
+                 *     a self-contained restore archive.)
+                 * Source code lives in git — no need to mirror it here.
+                 */
+                'include' => array_filter([
+                    env('DB_CONNECTION') === 'sqlite' ? database_path('database.sqlite') : null,
+                    base_path('.env'),
+                    env('BACKUP_INCLUDE_MEDIA', false) ? storage_path('app/public') : null,
+                ]),
 
                 /*
                  * These directories and files will be excluded from the backup.
-                 *
                  * Directories used by the backup process will automatically be excluded.
                  */
                 'exclude' => [
                     base_path('vendor'),
                     base_path('node_modules'),
                     storage_path('framework'),
+                    storage_path('logs'),
+                    storage_path('debugbar'),
+                    base_path('.git'),
+                    base_path('tests'),
+                    base_path('node_modules'),
                 ],
 
                 /*
@@ -89,9 +104,12 @@ return [
              *
              * For a complete list of available customization options, see https://github.com/spatie/db-dumper
              */
-            'databases' => [
-                env('DB_CONNECTION', 'mysql'),
-            ],
+            /*
+             * SQLite is a single file — no dump command needed; we include
+             * the file directly (see 'include' above). For MySQL/PostgreSQL
+             * the connection name triggers Spatie's mysqldump/pg_dump path.
+             */
+            'databases' => env('DB_CONNECTION') === 'sqlite' ? [] : [env('DB_CONNECTION', 'mysql')],
         ],
 
         /*

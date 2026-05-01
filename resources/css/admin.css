@@ -5,6 +5,7 @@
    ========================================================================== */
 
 @import "./app.css";
+@import "./_admin-kit.css";
 
 /* Admin-specific tokens */
 @theme {
