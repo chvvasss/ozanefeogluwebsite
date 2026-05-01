@@ -57,11 +57,38 @@ class LoginActivityRecorder
 
         if ($email && $user = User::query()->where('email', $email)->first()) {
             $threshold = (int) config('security.login.daily_lockout_threshold', 10);
+            $alertAt = (int) config('security.login.alert_threshold', 5);
+
             $user->increment('failed_attempts');
-            if ($user->failed_attempts >= $threshold) {
+            $user->refresh();
+
+            // Alert the legitimate owner once we cross the alert threshold —
+            // before the account is locked. Avoid spam: send once when crossing
+            // the threshold (exact equality), not on every subsequent attempt.
+            if ($user->failed_attempts === $alertAt) {
+                try {
+                    $user->notify(new \App\Notifications\SuspiciousLoginAttempts(
+                        attemptCount: $alertAt,
+                        accountLocked: false,
+                    ));
+                } catch (\Throwable $e) {
+                    report($e);
+                }
+            }
+
+            if ($user->failed_attempts >= $threshold && $user->locked_until === null) {
                 $user->forceFill([
                     'locked_until' => now()->addMinutes((int) config('security.login.lockout_minutes', 15)),
                 ])->save();
+
+                try {
+                    $user->notify(new \App\Notifications\SuspiciousLoginAttempts(
+                        attemptCount: (int) $user->failed_attempts,
+                        accountLocked: true,
+                    ));
+                } catch (\Throwable $e) {
+                    report($e);
+                }
             }
         }
     }

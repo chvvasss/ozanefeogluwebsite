@@ -144,9 +144,16 @@ return [
     */
 
     'features' => [
-        Features::registration(),
+        // Public registration is DISABLED — this is a single-author site.
+        // New users (editors, contributors) are added through admin panel only.
+        // Features::registration(),
+
         Features::resetPasswords(),
-        // Features::emailVerification(),
+
+        // Email verification is REQUIRED — User implements MustVerifyEmail.
+        // New accounts created via admin panel must verify email before login.
+        Features::emailVerification(),
+
         Features::updateProfileInformation(),
         Features::updatePasswords(),
         Features::twoFactorAuthentication([

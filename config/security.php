@@ -23,6 +23,10 @@ return [
         'throttle_decay_minutes' => 1,
         'lockout_minutes' => (int) env('AUTH_LOGIN_LOCKOUT_MINUTES', 15),
         'daily_lockout_threshold' => (int) env('AUTH_LOGIN_DAILY_LOCKOUT_THRESHOLD', 10),
+        // Send a notification email after this many consecutive failures.
+        // Must be < daily_lockout_threshold to give the user a heads-up
+        // BEFORE the account locks.
+        'alert_threshold' => (int) env('AUTH_LOGIN_ALERT_THRESHOLD', 5),
     ],
 
     /*
