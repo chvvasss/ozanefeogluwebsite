@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8">
+<link rel="stylesheet" href="_card.css">
+<style>
+.list{margin-top:14px;display:grid;gap:14px}
+.r{display:grid;grid-template-columns:170px 1fr;gap:18px;align-items:center}
+.tok{font-family:var(--font-mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-subtle)}
+.line-hair{height:1px;background:var(--rule)}
+.line-strong{height:1px;background:var(--ink)}
+.line-rule-strong{height:1px;background:var(--rule-strong)}
+.line-thick{height:2px;background:var(--ink)}
+.line-brass{height:0;border-top:3px solid var(--accent);width:48px}
+.line-brass-l{border-left:3px solid var(--accent);height:48px;padding-left:14px;font-family:var(--font-display);font-style:italic;color:var(--ink);font-size:.95rem;line-height:1.45}
+</style></head>
+<body>
+<div class="card" style="height:auto;">
+  <p class="eyebrow">Rules &amp; lines · the entire decoration vocabulary</p>
+  <div class="list">
+    <div class="r"><span class="tok">hairline · rule</span><div class="line-hair"></div></div>
+    <div class="r"><span class="tok">rule-strong</span><div class="line-rule-strong"></div></div>
+    <div class="r"><span class="tok">ink hairline</span><div class="line-strong"></div></div>
+    <div class="r"><span class="tok">section break</span><div class="line-thick"></div></div>
+    <div class="r"><span class="tok">brass indent</span><div class="line-brass-l">italic note · 1 per page</div></div>
+  </div>
+</div>
+</body></html>

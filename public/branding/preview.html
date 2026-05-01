@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Logo Sistemi · Önizleme — Ozan Efeoğlu</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+  /* Self-contained preview. Loads brand fonts via Fontsource self-hosted via Vite,
+     OR falls back through Charter / Iowan Old Style / Georgia. */
+  :root {
+    --ink: #141310;
+    --paper: #faf9f5;
+    --paper-2: #f4f3ed;
+    --rule: #d0cbbd;
+    --muted: #686252;
+    --stamp: #b91c1c;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Source Serif 4 Variable', 'Source Serif 4', Charter, 'Iowan Old Style', Georgia, serif;
+    font-size: 16px;
+    line-height: 1.6;
+    padding: 4rem 1.5rem 6rem;
+  }
+  .wrap { max-width: 1100px; margin: 0 auto; }
+  header.intro {
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 2rem;
+    margin-bottom: 3rem;
+    display: grid; gap: 0.5rem;
+  }
+  header.intro .eyebrow {
+    font-family: 'IBM Plex Mono', SF Mono, Menlo, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  header.intro h1 {
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    margin: 0;
+    line-height: 1.05;
+    font-variation-settings: 'opsz' 60;
+  }
+  header.intro h1 .dot { color: var(--stamp); }
+  header.intro p {
+    color: var(--muted);
+    max-width: 60ch;
+    margin: 0.5rem 0 0;
+  }
+  section { margin: 4rem 0; }
+  section h2 {
+    font-family: 'IBM Plex Mono', SF Mono, Menlo, monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--muted);
+    border-top: 1px solid var(--rule);
+    padding-top: 1rem;
+    margin: 0 0 2rem;
+    font-weight: 500;
+  }
+  .grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+  .card {
+    background: var(--paper-2);
+    border: 1px solid var(--rule);
+    padding: 2.5rem 1.5rem 1.25rem;
+    display: grid;
+    gap: 1rem;
+    text-align: center;
+    border-radius: 2px;
+  }
+  .card.dark { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+  .card.stamp { background: var(--stamp); color: var(--paper); border-color: var(--stamp); }
+  .card .frame { display: flex; align-items: center; justify-content: center; min-height: 120px; }
+  .card label {
+    font-family: 'IBM Plex Mono', SF Mono, Menlo, monospace;
+    font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); padding-top: 1rem; border-top: 1px solid var(--rule);
+  }
+  .card.dark label { color: #9f9889; border-top-color: #2e2a25; }
+  .card.stamp label { color: var(--paper); border-top-color: rgba(250,249,245,0.3); }
+  .card .meta {
+    font-family: 'IBM Plex Mono', SF Mono, Menlo, monospace;
+    font-size: 0.62rem; color: var(--muted); text-align: left;
+  }
+  .card.dark .meta { color: #9f9889; }
+  .card.stamp .meta { color: var(--paper); }
+  .favicon-row {
+    display: flex; align-items: end; gap: 2.5rem; flex-wrap: wrap;
+    background: var(--paper-2); padding: 2rem;
+    border: 1px solid var(--rule); border-radius: 2px;
+  }
+  .favicon-row > div { display: grid; gap: 0.5rem; justify-items: center; }
+  .favicon-row label {
+    font-family: 'IBM Plex Mono', SF Mono, Menlo, monospace;
+    font-size: 0.62rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted);
+  }
+  .navbar-demo { border: 1px solid var(--rule); border-radius: 2px; overflow: hidden; margin-top: 1rem; }
+  .navbar-demo .bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: color-mix(in oklch, var(--paper) 88%, transparent);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--rule);
+  }
+  .navbar-demo .bar.dark { background: var(--ink); border-bottom-color: #2e2a25; }
+  .navbar-demo .bar nav { display: flex; gap: 1.5rem; font-size: 0.85rem; color: var(--muted); }
+  .navbar-demo .bar.dark nav { color: #9f9889; }
+  .palette { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .palette > div { width: 140px; display: grid; gap: 0.5rem; }
+  .palette .swatch { height: 80px; border-radius: 2px; border: 1px solid var(--rule); }
+  .palette code { font-family: 'IBM Plex Mono', SF Mono, Menlo, monospace; font-size: 0.7rem; }
+  footer.colophon {
+    margin-top: 6rem; padding-top: 1.5rem; border-top: 1px solid var(--ink);
+    font-family: 'IBM Plex Mono', SF Mono, Menlo, monospace;
+    font-size: 0.7rem; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--muted); display: flex; justify-content: space-between;
+  }
+  /* Inline mark style — used in navbar demo */
+  .inline-oe {
+    font-family: 'Source Serif 4 Variable', 'Source Serif 4', Charter, Georgia, serif;
+    font-weight: 600; font-size: 32px; letter-spacing: -0.05em;
+    font-variation-settings: 'opsz' 32;
+    line-height: 1; color: inherit;
+  }
+  .stack { display: inline-flex; flex-direction: column; line-height: 1; }
+  .stack .name { font-weight: 600; font-size: 1.05rem; letter-spacing: -0.01em; font-variation-settings: 'opsz' 24; }
+  .stack .base { margin-top: 0.3rem; font-family: 'IBM Plex Mono', monospace; font-size: 0.55rem;
+                 letter-spacing: 0.22em; text-transform: uppercase; color: var(--muted); }
+  .bar.dark .stack .base { color: #9f9889; }
+  .versioning {
+    border: 1px dashed var(--rule); padding: 1.25rem 1.5rem; border-radius: 2px;
+    background: var(--paper); display: grid; gap: 0.5rem;
+    font-size: 0.85rem; color: var(--muted);
+  }
+  .versioning strong { color: var(--ink); font-weight: 600; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="intro">
+    <span class="eyebrow">Editorial Silence — v2.0 · "Yalın İmza" · LOCKED 2026-05-01</span>
+    <h1>oe<span class="dot">.</span></h1>
+    <p>Ozan Efeoğlu için kişisel logo sistemi. Tek karar: iki harf ve bir nokta. Lowercase, çünkü sahibi manşet değil — cümle. Kırmızı nokta editörün kalemiyle koyduğu onay damgasıdır.</p>
+  </header>
+
+  {{-- ====================== VERSION NOTE ====================== --}}
+  <div class="versioning">
+    <strong>v2.0 → v1.0'dan değişimler</strong>
+    <span>• UPPERCASE "OE" → lowercase "oe" — humble, literary</span>
+    <span>• Kare çerçeve kaldırıldı — Editorial Silence sessizliğinin saf hâli</span>
+    <span>• Source Serif 4 + opsz variation axis (24/32/48/60) — metric-aligned ölçek</span>
+    <span>• Wordmark'ta period ekleyerek "cümle bitti" damgası eklendi</span>
+  </div>
+
+  {{-- ====================== PRIMARY MARK ====================== --}}
+  <section>
+    <h2>Birincil Mark · 64×64</h2>
+    <div class="grid">
+      <div class="card">
+        <div class="frame"><img src="/branding/logo-mark.svg" width="120" height="120" alt="Logo mark" /></div>
+        <label>logo-mark.svg</label>
+        <div class="meta">Açık zemin · Source Serif 4 · opsz=48</div>
+      </div>
+      <div class="card dark">
+        <div class="frame"><img src="/branding/logo-mark-inverse.svg" width="120" height="120" alt="Logo mark inverse" /></div>
+        <label>logo-mark-inverse.svg</label>
+        <div class="meta">Koyu zemin · paper ink + sabit kırmızı damga</div>
+      </div>
+      <div class="card stamp">
+        <div class="frame">
+          <svg viewBox="0 0 64 64" width="120" height="120" aria-hidden="true">
+            <text x="6" y="48"
+                  font-family="'Source Serif 4 Variable', 'Source Serif 4', Charter, Georgia, serif"
+                  font-weight="600" font-size="48" letter-spacing="-1.6"
+                  style="font-variation-settings: 'opsz' 48;"
+                  fill="#faf9f5">oe</text>
+            <circle cx="49" cy="46" r="4.4" fill="#141310"/>
+          </svg>
+        </div>
+        <label>kampanya / etkinlik varyantı</label>
+        <div class="meta">Kırmızı zeminde mürekkep nokta — özel kullanım</div>
+      </div>
+    </div>
+  </section>
+
+  {{-- ====================== FAVICON SCALE TEST ====================== --}}
+  <section>
+    <h2>Favicon · Ölçek Testi</h2>
+    <div class="favicon-row">
+      <div><img src="/favicon.svg" width="16" height="16" alt=""><label>16 px</label></div>
+      <div><img src="/favicon.svg" width="24" height="24" alt=""><label>24 px</label></div>
+      <div><img src="/favicon.svg" width="32" height="32" alt=""><label>32 px</label></div>
+      <div><img src="/favicon.svg" width="48" height="48" alt=""><label>48 px</label></div>
+      <div><img src="/favicon.svg" width="64" height="64" alt=""><label>64 px</label></div>
+      <div><img src="/favicon.svg" width="96" height="96" alt=""><label>96 px</label></div>
+    </div>
+    <p style="color:var(--muted); font-size: 0.85rem; margin-top: 1rem;">
+      <em>Favicon, opsz=24 ile 16px'te bile lowercase "oe" okunur. Source Serif 4 yüklenmediği nadir durumlarda Charter / Georgia fallback'i devreye girer — yine zarif render eder.</em>
+    </p>
+  </section>
+
+  {{-- ====================== WORDMARK ====================== --}}
+  <section>
+    <h2>Wordmark · Source Serif 4 SemiBold + censor's red</h2>
+    <div class="card" style="padding: 3rem 2rem;">
+      <div class="frame" style="min-height: 80px;">
+        <img src="/branding/logo-wordmark.svg" style="max-width: 100%; height: 80px;" alt="Wordmark" />
+      </div>
+      <label>logo-wordmark.svg · 360×96 · opsz=32</label>
+    </div>
+  </section>
+
+  {{-- ====================== HORIZONTAL LOCKUP ====================== --}}
+  <section>
+    <h2>Yatay Lockup · Wordmark + Period</h2>
+    <div class="card" style="padding: 3rem 2rem;">
+      <div class="frame" style="min-height: 80px;">
+        <img src="/branding/logo-horizontal.svg" style="max-width: 100%; height: 64px;" alt="Horizontal lockup" />
+      </div>
+      <label>logo-horizontal.svg · 360×96</label>
+    </div>
+    <div class="card dark" style="padding: 3rem 2rem; margin-top: 1rem;">
+      <div class="frame" style="min-height: 80px;">
+        <img src="/branding/logo-horizontal-inverse.svg" style="max-width: 100%; height: 64px;" alt="Horizontal lockup inverse" />
+      </div>
+      <label>logo-horizontal-inverse.svg · koyu zemin</label>
+    </div>
+  </section>
+
+  {{-- ====================== NAVBAR DEMO ====================== --}}
+  <section>
+    <h2>Navbar · Bağlamda Önizleme (canlı sitedeki şekliyle)</h2>
+    <div class="navbar-demo">
+      <div class="bar">
+        <a href="#" style="display:inline-flex; align-items:center; gap:0.75rem; text-decoration:none; color: var(--ink); line-height: 1;">
+          <svg width="32" height="32" viewBox="0 0 64 64" aria-hidden="true">
+            <text x="6" y="48"
+                  font-family="'Source Serif 4 Variable', 'Source Serif 4', Charter, Georgia, serif"
+                  font-weight="600" font-size="48" letter-spacing="-1.6"
+                  style="font-variation-settings: 'opsz' 48;"
+                  fill="currentColor">oe</text>
+            <circle cx="49" cy="46" r="4.4" fill="#b91c1c"/>
+          </svg>
+          <span class="stack">
+            <span class="name">Ozan Efeoğlu</span>
+            <span class="base">İSTANBUL</span>
+          </span>
+        </a>
+        <nav><span>Yazılar</span><span>Görüntü</span><span>Hakkında</span><span>İletişim</span></nav>
+      </div>
+      <div class="bar dark">
+        <a href="#" style="display:inline-flex; align-items:center; gap:0.75rem; text-decoration:none; color: var(--paper); line-height: 1;">
+          <svg width="32" height="32" viewBox="0 0 64 64" aria-hidden="true">
+            <text x="6" y="48"
+                  font-family="'Source Serif 4 Variable', 'Source Serif 4', Charter, Georgia, serif"
+                  font-weight="600" font-size="48" letter-spacing="-1.6"
+                  style="font-variation-settings: 'opsz' 48;"
+                  fill="currentColor">oe</text>
+            <circle cx="49" cy="46" r="4.4" fill="#b91c1c"/>
+          </svg>
+          <span class="stack">
+            <span class="name">Ozan Efeoğlu</span>
+            <span class="base">İSTANBUL</span>
+          </span>
+        </a>
+        <nav><span>Yazılar</span><span>Görüntü</span><span>Hakkında</span><span>İletişim</span></nav>
+      </div>
+    </div>
+  </section>
+
+  {{-- ====================== OPEN GRAPH ====================== --}}
+  <section>
+    <h2>Open Graph · Sosyal Medya · 1200×630</h2>
+    <div style="border: 1px solid var(--rule); border-radius: 2px; overflow: hidden;">
+      <img src="/branding/og-mark.svg" style="display: block; width: 100%; height: auto;" alt="OG image" />
+    </div>
+  </section>
+
+  {{-- ====================== PALETTE ====================== --}}
+  <section>
+    <h2>Palet · Üç Renk, Daha Fazla Değil</h2>
+    <div class="palette">
+      <div>
+        <div class="swatch" style="background:#141310"></div>
+        <strong>Ink</strong>
+        <code>#141310</code>
+        <span style="font-size: 0.75rem; color: var(--muted);">mürekkep</span>
+      </div>
+      <div>
+        <div class="swatch" style="background:#faf9f5"></div>
+        <strong>Paper</strong>
+        <code>#faf9f5</code>
+        <span style="font-size: 0.75rem; color: var(--muted);">kâğıt</span>
+      </div>
+      <div>
+        <div class="swatch" style="background:#b91c1c"></div>
+        <strong>Censor's Red</strong>
+        <code>#b91c1c</code>
+        <span style="font-size: 0.75rem; color: var(--muted);">editörün noktası</span>
+      </div>
+    </div>
+  </section>
+
+  <footer class="colophon">
+    <span>OZANEFEOGLU.COM · BRAND v2.0</span>
+    <span>EDITORIAL SILENCE · YALIN İMZA</span>
+  </footer>
+
+</div>
+</body>
+</html>

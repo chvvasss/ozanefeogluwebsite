@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Public site — Ozan Efeoğlu UI kit</title>
+  <link rel="stylesheet" href="../../colors_and_type.css" />
+  <link rel="stylesheet" href="kit.css" />
+  <style>
+    body { margin: 0; background: var(--color-bg); color: var(--color-ink); }
+    /* kit-only chrome */
+    .kit-bar {
+      position: fixed; top: 16px; left: 50%; transform: translateX(-50%);
+      z-index: 50; background: var(--color-bg-elevated);
+      border: 1px solid var(--color-rule-strong); border-radius: 999px;
+      padding: 6px 8px; display: flex; gap: 4px; align-items: center;
+      box-shadow: var(--shadow-md);
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+    }
+    .kit-bar button {
+      border: 0; background: transparent; cursor: pointer;
+      padding: 6px 12px; border-radius: 999px;
+      font: inherit; letter-spacing: inherit; text-transform: inherit;
+      color: var(--color-ink-muted);
+    }
+    .kit-bar button[aria-pressed="true"] {
+      background: var(--color-ink); color: var(--color-bg-elevated);
+    }
+    .kit-bar .sep { width: 1px; height: 16px; background: var(--color-rule); margin: 0 4px; }
+    [data-theme="dark"] {
+      --color-bg: #16130f;
+      --color-bg-elevated: #1d1a15;
+      --color-bg-muted: #1a1713;
+      --color-ink: #f5f0e6;
+      --color-ink-muted: #b8b0a3;
+      --color-ink-subtle: #807868;
+      --color-rule: #2c2822;
+      --color-rule-strong: #3d3830;
+      --color-paper-50: #1a1713;
+      --color-paper-100: #1d1a15;
+      --color-paper-200: #221e18;
+      --color-paper-300: #2a261f;
+      --layer-bg-default: #16130f;
+      --layer-bg-muted: #1a1713;
+      --layer-bg-darker: #1d1a15;
+      --layer-bg-inverse: #f5f0e6;
+      --layer-ink-inverse: #16130f;
+    }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="primitives.jsx"></script>
+  <script type="text/babel" src="data.jsx"></script>
+  <script type="text/babel" src="Header.jsx"></script>
+  <script type="text/babel" src="Footer.jsx"></script>
+  <script type="text/babel" src="HomeScene.jsx"></script>
+  <script type="text/babel" src="Yazi.jsx"></script>
+  <script type="text/babel" src="OtherScenes.jsx"></script>
+  <script type="text/babel" src="SystemScenes.jsx"></script>
+
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+
+    const ROUTES = [
+      { key: "home", label: "Anasayfa" },
+      { key: "yazilar", label: "Arşiv" },
+      { key: "yazi", label: "Yazı" },
+      { key: "goruntu", label: "Görüntü" },
+      { key: "hakkinda", label: "Hakkında" },
+      { key: "iletisim", label: "İletişim" },
+      { key: "404", label: "404" },
+      { key: "500", label: "500" },
+      { key: "kvkk", label: "KVKK" },
+      { key: "gizlilik", label: "Gizlilik" },
+      { key: "kunye", label: "Künye" },
+      { key: "bakim", label: "Bakım" },
+      { key: "empty", label: "Boş" },
+    ];
+
+    const CHROMELESS = new Set(["bakim"]);
+
+    function App() {
+      const [route, setRoute] = useState("home");
+      const [yaziId, setYaziId] = useState(WRITINGS[0].id);
+      const [theme, setTheme] = useState("light");
+
+      useEffect(() => {
+        document.documentElement.setAttribute("data-theme", theme);
+      }, [theme]);
+
+      const navigate = (r, id) => {
+        if (r === "yazi" && id) setYaziId(id);
+        if (r === "admin") return; // not part of public kit
+        setRoute(r);
+        window.scrollTo({ top: 0, behavior: "instant" });
+      };
+
+      let scene = null;
+      if (route === "home") scene = <HomeScene onNavigate={navigate} />;
+      else if (route === "yazilar") scene = <YazilarScene onNavigate={navigate} />;
+      else if (route === "yazi") scene = <YaziScene id={yaziId} onNavigate={navigate} />;
+      else if (route === "goruntu") scene = <GoruntuScene onNavigate={navigate} />;
+      else if (route === "hakkinda") scene = <HakkindaScene onNavigate={navigate} />;
+      else if (route === "iletisim") scene = <IletisimScene onNavigate={navigate} />;
+      else if (route === "404") scene = <NotFoundScene onNavigate={navigate} />;
+      else if (route === "500") scene = <ServerErrorScene onNavigate={navigate} />;
+      else if (route === "kvkk") scene = <KvkkScene onNavigate={navigate} />;
+      else if (route === "gizlilik") scene = <GizlilikScene onNavigate={navigate} />;
+      else if (route === "kunye") scene = <KunyeScene onNavigate={navigate} />;
+      else if (route === "bakim") scene = <MaintenanceScene />;
+      else if (route === "empty") scene = <EmptyStateDemo onNavigate={navigate} />;
+
+      const chromeless = CHROMELESS.has(route);
+
+      return (
+        <>
+          <div className="kit-bar" role="toolbar" aria-label="Sahne seçici">
+            {ROUTES.map((r) => (
+              <button
+                key={r.key}
+                aria-pressed={route === r.key}
+                onClick={() => navigate(r.key)}
+              >
+                {r.label}
+              </button>
+            ))}
+            <span className="sep" />
+            <button onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
+              {theme === "dark" ? "Aydınlık" : "Karanlık"}
+            </button>
+          </div>
+
+          <div data-screen-label={`Public · ${route}`}>
+            {!chromeless && (
+              <PublicHeader
+                route={route === "yazi" ? "yazilar" : route}
+                onNavigate={navigate}
+                theme={theme}
+                onToggleTheme={() => setTheme(theme === "dark" ? "light" : "dark")}
+              />
+            )}
+            {scene}
+            {!chromeless && <PublicFooter onNavigate={navigate} />}
+          </div>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

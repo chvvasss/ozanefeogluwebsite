@@ -1,0 +1,510 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Logo 04 — Yalın imza · nokta ayarı</title>
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <style>
+    body {
+      background: var(--color-bg);
+      color: var(--color-ink);
+      margin: 0;
+    }
+    .lab {
+      max-width: 1280px; margin: 0 auto;
+      padding: 56px 48px 96px;
+    }
+    @media (max-width: 760px) { .lab { padding: 36px 22px 64px; } }
+
+    .hero {
+      border-bottom: 2px solid var(--color-ink);
+      padding-bottom: 24px; margin-bottom: 48px;
+    }
+    .eyebrow {
+      font-family: var(--font-mono); font-size: .68rem;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--color-accent); margin: 0 0 12px;
+    }
+    h1 {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: clamp(2rem, 4.4vw, 3rem);
+      letter-spacing: -.02em; line-height: 1.04;
+      color: var(--color-ink); margin: 0 0 12px;
+    }
+    .lede {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 1.12rem; line-height: 1.55;
+      color: var(--color-ink-muted); max-width: 64ch; margin: 0;
+    }
+
+    /* Section headings */
+    h2.sec {
+      font-family: var(--font-mono); font-size: .72rem;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--color-ink-subtle);
+      margin: 56px 0 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-rule);
+    }
+    h2.sec span { color: var(--color-accent); }
+
+    /* Card grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: var(--color-rule);
+      border: 1px solid var(--color-rule);
+    }
+    @media (max-width: 760px) { .grid { grid-template-columns: 1fr; } }
+
+    .cell {
+      background: var(--color-bg-elevated);
+      padding: 32px 28px 26px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .cell-head {
+      display: flex; justify-content: space-between; align-items: baseline;
+      gap: 16px;
+    }
+    .cell-num {
+      font-family: var(--font-mono); font-size: .66rem;
+      letter-spacing: .22em; color: var(--color-accent);
+    }
+    .cell-name {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: 1.05rem; letter-spacing: -.005em;
+      color: var(--color-ink); margin: 0;
+    }
+    .cell-note {
+      font-family: var(--font-display); font-style: italic;
+      font-size: .92rem; line-height: 1.45;
+      color: var(--color-ink-muted); margin: 0;
+    }
+    .stage {
+      background: var(--color-paper-50);
+      border: 1px solid var(--color-rule);
+      padding: 36px 24px;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 140px;
+    }
+    .stage svg { display: block; max-width: 100%; height: auto; }
+
+    .meta-row {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      font-family: var(--font-mono); font-size: .64rem;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--color-ink-subtle);
+    }
+    .meta-row strong { color: var(--color-ink); font-weight: 500; }
+
+    /* Final wordmark stage */
+    .final-stage {
+      background: var(--color-paper-50);
+      border: 1px solid var(--color-rule);
+      padding: 80px 32px;
+      display: flex; align-items: center; justify-content: center;
+      min-height: 240px;
+    }
+    .final-stage.dark {
+      background: var(--color-paper-900);
+    }
+    .stage-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 18px;
+    }
+    @media (max-width: 760px) { .stage-row { grid-template-columns: 1fr; } }
+
+    /* Decision panel */
+    .decision {
+      margin-top: 64px;
+      padding: 32px 28px;
+      background: var(--color-bg-elevated);
+      border-left: 3px solid var(--color-accent);
+    }
+    .decision h3 {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: 1.4rem; letter-spacing: -.01em;
+      color: var(--color-ink); margin: 0 0 12px;
+    }
+    .decision p {
+      font-family: var(--font-display); font-size: 1rem;
+      line-height: 1.6; color: var(--color-ink); margin: 0 0 12px;
+    }
+    .decision p:last-child { margin-bottom: 0; }
+    .decision em { font-style: italic; color: var(--color-ink-muted); }
+    .decision code {
+      font-family: var(--font-mono); font-size: .85em;
+      background: var(--color-paper-100); padding: 1px 6px;
+      border: 1px solid var(--color-rule);
+    }
+
+    /* In-context preview */
+    .context {
+      background: var(--color-paper-50);
+      border: 1px solid var(--color-rule);
+      padding: 24px 28px;
+      margin-top: 18px;
+    }
+    .context-eyebrow {
+      font-family: var(--font-mono); font-size: .62rem;
+      letter-spacing: .2em; text-transform: uppercase;
+      color: var(--color-ink-subtle); margin: 0 0 14px;
+    }
+    .context-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 14px; border-bottom: 1px solid var(--color-rule);
+    }
+    .context-nav {
+      display: flex; gap: 22px;
+      font-family: var(--font-mono); font-size: .72rem;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--color-ink-muted);
+    }
+    .context-body {
+      padding-top: 22px;
+    }
+    .context-headline {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: 1.6rem; letter-spacing: -.012em; line-height: 1.15;
+      color: var(--color-ink); margin: 0 0 8px; max-width: 30ch;
+    }
+    .context-stand {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 1rem; line-height: 1.55;
+      color: var(--color-ink-muted); max-width: 56ch; margin: 0;
+    }
+  </style>
+</head>
+<body>
+  <main class="lab">
+    <header class="hero">
+      <p class="eyebrow">Marka · Logo 04 · nokta ayarı</p>
+      <h1>Yalın imza, doğru nokta.</h1>
+      <p class="lede">
+        Yön kilit: 04. Geriye tek soru kalıyor — kırmızı nokta nereye, ne büyüklükte konacak. Aşağıda sekiz farklı pozisyon yan yana: harfin içi, sonu, üstü, sağı. Hepsi aynı boy isimle, aynı zeminde.
+      </p>
+    </header>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         A · POZİSYON DENEMELERİ
+         ═══════════════════════════════════════════════════════════════ -->
+    <h2 class="sec"><span>A</span> &nbsp;·&nbsp; Nokta nereye?</h2>
+
+    <div class="grid">
+
+      <!-- A1 — i'nin noktası -->
+      <article class="cell">
+        <div class="cell-head"><span class="cell-num">A1</span><span class="cell-name">i noktası.</span></div>
+        <p class="cell-note">Türkçedeki "i" harfinin noktası kırmızıyla değiştirilir. En sessiz, en akıllı çözüm — okurken kimse fark etmez, sonra fark eder.</p>
+        <div class="stage">
+          <svg viewBox="0 0 320 80" width="320" height="80" aria-label="Ozan Efeoğlu" role="img">
+            <text x="160" y="52" text-anchor="middle"
+                  font-family="Source Serif 4 Variable, Source Serif 4, Charter, Iowan Old Style, Georgia, serif"
+                  font-weight="600" font-size="36" letter-spacing="-1" fill="#141310"
+                  font-feature-settings="'ss01'">Ozan Efeo<tspan>ğ</tspan>lu</text>
+            <!-- Hide black dot of "i" by overdrawing background dot -->
+            <!-- The "i" is the 11th glyph from start. We'll mask its dot with a paper-color rect & paint a red dot above. -->
+            <!-- Approx position of "i" dot after "Ozan Efeoğlu" centered: -->
+            <rect x="91" y="20" width="9" height="12" fill="#faf9f5" />
+            <circle cx="95.5" cy="26" r="4" fill="#b91c1c" />
+          </svg>
+        </div>
+        <div class="meta-row"><span><strong>Yer</strong> · "i" üstü</span><span><strong>Çap</strong> · 4u</span></div>
+      </article>
+
+      <!-- A2 — son noktası -->
+      <article class="cell">
+        <div class="cell-head"><span class="cell-num">A2</span><span class="cell-name">Cümle noktası.</span></div>
+        <p class="cell-note">İsmin sonuna konan resmi nokta — gazete künyesi gibi. "Yazı bitti, imza burada" demektir. Klasik, kararlı, yorum gerektirmez.</p>
+        <div class="stage">
+          <svg viewBox="0 0 320 80" width="320" height="80" aria-label="Ozan Efeoğlu." role="img">
+            <text x="148" y="52" text-anchor="middle"
+                  font-family="Source Serif 4 Variable, Charter, Georgia, serif"
+                  font-weight="600" font-size="36" letter-spacing="-1" fill="#141310">Ozan Efeoğlu</text>
+            <circle cx="244" cy="50" r="4" fill="#b91c1c" />
+          </svg>
+        </div>
+        <div class="meta-row"><span><strong>Yer</strong> · ad sonu, baseline</span><span><strong>Çap</strong> · 4u</span></div>
+      </article>
+
+      <!-- A3 — virgül-üstü pul -->
+      <article class="cell">
+        <div class="cell-head"><span class="cell-num">A3</span><span class="cell-name">Pul · sağ üst.</span></div>
+        <p class="cell-note">İsmin sağ‑üstüne küçük bir mühür gibi. Yayın evi pulu, posta damgası havası. İsmin ağırlığını bozmadan oturur.</p>
+        <div class="stage">
+          <svg viewBox="0 0 320 80" width="320" height="80" aria-label="Ozan Efeoğlu" role="img">
+            <text x="148" y="56" text-anchor="middle"
+                  font-family="Source Serif 4 Variable, Charter, Georgia, serif"
+                  font-weight="600" font-size="36" letter-spacing="-1" fill="#141310">Ozan Efeoğlu</text>
+            <circle cx="246" cy="22" r="3.5" fill="#b91c1c" />
+          </svg>
+        </div>
+        <div class="meta-row"><span><strong>Yer</strong> · sağ üst pul</span><span><strong>Çap</strong> · 3.5u</span></div>
+      </article>
+
+      <!-- A4 — sol başlangıç -->
+      <article class="cell">
+        <div class="cell-head"><span class="cell-num">A4</span><span class="cell-name">Açılış noktası.</span></div>
+        <p class="cell-note">İsmin solunda, başlangıç işareti. "Burada bir kayıt başlıyor." Çok doğrudan, okuma akışına önce çarpar.</p>
+        <div class="stage">
+          <svg viewBox="0 0 320 80" width="320" height="80" aria-label="• Ozan Efeoğlu" role="img">
+            <circle cx="60" cy="44" r="4" fill="#b91c1c" />
+            <text x="76" y="52"
+                  font-family="Source Serif 4 Variable, Charter, Georgia, serif"
+                  font-weight="600" font-size="36" letter-spacing="-1" fill="#141310">Ozan Efeoğlu</text>
+          </svg>
+        </div>
+        <div class="meta-row"><span><strong>Yer</strong> · sol başlangıç</span><span><strong>Çap</strong> · 4u</span></div>
+      </article>
+
+      <!-- A5 — orta ayraç -->
+      <article class="cell">
+        <div class="cell-head"><span class="cell-num">A5</span><span class="cell-name">Orta ayraç.</span></div>
+        <p class="cell-note">"Ozan • Efeoğlu" — ad ve soyadı arasına orta‑nokta. Ritim verir, isim iki ayrı ağırlıkta okunur. Daha tipografik, daha künyeci.</p>
+        <div class="stage">
+          <svg viewBox="0 0 340 80" width="340" height="80" aria-label="Ozan • Efeoğlu" role="img">
+            <text x="74" y="52" text-anchor="end"
+                  font-family="Source Serif 4 Variable, Charter, Georgia, serif"
+                  font-weight="600" font-size="36" letter-spacing="-1" fill="#141310">Ozan</text>
+            <circle cx="92" cy="40" r="4" fill="#b91c1c" />
+            <text x="110" y="52"
+                  font-family="Source Serif 4 Variable, Charter, Georgia, serif"
+                  font-weight="600" font-size="36" letter-spacing="-1" fill="#141310">Efeoğlu</text>
+          </svg>
+        </div>
+        <div class="meta-row"><span><strong>Yer</strong> · ad/soyad arası</span><span><strong>Çap</strong> · 4u, x‑height ortası</span></div>
+      </article>
+
+      <!-- A6 — ğ noktası -->
+      <article class="cell">
+        <div class="cell-head"><span class="cell-num">A6</span><span class="cell-name">Yumuşak‑g vurgusu.</span></div>
+        <p class="cell-note">"Efeoğlu"daki "ğ" harfinin breve aksanı kırmızı yapılır. Türkçeye özel — yabancı bir markada olamayacak bir detay. Çok yerel.</p>
+        <div class="stage">
+          <svg viewBox="0 0 320 80" width="320" height="80" aria-label="Ozan Efeoğlu" role="img">
+            <text x="160" y="52" text-anchor="middle"
+                  font-family="Source Serif 4 Variable, Charter, Georgia, serif"
+                  font-weight="600" font-size="36" letter-spacing="-1" fill="#141310">Ozan Efe<tspan fill="#141310">o</tspan>g<tspan fill="#141310">lu</tspan></text>
+            <!-- breve over the g -->
+            <path d="M 195 24 q 6 6 12 0" fill="none" stroke="#b91c1c" stroke-width="2.5" stroke-linecap="round" />
+          </svg>
+        </div>
+        <div class="meta-row"><span><strong>Yer</strong> · ğ breve aksanı</span><span><strong>Çap</strong> · özel form</span></div>
+      </article>
+
+      <!-- A7 — alt çizgi noktası -->
+      <article class="cell">
+        <div class="cell-head"><span class="cell-num">A7</span><span class="cell-name">Künye altı.</span></div>
+        <p class="cell-note">İsim, ince kural, alt başlık — ve kuralın sağ ucunda mühür noktası. Künye / kolofon hissi en kuvvetli versiyon.</p>
+        <div class="stage">
+          <svg viewBox="0 0 340 100" width="340" height="100" aria-label="Ozan Efeoğlu — Editorial Silence" role="img">
+            <text x="170" y="40" text-anchor="middle"
+                  font-family="Source Serif 4 Variable, Charter, Georgia, serif"
+                  font-weight="600" font-size="28" letter-spacing="-.8" fill="#141310">Ozan Efeoğlu</text>
+            <line x1="86" y1="56" x2="254" y2="56" stroke="#141310" stroke-width="1" />
+            <circle cx="258" cy="56" r="2.6" fill="#b91c1c" />
+            <text x="170" y="76" text-anchor="middle"
+                  font-family="IBM Plex Mono, ui-monospace, monospace"
+                  font-size="9" letter-spacing="3" fill="#46413a">EDITORIAL  SILENCE</text>
+          </svg>
+        </div>
+        <div class="meta-row"><span><strong>Yer</strong> · kural sonu</span><span><strong>Çap</strong> · 2.6u</span></div>
+      </article>
+
+      <!-- A8 — superscript yıldız nokta -->
+      <article class="cell">
+        <div class="cell-head"><span class="cell-num">A8</span><span class="cell-name">Dipnot işareti.</span></div>
+        <p class="cell-note">İsmin sağ‑üstüne küçük, üstü‑indeks bir nokta — kitabın dipnotu gibi. "Daha fazla bilgi var" der. Çok ince, gözle aranmaz; bulununca anlam katar.</p>
+        <div class="stage">
+          <svg viewBox="0 0 320 80" width="320" height="80" aria-label="Ozan Efeoğlu" role="img">
+            <text x="152" y="52" text-anchor="middle"
+                  font-family="Source Serif 4 Variable, Charter, Georgia, serif"
+                  font-weight="600" font-size="36" letter-spacing="-1" fill="#141310">Ozan Efeoğlu</text>
+            <circle cx="237" cy="28" r="2.4" fill="#b91c1c" />
+          </svg>
+        </div>
+        <div class="meta-row"><span><strong>Yer</strong> · ad‑sonu üst‑indeks</span><span><strong>Çap</strong> · 2.4u</span></div>
+      </article>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         B · LIVE TWEAK — gerçek sahnede deneme
+         ═══════════════════════════════════════════════════════════════ -->
+    <h2 class="sec"><span>B</span> &nbsp;·&nbsp; Canlı ayar — sahnede dene</h2>
+
+    <p style="font-family: var(--font-display); font-style: italic; font-size: 1.02rem; color: var(--color-ink-muted); max-width: 60ch; margin: 0 0 24px;">
+      Sağ alttaki <strong>Tweaks</strong> panelinden noktanın yerini, çapını ve yatay/dikey kaymasını canlı değiştir. Aynı logoyu hem açık hem koyu zeminde, hem de bir gazete sahnesinde anında gör.
+    </p>
+
+    <div class="final-stage" id="final-light">
+      <svg id="logo-svg-light" viewBox="0 0 600 200" width="100%" style="max-width: 600px;" aria-label="Ozan Efeoğlu" role="img">
+        <text id="logo-text-light" x="300" y="120" text-anchor="middle"
+              font-family="Source Serif 4 Variable, Charter, Georgia, serif"
+              font-weight="600" font-size="64" letter-spacing="-2" fill="#141310">Ozan Efeoğlu</text>
+        <circle id="logo-dot-light" cx="430" cy="118" r="6" fill="#b91c1c" />
+        <line id="logo-rule-light" x1="180" y1="146" x2="420" y2="146" stroke="#141310" stroke-width="1" style="display:none" />
+        <text id="logo-tag-light" x="300" y="170" text-anchor="middle"
+              font-family="IBM Plex Mono, ui-monospace, monospace"
+              font-size="11" letter-spacing="3.5" fill="#46413a" style="display:none">EDITORIAL  SILENCE</text>
+      </svg>
+    </div>
+
+    <div class="stage-row">
+      <div class="final-stage" style="padding: 48px 32px; min-height: 180px;" id="final-mid">
+        <svg id="logo-svg-mid" viewBox="0 0 360 100" width="100%" style="max-width: 360px;" aria-label="Ozan Efeoğlu" role="img">
+          <text id="logo-text-mid" x="180" y="60" text-anchor="middle"
+                font-family="Source Serif 4 Variable, Charter, Georgia, serif"
+                font-weight="600" font-size="32" letter-spacing="-1" fill="#141310">Ozan Efeoğlu</text>
+          <circle id="logo-dot-mid" cx="258" cy="59" r="3" fill="#b91c1c" />
+        </svg>
+      </div>
+      <div class="final-stage dark" style="padding: 48px 32px; min-height: 180px;" id="final-dark">
+        <svg id="logo-svg-dark" viewBox="0 0 360 100" width="100%" style="max-width: 360px;" aria-label="Ozan Efeoğlu" role="img">
+          <text id="logo-text-dark" x="180" y="60" text-anchor="middle"
+                font-family="Source Serif 4 Variable, Charter, Georgia, serif"
+                font-weight="600" font-size="32" letter-spacing="-1" fill="#faf9f5">Ozan Efeoğlu</text>
+          <circle id="logo-dot-dark" cx="258" cy="59" r="3" fill="#b91c1c" />
+        </svg>
+      </div>
+    </div>
+
+    <!-- In-context: gazete header -->
+    <h2 class="sec"><span>C</span> &nbsp;·&nbsp; Sahnede — gazete header</h2>
+
+    <div class="context">
+      <p class="context-eyebrow">Yazı detay sahnesi · /yazilar/hatay-tezgah</p>
+      <div class="context-header">
+        <svg id="logo-svg-header" viewBox="0 0 220 50" width="220" height="50" aria-label="Ozan Efeoğlu" role="img">
+          <text id="logo-text-header" x="110" y="32" text-anchor="middle"
+                font-family="Source Serif 4 Variable, Charter, Georgia, serif"
+                font-weight="600" font-size="22" letter-spacing="-.6" fill="#141310">Ozan Efeoğlu</text>
+          <circle id="logo-dot-header" cx="167" cy="31" r="2" fill="#b91c1c" />
+        </svg>
+        <nav class="context-nav">
+          <span>Yazılar</span><span>Görüntü</span><span>Hakkımda</span><span>İletişim</span>
+        </nav>
+      </div>
+      <div class="context-body">
+        <p class="context-eyebrow" style="margin-bottom: 8px;">Saha · Hatay · 26 Nisan 2026</p>
+        <h3 class="context-headline">Hatay'da bir kahvenin tezgâhı.</h3>
+        <p class="context-stand">
+          Deprem sonrası açılan ilk kahvehane, eski bir bakkalın kalıntısında. Tezgâh çinko, çinko üstüne çay lekeleri. Kim oturuyor, kim oturamıyor — bir gün, bir defter.
+        </p>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         DECISION
+         ═══════════════════════════════════════════════════════════════ -->
+    <section class="decision">
+      <p class="eyebrow">Karar</p>
+      <h3>Beğendiğin ayarı söyle.</h3>
+      <p>
+        Tweaks panelindeki ayarlar memnun edici olduğunda <strong>"şu ayarlar"</strong> de — ya da yukarıdan bir numara seç (<em>"A1 noktası A7'nin künye düzeniyle"</em> de olur). Seçili ayarı kanonlayıp dosyalara yazarım: <code>logo-mark.svg</code>, <code>logo-horizontal.svg</code>, <code>logo-wordmark.svg</code>, <code>favicon.svg</code>, <code>apple-touch-icon.svg</code>, <code>og-mark.svg</code>.
+      </p>
+      <p>
+        Sonra bütün sahnelerde (header, footer, e‑mail imzası, admin chrome) eski OE harfinin geçtiği her yer yeni imzayla değiştirilir. Tek bir geçiş.
+      </p>
+    </section>
+  </main>
+
+  <!-- React + Tweaks panel -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <div id="tweaks-root"></div>
+  <script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "preset": "i-dot",
+  "size_pct": 100,
+  "dx": 0,
+  "dy": 0,
+  "show_rule": false,
+  "show_tagline": false
+}/*EDITMODE-END*/;
+
+const PRESETS = {
+  "i-dot":     { label: "i noktası",       baseCx: 270, baseCy: 105, baseR: 5.5 },
+  "end-dot":   { label: "cümle sonu",      baseCx: 432, baseCy: 118, baseR: 6.5 },
+  "stamp-tr":  { label: "sağ üst pul",     baseCx: 432, baseCy: 78,  baseR: 5.5 },
+  "open-left": { label: "sol açılış",      baseCx: 162, baseCy: 110, baseR: 7   },
+  "mid-dot":   { label: "ad/soyad arası",  baseCx: 273, baseCy: 105, baseR: 6   },
+  "footnote":  { label: "üst‑indeks",      baseCx: 422, baseCy: 86,  baseR: 4   }
+};
+
+// Scaling helper: sizes are tuned for the LIGHT 600x200 hero. Other SVGs scale proportionally.
+function scaleFor(viewW, viewH) {
+  // hero is 600x200 → scale = (svg viewBox width / 600)
+  return { sx: viewW / 600, sy: viewH / 200 };
+}
+
+function App() {
+  const [tweaks, setTweaks] = window.useTweaks(TWEAK_DEFAULTS);
+
+  React.useEffect(() => {
+    const p = PRESETS[tweaks.preset] || PRESETS["i-dot"];
+    const sizeMul = (tweaks.size_pct || 100) / 100;
+    const cx = p.baseCx + (tweaks.dx || 0);
+    const cy = p.baseCy + (tweaks.dy || 0);
+    const r  = p.baseR * sizeMul;
+
+    // Hero (600x200, fontSize 64)
+    applyDot('logo-dot-light', cx, cy, r);
+    // Mid (360x100 viewBox) — scale by 360/600 = 0.6, font 32
+    applyDot('logo-dot-mid', cx * 0.6, cy * 0.5, r * 0.5);
+    // Dark
+    applyDot('logo-dot-dark', cx * 0.6, cy * 0.5, r * 0.5);
+    // Header (220x50 viewBox)
+    applyDot('logo-dot-header', cx * (220/600), cy * (50/200), r * (50/200) * 1.15);
+
+    // Toggle rule + tagline on hero
+    document.getElementById('logo-rule-light').style.display = tweaks.show_rule ? 'block' : 'none';
+    document.getElementById('logo-tag-light').style.display = tweaks.show_tagline ? 'block' : 'none';
+  }, [tweaks]);
+
+  function applyDot(id, cx, cy, r) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.setAttribute('cx', cx);
+    el.setAttribute('cy', cy);
+    el.setAttribute('r', Math.max(1.4, r));
+  }
+
+  const { TweaksPanel, TweakSection, TweakSelect, TweakSlider, TweakToggle } = window;
+
+  return (
+    <TweaksPanel title="Tweaks · nokta">
+      <TweakSection title="Yer">
+        <TweakSelect
+          label="Pozisyon"
+          value={tweaks.preset}
+          onChange={v => setTweaks('preset', v)}
+          options={Object.entries(PRESETS).map(([id, p]) => ({ value: id, label: p.label }))}
+        />
+      </TweakSection>
+      <TweakSection title="Ayar">
+        <TweakSlider label="Çap (%)" min={50} max={180} step={5}
+                     value={tweaks.size_pct} onChange={v => setTweaks('size_pct', v)} />
+        <TweakSlider label="Yatay kaydır" min={-40} max={40} step={1}
+                     value={tweaks.dx} onChange={v => setTweaks('dx', v)} unit="u" />
+        <TweakSlider label="Dikey kaydır" min={-40} max={40} step={1}
+                     value={tweaks.dy} onChange={v => setTweaks('dy', v)} unit="u" />
+      </TweakSection>
+      <TweakSection title="Ek (yalnız hero)">
+        <TweakToggle label="Künye kuralı" value={tweaks.show_rule}
+                     onChange={v => setTweaks('show_rule', v)} />
+        <TweakToggle label="EDITORIAL SILENCE" value={tweaks.show_tagline}
+                     onChange={v => setTweaks('show_tagline', v)} />
+      </TweakSection>
+    </TweaksPanel>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<App />);
+  </script>
+</body>
+</html>

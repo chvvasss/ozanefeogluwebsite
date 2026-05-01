@@ -1,0 +1,71 @@
+/* Shared CSS for design-system preview cards (Editorial Silence) */
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/source-serif-4@5.1.0/index.css");
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/source-serif-4@5.1.0/400-italic.css");
+@import url("https://cdn.jsdelivr.net/npm/@fontsource-variable/ibm-plex-sans@5.1.0/index.css");
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.1.0/index.css");
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.1.0/500.css");
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.1.0/600.css");
+@import url("https://cdn.jsdelivr.net/npm/@fontsource/ibm-plex-mono@5.1.0/700.css");
+
+:root {
+  --font-display: "Source Serif 4", "Charter", "Iowan Old Style", Georgia, serif;
+  --font-sans: "IBM Plex Sans Variable", "Helvetica Neue", -apple-system, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", "SF Mono", Menlo, Consolas, monospace;
+
+  --paper-50:#faf9f5; --paper-100:#f4f3ed; --paper-200:#e8e6dc; --paper-300:#d0cbbd;
+  --paper-400:#9f9889; --paper-500:#686252; --paper-600:#46413a; --paper-700:#2e2a25;
+  --paper-800:#1c1915; --paper-900:#14110d; --paper-950:#08060a;
+
+  --ink:#141310; --paper:#faf9f5; --stamp:#b91c1c;
+  --bg:#f4f3ed; --bg-elev:#fffdf6; --bg-muted:#e8e6dc; --bg-sunken:#d0cbbd;
+  --ink-muted:#46413a; --ink-subtle:#686252;
+  --rule:#d0cbbd; --rule-strong:#9f9889;
+  --accent:#b91c1c;
+
+  --tracking-tightest:-0.04em; --tracking-tighter:-0.02em; --tracking-tight:-0.01em;
+  --tracking-wide:0.025em; --tracking-wider:0.1em; --tracking-caps:0.18em;
+  --radius-xs:1px; --radius-sm:2px; --radius-md:4px; --radius-lg:8px;
+}
+
+html, body {
+  margin: 0; padding: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  background: var(--paper-50);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+.card {
+  width: 700px;
+  background: var(--paper-50);
+  padding: 28px 32px;
+  box-sizing: border-box;
+  position: relative;
+}
+
+/* Paper grain — subtle */
+.card::before {
+  content:"";
+  position:absolute; inset:0;
+  pointer-events:none;
+  opacity:0.022;
+  mix-blend-mode:multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='300'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' stitchTiles='stitch' seed='3'/><feColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+.card > * { position: relative; }
+
+.eyebrow {
+  font-family: var(--font-mono); font-size: 0.68rem;
+  letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--ink-subtle); font-weight: 600;
+}
+.kicker { font-family: var(--font-mono); font-size:.68rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ink); font-weight:700; }
+.kicker--accent { color: var(--accent); letter-spacing: 0.22em; }
+.dateline { font-family: var(--font-mono); font-size:.7rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-muted); font-weight:500; }
+.dot-sep { color: var(--accent); font-weight: 700; padding-inline: 0.45em; }
+.mono { font-family: var(--font-mono); }
+.serif { font-family: var(--font-display); }
+.rule { height:1px; background:var(--rule); border:0; margin:0; }
+.rule-strong { height:1px; background:var(--ink); border:0; margin:0; }

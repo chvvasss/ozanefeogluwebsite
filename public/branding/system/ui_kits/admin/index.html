@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yazı Masası — Ozan Efeoğlu CMS</title>
+  <link rel="stylesheet" href="../../colors_and_type.css" />
+  <link rel="stylesheet" href="../public/kit.css" />
+  <link rel="stylesheet" href="admin.css" />
+  <style>
+    body { margin: 0; background: var(--color-bg); color: var(--color-ink); }
+    .kit-bar {
+      position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%);
+      z-index: 50; background: var(--color-bg-elevated);
+      border: 1px solid var(--color-rule-strong); border-radius: 999px;
+      padding: 6px 8px; display: flex; gap: 4px; align-items: center;
+      box-shadow: var(--shadow-md);
+      font-family: var(--font-mono); font-size: 0.7rem;
+      letter-spacing: 0.18em; text-transform: uppercase;
+    }
+    .kit-bar button {
+      border: 0; background: transparent; cursor: pointer;
+      padding: 6px 12px; border-radius: 999px;
+      font: inherit; letter-spacing: inherit; text-transform: inherit;
+      color: var(--color-ink-muted);
+    }
+    .kit-bar button[aria-pressed="true"] { background: var(--color-ink); color: var(--color-bg-elevated); }
+  </style>
+</head>
+<body>
+  <div id="root"></div>
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+  <script type="text/babel" src="../public/primitives.jsx"></script>
+  <script type="text/babel" src="data.jsx"></script>
+  <script type="text/babel" src="Shell.jsx"></script>
+  <script type="text/babel" src="Scenes.jsx"></script>
+  <script type="text/babel" src="MoreScenes.jsx"></script>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    const SCENES = [
+      { key: "dashboard", label: "Masa", crumbs: ["Yazı Masası", "Masa"] },
+      { key: "writings", label: "Yazılar", crumbs: ["Yayın", "Yazılar"] },
+      { key: "compose", label: "Yeni yazı", crumbs: ["Yayın", "Yazılar", "Yeni yazı"] },
+      { key: "publications", label: "Yayınlar", crumbs: ["Yayın", "Yayınlar"] },
+      { key: "pages", label: "Sayfalar", crumbs: ["Yayın", "Sayfalar"] },
+      { key: "photos", label: "Fotoğraflar", crumbs: ["Yayın", "Fotoğraflar"] },
+      { key: "inbox", label: "Mesaj kutusu", crumbs: ["Gelen kutusu", "Mesajlar"] },
+      { key: "users", label: "Kullanıcılar", crumbs: ["Hesap", "Kullanıcılar"] },
+      { key: "profile", label: "Profil", crumbs: ["Hesap", "Profil"] },
+      { key: "sessions", label: "Oturumlar", crumbs: ["Hesap", "Oturumlar"] },
+      { key: "twofa", label: "2FA kur", crumbs: ["Hesap", "İki faktör", "Kur"] },
+      { key: "twofa-disable", label: "2FA kapat", crumbs: ["Hesap", "İki faktör", "Kapat"] },
+      { key: "settings", label: "Ayarlar", crumbs: ["Site", "Ayarlar"] },
+      { key: "backup", label: "Yedekleme", crumbs: ["Site", "Yedekleme"] },
+      { key: "audit", label: "Denetim", crumbs: ["Site", "Denetim kaydı"] },
+    ];
+
+    function App() {
+      const [route, setRoute] = useState("dashboard");
+      const [open, setOpen] = useState(false);
+
+      const navigate = (r) => {
+        if (r === "__public") { window.location.href = "../public/index.html"; return; }
+        setRoute(r);
+        setOpen(false);
+        window.scrollTo({ top: 0, behavior: "instant" });
+      };
+
+      const cur = SCENES.find(s => s.key === route) || SCENES[0];
+
+      let scene = null;
+      switch (route) {
+        case "dashboard": scene = <AdminDashboard onNavigate={navigate} />; break;
+        case "writings": scene = <AdminWritings onNavigate={navigate} />; break;
+        case "compose": scene = <AdminCompose onNavigate={navigate} />; break;
+        case "publications": scene = <AdminPublications />; break;
+        case "pages": scene = <AdminPages />; break;
+        case "photos": scene = <AdminPhotos />; break;
+        case "inbox": scene = <AdminInbox />; break;
+        case "users": scene = <AdminUsers />; break;
+        case "profile": scene = <AdminProfile />; break;
+        case "sessions": scene = <AdminSessions />; break;
+        case "twofa": scene = <AdminTwoFactorSetup onNavigate={navigate} />; break;
+        case "twofa-disable": scene = <AdminTwoFactorDisable onNavigate={navigate} />; break;
+        case "settings": scene = <AdminSettings />; break;
+        case "backup": scene = <AdminBackup />; break;
+        case "audit": scene = <AdminAudit />; break;
+        default: scene = <AdminDashboard onNavigate={navigate} />;
+      }
+
+      return (
+        <>
+          <div className="admin-shell" data-screen-label={`Admin · ${route}`}>
+            <AdminSidebar route={route} onNavigate={navigate} open={open} onClose={() => setOpen(false)} />
+            <div className="admin-workspace">
+              <AdminTopbar crumbs={cur.crumbs} onToggleMenu={() => setOpen(!open)} onNavigate={navigate} />
+              {scene}
+            </div>
+          </div>
+
+          <div className="kit-bar" role="toolbar" aria-label="Sahne seçici">
+            {SCENES.map((s) => (
+              <button key={s.key} aria-pressed={route === s.key} onClick={() => navigate(s.key)}>
+                {s.label}
+              </button>
+            ))}
+          </div>
+        </>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+  </script>
+</body>
+</html>

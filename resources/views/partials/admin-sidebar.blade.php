@@ -94,6 +94,18 @@
     </a>
     @endrole
 
+    <p class="admin-nav-group">Tasarım</p>
+    <a href="/branding/system/" target="_blank" rel="noopener" class="admin-nav-item">
+        <span aria-hidden="true">◈</span>
+        Marka rehberi
+        <span class="ml-auto text-[0.6rem] font-mono text-[var(--color-ink-subtle)] tracking-[0.18em]">↗</span>
+    </a>
+    <a href="/branding/preview.html" target="_blank" rel="noopener" class="admin-nav-item">
+        <span aria-hidden="true">◉</span>
+        Logo önizleme
+        <span class="ml-auto text-[0.6rem] font-mono text-[var(--color-ink-subtle)] tracking-[0.18em]">↗</span>
+    </a>
+
     <div class="mt-auto pt-6 px-3 text-xs text-[var(--color-ink-subtle)] font-mono">
         <span>v0.1 · {{ now()->format('Y.m.d') }}</span>
     </div>

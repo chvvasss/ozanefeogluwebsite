@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Editorial Silence v2.0 · iOS / Android home screen icon · 180×180
+  Paper background; iOS auto-applies rounded corners.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="Ozan Efeoğlu">
+  <rect width="180" height="180" fill="#faf9f5"/>
+  <text x="22" y="128"
+        font-family="'Source Serif 4 Variable', 'Source Serif 4', Charter, 'Iowan Old Style', Georgia, serif"
+        font-weight="600" font-size="124" letter-spacing="-4"
+        style="font-variation-settings: 'opsz' 60;"
+        fill="#141310">oe</text>
+  <circle cx="138" cy="122" r="11" fill="#b91c1c"/>
+</svg>

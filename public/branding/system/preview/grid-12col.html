@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8">
+<link rel="stylesheet" href="_card.css">
+<style>
+.dossier{display:grid;grid-template-columns:repeat(12,1fr);gap:8px;margin-top:14px}
+.dossier > div{height:36px;background:var(--bg-muted);border:1px solid var(--rule);display:grid;place-items:center;font-family:var(--font-mono);font-size:.6rem;color:var(--ink-subtle);letter-spacing:.1em}
+.demo{display:grid;grid-template-columns:repeat(12,1fr);gap:8px;margin-top:10px}
+.demo > div{padding:8px 10px;background:var(--paper-100);border:1px solid var(--rule);font-family:var(--font-mono);font-size:.62rem;color:var(--ink-subtle);text-transform:uppercase;letter-spacing:.14em}
+.demo .a{grid-column:span 7;background:var(--ink);color:var(--paper-50)}
+.demo .b{grid-column:span 5}
+.demo .c{grid-column:span 4}
+.demo .d{grid-column:span 8}
+.note{font-family:var(--font-mono);font-size:.66rem;color:var(--ink-muted);margin-top:10px;letter-spacing:.04em}
+</style></head>
+<body>
+<div class="card" style="height:auto;">
+  <p class="eyebrow">Field Dossier grid · 12 columns</p>
+  <div class="dossier"><div>1</div><div>2</div><div>3</div><div>4</div><div>5</div><div>6</div><div>7</div><div>8</div><div>9</div><div>10</div><div>11</div><div>12</div></div>
+  <div class="demo"><div class="a">.dg-7 · lead photo</div><div class="b">.dg-5 · standfirst</div></div>
+  <div class="demo"><div class="c">.dg-4 · margin</div><div class="d">.dg-8 · prose</div></div>
+  <p class="note">container-base 1100 / container-wide 1320 · gutter clamp(1rem,1.6vw,1.5rem)</p>
+</div>
+</body></html>

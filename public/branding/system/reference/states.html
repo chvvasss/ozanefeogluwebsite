@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Durumlar — Editorial Silence</title>
+  <link rel="stylesheet" href="../colors_and_type.css" />
+  <link rel="stylesheet" href="_ref.css" />
+</head>
+<body>
+  <div class="ref-shell">
+    <aside class="ref-side">
+      <a href="../index.html" class="ref-mark">
+        <svg width="36" height="36" viewBox="0 0 64 64" aria-hidden="true">
+          <text x="6" y="48" font-family="Source Serif 4 Variable, Source Serif 4, Charter, Iowan Old Style, Georgia, serif" font-weight="600" font-size="48" letter-spacing="-1.6" fill="currentColor">oe</text>
+          <circle cx="49" cy="46" r="4.4" fill="#b91c1c" />
+        </svg>
+        <span class="ref-mark-text">
+          <span class="ref-mark-name">Editorial Silence</span>
+          <span class="ref-mark-sub">v1.0 · referans</span>
+        </span>
+      </a>
+
+      <p class="ref-side-eyebrow">Bölümler</p>
+      <nav class="ref-pages" aria-label="Referans sayfaları">
+        <a href="states.html" aria-current="page">Durumlar</a>
+        <a href="components.html">Bileşenler</a>
+        <a href="tokens.html">Belirteçler</a>
+      </nav>
+
+      <p class="ref-side-eyebrow">Bu sayfa</p>
+      <ol class="ref-toc">
+        <li><a href="#matrix"><span class="ref-toc-num">01</span><span>State matrisi</span></a></li>
+        <li><a href="#empty"><span class="ref-toc-num">02</span><span>Boş durum</span></a></li>
+        <li><a href="#loading"><span class="ref-toc-num">03</span><span>Yükleniyor</span></a></li>
+        <li><a href="#error"><span class="ref-toc-num">04</span><span>Hata</span></a></li>
+        <li><a href="#success"><span class="ref-toc-num">05</span><span>Başarılı</span></a></li>
+        <li><a href="#offline"><span class="ref-toc-num">06</span><span>Çevrimdışı</span></a></li>
+        <li><a href="#voice"><span class="ref-toc-num">07</span><span>Dil tonu</span></a></li>
+      </ol>
+    </aside>
+
+    <main class="ref-main">
+      <header class="ref-hero">
+        <p class="ref-eyebrow">Referans · 03</p>
+        <h1 class="ref-title">Durumlar.</h1>
+        <p class="ref-lede">
+          Her arayüz altı durumdan geçer: idle, hover, active, focus, disabled, loading. Bunların ötesinde gövdenin kendisi de altı duruma girer: dolu, boş, yükleniyor, hatalı, başarılı, çevrimdışı. Bu sayfa o on iki halin sözlüğüdür.
+        </p>
+      </header>
+
+      <!-- ─── 01 STATE MATRIX ─── -->
+      <section class="ref-section" id="matrix">
+        <p class="ref-section-eyebrow">01 · Etkileşim durumları</p>
+        <h2>State matrisi.</h2>
+        <p>
+          Bir bileşenin altı durumu — tasarım sisteminde her interaktif öğe için tutulur. Tek bir buton, link veya alan bu altı duruma da net bir cevap vermek zorundadır.
+        </p>
+
+        <h3><span class="num">01a</span>Düğme (Btn) — altı durum</h3>
+        <div class="state-matrix">
+          <div class="state-cell">
+            <span class="state-cell-label"><span class="state-cell-num">01</span>Idle</span>
+            <div class="state-cell-demo">
+              <button class="btn">Yayımla</button>
+            </div>
+            <p class="state-cell-note">Düğme yerinde duruyor; etkileşim beklenmiyor.</p>
+          </div>
+          <div class="state-cell">
+            <span class="state-cell-label"><span class="state-cell-num">02</span>Hover</span>
+            <div class="state-cell-demo">
+              <button class="btn" style="background: var(--color-ink); transform: translateY(-1px);">Yayımla</button>
+            </div>
+            <p class="state-cell-note">İmleç üstüne geldi; geri bildirim hafif kalkma + parlaklık.</p>
+          </div>
+          <div class="state-cell">
+            <span class="state-cell-label"><span class="state-cell-num">03</span>Active / pressed</span>
+            <div class="state-cell-demo">
+              <button class="btn" style="transform: translateY(0); box-shadow: inset 0 1px 0 rgba(0,0,0,.2);">Yayımla</button>
+            </div>
+            <p class="state-cell-note">Tıklama anı; hareket yoktur, içe çöker.</p>
+          </div>
+          <div class="state-cell">
+            <span class="state-cell-label"><span class="state-cell-num">04</span>Focus</span>
+            <div class="state-cell-demo">
+              <button class="btn" style="outline: 2px solid var(--color-accent); outline-offset: 3px;">Yayımla</button>
+            </div>
+            <p class="state-cell-note">Klavye odağı; vermilyon halka, kalın değil 2px.</p>
+          </div>
+          <div class="state-cell">
+            <span class="state-cell-label"><span class="state-cell-num">05</span>Disabled</span>
+            <div class="state-cell-demo">
+              <button class="btn" disabled style="opacity: .4; cursor: not-allowed;">Yayımla</button>
+            </div>
+            <p class="state-cell-note">Erişilemez; opacity .4, kursör not‑allowed.</p>
+          </div>
+          <div class="state-cell">
+            <span class="state-cell-label"><span class="state-cell-num">06</span>Loading</span>
+            <div class="state-cell-demo">
+              <button class="btn" disabled style="opacity: .7;">
+                <span style="display: inline-block; width: 10px; height: 10px; border: 1.5px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: refSpin .8s linear infinite; margin-right: 8px; vertical-align: -1px;"></span>
+                Yayımlanıyor
+              </button>
+            </div>
+            <p class="state-cell-note">İşlem sürüyor; metin değişir, fiil ‑ıyor formuna geçer.</p>
+          </div>
+        </div>
+
+        <style>@keyframes refSpin { to { transform: rotate(360deg); } }</style>
+
+        <h3><span class="num">01b</span>Form alanı (Field) — altı durum</h3>
+        <div class="state-matrix">
+          <div class="state-cell">
+            <span class="state-cell-label"><span class="state-cell-num">01</span>Idle</span>
+            <div class="state-cell-demo">
+              <input class="input" placeholder="Konum" style="width: 100%; max-width: 200px;" />
+            </div>
+            <p class="state-cell-note">Boş, yer tutucu görünüyor.</p>
+          </div>
+          <div class="state-cell">
+            <span class="state-cell-label"><span class="state-cell-num">02</span>Filled</span>
+            <div class="state-cell-demo">
+              <input class="input" value="Hatay" readonly style="width: 100%; max-width: 200px;" />
+            </div>
+            <p class="state-cell-note">Kullanıcı girdi yazdı; mürekkep koyulaştı.</p>
+          </div>
+          <div class="state-cell">
+            <span class="state-cell-label"><span class="state-cell-num">03</span>Focus</span>
+            <div class="state-cell-demo">
+              <input class="input" value="Hatay" style="width: 100%; max-width: 200px; outline: 2px solid var(--color-accent); outline-offset: 1px;" />
+            </div>
+            <p class="state-cell-note">Klavye odağı; vermilyon halka.</p>
+          </div>
+          <div class="state-cell">
+            <span class="state-cell-label"><span class="state-cell-num">04</span>Error</span>
+            <div class="state-cell-demo" style="flex-direction: column; align-items: stretch; gap: 6px;">
+              <input class="input" value="" style="border-color: var(--color-danger); width: 100%; max-width: 220px;" />
+              <span style="color: var(--color-danger); font-family: var(--font-mono); font-size: .68rem; letter-spacing: .14em;">Konum boş bırakılamaz.</span>
+            </div>
+            <p class="state-cell-note">Yardım mesajı tek cümle, suçlamasız.</p>
+          </div>
+          <div class="state-cell">
+            <span class="state-cell-label"><span class="state-cell-num">05</span>Disabled</span>
+            <div class="state-cell-demo">
+              <input class="input" value="—" disabled style="width: 100%; max-width: 200px; opacity: .5;" />
+            </div>
+            <p class="state-cell-note">Şu an düzenlenemez; sebep yakında durur.</p>
+          </div>
+          <div class="state-cell">
+            <span class="state-cell-label"><span class="state-cell-num">06</span>Read‑only</span>
+            <div class="state-cell-demo">
+              <input class="input" value="Şubat 2024" readonly style="width: 100%; max-width: 200px; background: var(--color-bg-muted); border-color: transparent;" />
+            </div>
+            <p class="state-cell-note">Bilgi var, düzenleme kapalı; kenarlık yok.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 02 EMPTY ─── -->
+      <section class="ref-section" id="empty">
+        <p class="ref-section-eyebrow">02 · Gövde durumları</p>
+        <h2>Boş durum.</h2>
+        <p>
+          Veri yok, henüz veri yok ya da filtre sonucu boş. Üç farklı sebep, üç farklı tonu gerektirir. Hiçbiri özür dilemez, hiçbiri sevimli olmaya çalışmaz.
+        </p>
+
+        <div class="preview-frame">
+          <div style="border: 1px dashed var(--color-rule-strong); padding: 48px 32px; background: var(--color-bg-muted); text-align: center; max-width: 520px; margin-inline: auto;">
+            <p style="font-family: var(--font-mono); font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--color-ink-subtle); margin: 0;">Defter henüz açılmadı</p>
+            <h3 style="font-family: var(--font-display); font-weight: 600; font-size: 1.4rem; color: var(--color-ink); margin: 14px 0 6px;">Bu rafta henüz yazı yok.</h3>
+            <p style="font-family: var(--font-display); font-style: italic; font-size: .95rem; color: var(--color-ink-muted); margin: 0;">İlk dosya yayımlandığında burası dolacak.</p>
+          </div>
+        </div>
+
+        <div class="do-dont">
+          <div class="do-cell"><p>"Bu rafta henüz yazı yok." — sebep + zaman + edilgen.</p></div>
+          <div class="dont-cell"><p>"Hiçbir şey bulunamadı 😔" — emoji + sevimli + suçlamacı.</p></div>
+        </div>
+
+        <h3><span class="num">02a</span>Üç boş durum tonu</h3>
+        <table class="api-table">
+          <thead><tr><th>Sebep</th><th>Başlık örneği</th><th>Aksiyon</th></tr></thead>
+          <tbody>
+            <tr><td class="api-prop">İlk kez</td><td>Bu rafta henüz yazı yok.</td><td>İmza · "ilk dosya yayımlandığında burası dolacak"</td></tr>
+            <tr><td class="api-prop">Filtre boş</td><td>Bu kıstasla hiçbir kayıt yok.</td><td>Aksiyon · "filtreyi kaldır"</td></tr>
+            <tr><td class="api-prop">Silindi</td><td>Bu defter kapatıldı.</td><td>Yön · "arşivde 2023'te yer aldı → ara"</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 03 LOADING ─── -->
+      <section class="ref-section" id="loading">
+        <p class="ref-section-eyebrow">03 · Gövde durumları</p>
+        <h2>Yükleniyor.</h2>
+        <p>
+          Skeleton yok. Yüksekliği bilinen kutular için hafif bir nabız (pulse), bilinmeyenler için tek bir editöryal mesaj. Spinner sadece düğme içinde kullanılır.
+        </p>
+
+        <h3><span class="num">03a</span>Skeleton (yükselebilir)</h3>
+        <div class="preview-frame">
+          <div style="display: flex; flex-direction: column; gap: 14px; max-width: 540px;">
+            <div style="height: 14px; width: 30%; background: var(--color-rule); animation: refPulse 1.6s ease-in-out infinite;"></div>
+            <div style="height: 32px; width: 80%; background: var(--color-rule); animation: refPulse 1.6s ease-in-out infinite;"></div>
+            <div style="height: 14px; width: 100%; background: var(--color-rule); animation: refPulse 1.6s ease-in-out infinite;"></div>
+            <div style="height: 14px; width: 90%; background: var(--color-rule); animation: refPulse 1.6s ease-in-out infinite;"></div>
+            <div style="height: 14px; width: 60%; background: var(--color-rule); animation: refPulse 1.6s ease-in-out infinite;"></div>
+          </div>
+        </div>
+        <style>@keyframes refPulse { 0%,100% { opacity: 1; } 50% { opacity: .55; } }</style>
+
+        <h3><span class="num">03b</span>Tek satır mesaj (alt durum)</h3>
+        <div class="preview-frame" style="text-align: center;">
+          <p style="font-family: var(--font-display); font-style: italic; font-size: 1.05rem; color: var(--color-ink-muted); margin: 0;">
+            Arşiv okunuyor<span style="display: inline-block; width: 1ch; text-align: left;">…</span>
+          </p>
+        </div>
+
+        <div class="do-dont">
+          <div class="do-cell"><p>Skeleton yüksekliği gerçek içerikle ±%5 sapmasında olsun. Sıçrama olmasın.</p></div>
+          <div class="dont-cell"><p>Tam ekran spinner — sayfayı çevirmek yerine perde çekmek.</p></div>
+        </div>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 04 ERROR ─── -->
+      <section class="ref-section" id="error">
+        <p class="ref-section-eyebrow">04 · Gövde durumları</p>
+        <h2>Hata.</h2>
+        <p>
+          Hata sayfası bağırmaz. Ne olduğunu söyler, ne yapacağını gösterir, ihtiyacı varsa teknik kimliği (request_id) sunar. Ünlem işareti, üzgün surat, kırmızı şerit yok.
+        </p>
+
+        <h3><span class="num">04a</span>Sayfa düzeyi (500)</h3>
+        <div class="preview-frame">
+          <div style="max-width: 520px;">
+            <p style="font-family: var(--font-mono); font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--color-danger); margin: 0;">Hata · 500</p>
+            <h3 style="font-family: var(--font-display); font-weight: 600; font-size: 2.4rem; letter-spacing: -.01em; margin: 8px 0 0; color: var(--color-ink);">Mürekkep ıslak.</h3>
+            <p style="font-family: var(--font-display); font-style: italic; font-size: 1.05rem; line-height: 1.55; color: var(--color-ink-muted); margin: 14px 0 0;">
+              Sunucu bu sayfayı dizgi sırasında düşürdü. Birkaç dakika içinde matbaa yeniden açılacaktır.
+            </p>
+            <pre style="margin-top: 18px; padding: 10px 12px; background: var(--color-bg-muted); border: 1px solid var(--color-rule); font-family: var(--font-mono); font-size: .72rem; color: var(--color-ink-muted); margin-bottom: 0;">request_id: 1f4a‑e8b2‑c9d0
+timestamp:  2026‑04‑26T14:32:08+03:00</pre>
+          </div>
+        </div>
+
+        <h3><span class="num">04b</span>Inline (form alanı)</h3>
+        <div class="preview-frame">
+          <div style="max-width: 320px;">
+            <label style="font-family: var(--font-mono); font-size: .68rem; letter-spacing: .18em; text-transform: uppercase; color: var(--color-ink-muted);">E‑posta</label>
+            <input class="input" value="elif@" style="width: 100%; margin-top: 6px; border-color: var(--color-danger);" />
+            <p style="font-family: var(--font-mono); font-size: .68rem; letter-spacing: .14em; color: var(--color-danger); margin: 6px 0 0;">Geçerli bir e‑posta adresi giriniz.</p>
+          </div>
+        </div>
+
+        <div class="do-dont">
+          <div class="do-cell"><p>"Mürekkep ıslak." — metafor sade, gövde edilgen, eylem net.</p></div>
+          <div class="dont-cell"><p>"Bir şeyler ters gitti! 😱 Lütfen daha sonra tekrar deneyin." — boğuk, suçlu hissi veren ses.</p></div>
+        </div>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 05 SUCCESS ─── -->
+      <section class="ref-section" id="success">
+        <p class="ref-section-eyebrow">05 · Gövde durumları</p>
+        <h2>Başarılı.</h2>
+        <p>
+          Toast yok. Başarı geri bildirimi sahnenin kendisidir — kayıt göründü, satır eklendi, durum yeşile döndü. Bir cümle yazılı bildirim eklenecekse, üst aksiyon çubuğunda durur, 4 saniyede çekilir.
+        </p>
+
+        <div class="preview-frame">
+          <div style="display: flex; gap: 12px; align-items: center; padding: 12px 16px; background: var(--color-paper-100); border: 1px solid var(--color-success); border-left: 3px solid var(--color-success); max-width: 480px;">
+            <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--color-success);"></span>
+            <p style="font-family: var(--font-display); font-size: .95rem; color: var(--color-ink); margin: 0;">
+              Yazı yayımlandı — <span style="color: var(--color-ink-subtle); font-family: var(--font-mono); font-size: .76rem;">2026.04.26 09:14</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="do-dont">
+          <div class="do-cell"><p>"Yazı yayımlandı — 09:14." — geçmiş zaman, zaman damgası, somut.</p></div>
+          <div class="dont-cell"><p>"Hurra! Başarıyla yayımlandı 🎉" — abartı, emoji, ünlem.</p></div>
+        </div>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 06 OFFLINE ─── -->
+      <section class="ref-section" id="offline">
+        <p class="ref-section-eyebrow">06 · Gövde durumları</p>
+        <h2>Çevrimdışı.</h2>
+        <p>
+          Bağlantı yok ya da yazma yetkisi düştü. Sayfa kalır, üst banda incedir, kullanıcıyı durmaya zorlamaz — okuma davam eder, yazma kuyruğa alınır.
+        </p>
+
+        <div class="preview-frame">
+          <div style="background: var(--color-bg-muted); border: 1px solid var(--color-rule-strong); border-bottom: 0; padding: 8px 14px; max-width: 720px; display: flex; gap: 14px; align-items: center;">
+            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--color-warning);"></span>
+            <p style="font-family: var(--font-mono); font-size: .72rem; letter-spacing: .14em; color: var(--color-ink-muted); margin: 0;">
+              Çevrimdışı · değişiklikler kuyruğa alındı, bağlantı geri gelince gönderilecek.
+            </p>
+          </div>
+          <div style="background: var(--color-bg-elevated); border: 1px solid var(--color-rule-strong); padding: 22px; max-width: 720px;">
+            <p style="font-family: var(--font-display); color: var(--color-ink-muted); margin: 0;">Sayfa içeriği aynen kalır, okumayı kesmez.</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 07 VOICE ─── -->
+      <section class="ref-section" id="voice">
+        <p class="ref-section-eyebrow">07 · Yazı işleri</p>
+        <h2>Dil tonu.</h2>
+        <p>
+          Tüm sistem mesajları aynı kişiden çıkar gibi yazılır: yazı işleri masasında oturan, sakin, suçlamayan ama mesafeli bir editör. Aşağıdaki tablo, yaygın senaryolar için hızlı bir sözlüktür.
+        </p>
+
+        <table class="api-table">
+          <thead><tr><th>Senaryo</th><th>Yapın</th><th>Yapmayın</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="api-prop">Yükleniyor</td>
+              <td>Arşiv okunuyor</td>
+              <td>Yükleniyor lütfen bekleyin...</td>
+            </tr>
+            <tr>
+              <td class="api-prop">Boş arşiv</td>
+              <td>Bu rafta henüz yazı yok.</td>
+              <td>Hiçbir şey bulunamadı 😔</td>
+            </tr>
+            <tr>
+              <td class="api-prop">404</td>
+              <td>Bu sütun bulunamadı.</td>
+              <td>Sayfa yok!</td>
+            </tr>
+            <tr>
+              <td class="api-prop">500</td>
+              <td>Mürekkep ıslak.</td>
+              <td>Bir şeyler ters gitti.</td>
+            </tr>
+            <tr>
+              <td class="api-prop">Bakım</td>
+              <td>Tezgâh bakımda. Tahmini açılış 18:00.</td>
+              <td>Site bakımda. Daha sonra tekrar deneyin.</td>
+            </tr>
+            <tr>
+              <td class="api-prop">Form hatası</td>
+              <td>Konum boş bırakılamaz.</td>
+              <td>Lütfen bir konum girin!</td>
+            </tr>
+            <tr>
+              <td class="api-prop">Silme onayı</td>
+              <td>Bu yazıyı arşivden çıkarmak istiyor musunuz?</td>
+              <td>Emin misiniz??</td>
+            </tr>
+            <tr>
+              <td class="api-prop">Kaydetme</td>
+              <td>Yazı yayımlandı — 09:14.</td>
+              <td>Başarıyla kaydedildi! ✅</td>
+            </tr>
+            <tr>
+              <td class="api-prop">Çevrimdışı</td>
+              <td>Çevrimdışı; değişiklikler kuyruğa alındı.</td>
+              <td>Bağlantı yok! İnternetinizi kontrol edin!</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>

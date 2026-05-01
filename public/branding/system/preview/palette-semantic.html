@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8">
+<title>Semantic tokens</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+.grid { display:grid; grid-template-columns: 1fr 1fr; gap:8px 24px; margin-top: 16px; }
+.row { display:grid; grid-template-columns: 26px 1fr auto; gap: 12px; align-items:center; padding: 8px 0; border-bottom: 1px solid var(--rule); }
+.swatch { width: 22px; height: 22px; border:1px solid rgba(0,0,0,0.1); }
+.tok { font-family: var(--font-mono); font-size:.74rem; letter-spacing:0.02em; color:var(--ink); }
+.val { font-family: var(--font-mono); font-size:.7rem; color:var(--ink-muted); }
+</style></head>
+<body>
+<div class="card" style="height:auto;">
+  <p class="eyebrow">Semantic · light</p>
+  <div class="grid">
+    <div class="row"><span class="swatch" style="background:#f4f3ed"></span><span class="tok">--color-bg</span><span class="val">paper-100</span></div>
+    <div class="row"><span class="swatch" style="background:#fffdf6"></span><span class="tok">--color-bg-elevated</span><span class="val">#fffdf6</span></div>
+    <div class="row"><span class="swatch" style="background:#e8e6dc"></span><span class="tok">--color-bg-muted</span><span class="val">paper-200</span></div>
+    <div class="row"><span class="swatch" style="background:#d0cbbd"></span><span class="tok">--color-bg-sunken</span><span class="val">paper-300</span></div>
+    <div class="row"><span class="swatch" style="background:#141310"></span><span class="tok">--color-ink</span><span class="val">#141310</span></div>
+    <div class="row"><span class="swatch" style="background:#46413a"></span><span class="tok">--color-ink-muted</span><span class="val">paper-600</span></div>
+    <div class="row"><span class="swatch" style="background:#686252"></span><span class="tok">--color-ink-subtle</span><span class="val">paper-500</span></div>
+    <div class="row"><span class="swatch" style="background:#d0cbbd"></span><span class="tok">--color-rule</span><span class="val">paper-300</span></div>
+    <div class="row"><span class="swatch" style="background:#9f9889"></span><span class="tok">--color-rule-strong</span><span class="val">paper-400</span></div>
+    <div class="row"><span class="swatch" style="background:#b91c1c"></span><span class="tok">--color-accent</span><span class="val">stamp · red-700</span></div>
+    <div class="row"><span class="swatch" style="background:#4a6b3a"></span><span class="tok">--color-success</span><span class="val">moss</span></div>
+    <div class="row"><span class="swatch" style="background:#883028"></span><span class="tok">--color-danger</span><span class="val">oxidized</span></div>
+  </div>
+</div>
+</body></html>

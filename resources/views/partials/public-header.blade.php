@@ -16,13 +16,27 @@
 >
     <div class="max-w-[var(--container-wide)] mx-auto px-[clamp(1rem,4vw,3rem)] flex items-center justify-between gap-6">
 
-        {{-- Wordmark --}}
-        <a href="{{ route('home') }}" class="no-underline group inline-flex flex-col leading-none">
-            <span class="font-[var(--font-display)] font-semibold text-[var(--text-md)] text-[var(--color-ink)] tracking-[var(--tracking-tight)]">
-                {{ site_setting('identity.name') }}
-            </span>
-            <span class="mt-1 font-mono text-[0.6rem] tracking-[0.22em] uppercase text-[var(--color-ink-subtle)]">
-                {{ strtoupper(site_setting('identity.base')) }}
+        {{-- Brand: lowercase oe mark + wordmark stack (Editorial Silence v2 — Yalın İmza) --}}
+        <a href="{{ route('home') }}" class="no-underline group inline-flex items-center gap-3 leading-none">
+            {{-- Mark: lowercase "oe" Source Serif + censor's red dot. currentColor → theme aware. --}}
+            <svg class="w-8 h-8 shrink-0 text-[var(--color-ink)]"
+                 viewBox="0 0 64 64" aria-hidden="true" focusable="false">
+                <text x="6" y="48"
+                      font-family="'Source Serif 4 Variable', 'Source Serif 4', Charter, 'Iowan Old Style', Georgia, serif"
+                      font-weight="600" font-size="48" letter-spacing="-1.6"
+                      style="font-variation-settings: 'opsz' 48;"
+                      fill="currentColor">oe</text>
+                <circle cx="49" cy="46" r="4.4" fill="#b91c1c"/>
+            </svg>
+
+            {{-- Wordmark stack --}}
+            <span class="inline-flex flex-col leading-none">
+                <span class="font-[var(--font-display)] font-semibold text-[var(--text-md)] text-[var(--color-ink)] tracking-[var(--tracking-tight)]">
+                    {{ site_setting('identity.name') }}
+                </span>
+                <span class="mt-1 font-mono text-[0.6rem] tracking-[0.22em] uppercase text-[var(--color-ink-subtle)]">
+                    {{ strtoupper(site_setting('identity.base')) }}
+                </span>
             </span>
         </a>
 

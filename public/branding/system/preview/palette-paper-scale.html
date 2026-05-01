@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8">
+<title>Paper Scale</title>
+<link rel="stylesheet" href="_card.css">
+<style>
+.scale { display:grid; grid-template-columns: repeat(11, 1fr); gap: 4px; margin-top: 16px; }
+.step { display:flex; flex-direction:column; gap:6px; }
+.bar { height: 76px; }
+.lbl { font-family: var(--font-mono); font-size:.6rem; color:var(--ink-muted); letter-spacing:0.06em; text-align:center; }
+.hex { font-family: var(--font-mono); font-size:.55rem; color:var(--ink-subtle); letter-spacing:0.04em; text-align:center; }
+</style></head>
+<body>
+<div class="card" style="height:auto;">
+  <p class="eyebrow">Paper · neutrals 50 → 950</p>
+  <div class="scale">
+    <div class="step"><div class="bar" style="background:#faf9f5; border:1px solid var(--rule);"></div><div class="lbl">50</div><div class="hex">faf9f5</div></div>
+    <div class="step"><div class="bar" style="background:#f4f3ed;"></div><div class="lbl">100</div><div class="hex">f4f3ed</div></div>
+    <div class="step"><div class="bar" style="background:#e8e6dc;"></div><div class="lbl">200</div><div class="hex">e8e6dc</div></div>
+    <div class="step"><div class="bar" style="background:#d0cbbd;"></div><div class="lbl">300</div><div class="hex">d0cbbd</div></div>
+    <div class="step"><div class="bar" style="background:#9f9889;"></div><div class="lbl">400</div><div class="hex">9f9889</div></div>
+    <div class="step"><div class="bar" style="background:#686252;"></div><div class="lbl">500</div><div class="hex">686252</div></div>
+    <div class="step"><div class="bar" style="background:#46413a;"></div><div class="lbl">600</div><div class="hex">46413a</div></div>
+    <div class="step"><div class="bar" style="background:#2e2a25;"></div><div class="lbl">700</div><div class="hex">2e2a25</div></div>
+    <div class="step"><div class="bar" style="background:#1c1915;"></div><div class="lbl">800</div><div class="hex">1c1915</div></div>
+    <div class="step"><div class="bar" style="background:#14110d;"></div><div class="lbl">900</div><div class="hex">14110d</div></div>
+    <div class="step"><div class="bar" style="background:#08060a;"></div><div class="lbl">950</div><div class="hex">08060a</div></div>
+  </div>
+  <p class="dateline" style="margin-top:14px;">11 basamak · ofset baskı toneları · saf siyah/beyaz reddi</p>
+</div>
+</body></html>

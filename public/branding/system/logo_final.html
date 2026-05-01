@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <title>Logo · son hâl</title>
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <style>
+    body { background: var(--color-bg); color: var(--color-ink); font-family: var(--font-display); margin: 0; padding: 0; }
+    .lab { max-width: 1100px; margin: 0 auto; padding: 56px 48px 96px; }
+    h1 { font-family: var(--font-display); font-weight: 600; font-size: 2.4rem; letter-spacing: -.02em; margin: 0 0 8px; }
+    .eyebrow { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--color-accent); margin: 0 0 12px; }
+    .lede { font-style: italic; color: var(--color-ink-muted); max-width: 60ch; margin: 0 0 40px; line-height: 1.55; }
+    h2 { font-family: var(--font-mono); font-size: .72rem; letter-spacing: .22em; text-transform: uppercase; color: var(--color-ink-subtle); margin: 48px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--color-rule); }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--color-rule); border: 1px solid var(--color-rule); }
+    .cell { background: var(--color-bg-elevated); padding: 32px; min-height: 160px; display: flex; align-items: center; justify-content: center; }
+    .cell.dark { background: var(--color-paper-900); }
+    .cell img { display: block; max-width: 100%; max-height: 200px; }
+    .small-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--color-rule); border: 1px solid var(--color-rule); }
+    .small-row .cell { padding: 24px; min-height: 120px; }
+    .small-row img { max-height: 80px; }
+    .label { font-family: var(--font-mono); font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--color-ink-subtle); position: absolute; top: 8px; left: 8px; }
+    .cell { position: relative; }
+  </style>
+</head>
+<body>
+  <main class="lab">
+    <p class="eyebrow">Marka · son hâl · 2026.05</p>
+    <h1>Yeni imza.</h1>
+    <p class="lede"><em>Ozan Efeoğlu.</em> Cümle gibi biten isim. Soyadın sonunda küçük, yorulmaz bir kırmızı nokta — yayımlandı işareti. Hepsi bu.</p>
+
+    <h2>Yatay kilit</h2>
+    <div class="row">
+      <div class="cell"><span class="label">açık</span><img src="assets/logo-horizontal.svg" alt=""/></div>
+      <div class="cell dark"><span class="label" style="color:#9f9889">koyu</span><img src="assets/logo-horizontal-inverse.svg" alt=""/></div>
+    </div>
+
+    <h2>Wordmark</h2>
+    <div class="row">
+      <div class="cell"><img src="assets/logo-wordmark.svg" alt=""/></div>
+      <div class="cell" style="background:#f0ece2"><img src="assets/logo-wordmark.svg" alt=""/></div>
+    </div>
+
+    <h2>Kare işaret</h2>
+    <div class="small-row">
+      <div class="cell"><span class="label">mark 64</span><img src="assets/logo-mark.svg" alt=""/></div>
+      <div class="cell dark"><span class="label" style="color:#9f9889">inverse</span><img src="assets/logo-mark-inverse.svg" alt=""/></div>
+      <div class="cell"><span class="label">favicon 32</span><img src="assets/favicon.svg" alt=""/></div>
+      <div class="cell"><span class="label">apple 180</span><img src="assets/apple-touch-icon.svg" alt=""/></div>
+    </div>
+
+    <h2>OG · 1200×630</h2>
+    <div class="cell" style="border:1px solid var(--color-rule); padding:0; min-height:0;">
+      <img src="assets/og-mark.svg" alt="" style="width:100%; max-height:none; display:block;"/>
+    </div>
+  </main>
+</body>
+</html>

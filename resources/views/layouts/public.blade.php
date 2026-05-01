@@ -38,7 +38,11 @@
         <meta name="twitter:image" content="{{ $pageOgImage }}">
     @endif
 
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    {{-- Favicon system — Editorial Silence brand v1.0 --}}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any"><!-- legacy fallback -->
+    <link rel="apple-touch-icon" href="/branding/apple-touch-icon.svg">
+    <meta name="theme-color" content="#faf9f5">
 
     {{-- RSS alternate — only rendered when feed actually exists --}}
     @if (site_setting('features.feed_enabled'))

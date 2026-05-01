@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Editorial Silence — Tasarım Sistemi v1.0</title>
+  <link rel="stylesheet" href="colors_and_type.css" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <style>
+    :root {
+      --max-w: 1200px;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--color-bg);
+      color: var(--color-ink);
+      font-family: var(--font-display);
+      font-size: 1rem;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── shell ─────────────────────────── */
+    .shell {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: clamp(40px, 6vw, 80px) clamp(24px, 5vw, 64px) clamp(80px, 10vw, 120px);
+    }
+
+    /* ─── header / colophon ────────────── */
+    .colophon {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: start;
+      gap: 24px;
+      padding-bottom: 28px;
+      border-bottom: 1px solid var(--color-rule);
+      margin-bottom: clamp(40px, 6vw, 72px);
+    }
+    .colophon-mark {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .colophon-mark svg { display: block; }
+    .colophon-mark-text {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .colophon-name {
+      font-family: var(--font-display);
+      font-weight: 600; font-size: 1.05rem;
+      letter-spacing: -.005em; color: var(--color-ink);
+    }
+    .colophon-sub {
+      font-family: var(--font-mono);
+      font-size: .68rem; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--color-ink-subtle);
+    }
+    .colophon-meta {
+      font-family: var(--font-mono);
+      font-size: .68rem; letter-spacing: .18em;
+      text-transform: uppercase; color: var(--color-ink-subtle);
+      text-align: right;
+      line-height: 1.7;
+    }
+    .colophon-meta b { color: var(--color-ink); font-weight: 500; }
+
+    /* ─── hero masthead ──────────────────── */
+    .masthead {
+      padding: clamp(40px, 8vw, 80px) 0 clamp(48px, 8vw, 88px);
+      border-bottom: 2px solid var(--color-ink);
+      margin-bottom: clamp(48px, 8vw, 80px);
+    }
+    .masthead-eyebrow {
+      font-family: var(--font-mono);
+      font-size: .72rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin: 0 0 18px;
+      display: flex; align-items: center; gap: 14px;
+    }
+    .masthead-eyebrow::after {
+      content: ""; flex: 1; height: 1px;
+      background: var(--color-rule);
+      max-width: 120px;
+    }
+    .masthead h1 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(2.6rem, 7vw, 5.4rem);
+      letter-spacing: -.025em;
+      line-height: 1;
+      color: var(--color-ink);
+      margin: 0 0 24px;
+      max-width: 14ch;
+    }
+    .masthead-lede {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+      line-height: 1.5;
+      color: var(--color-ink-muted);
+      max-width: 56ch;
+      margin: 0;
+    }
+    .masthead-tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 36px;
+    }
+    .masthead-tag {
+      font-family: var(--font-mono);
+      font-size: .66rem; letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--color-ink-muted);
+      padding: 6px 12px;
+      border: 1px solid var(--color-rule-strong);
+      background: var(--color-bg-elevated);
+    }
+
+    /* ─── section header ─────────────────── */
+    .section {
+      margin-bottom: clamp(56px, 8vw, 96px);
+    }
+    .section-header {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: clamp(24px, 4vw, 48px);
+      align-items: baseline;
+      margin-bottom: 28px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--color-ink);
+    }
+    .section-num {
+      font-family: var(--font-mono);
+      font-size: .72rem; letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      white-space: nowrap;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(1.6rem, 3vw, 2.2rem);
+      letter-spacing: -.012em;
+      line-height: 1.1;
+      color: var(--color-ink);
+      margin: 0;
+    }
+    .section-lede {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.08rem;
+      line-height: 1.55;
+      color: var(--color-ink-muted);
+      max-width: 64ch;
+      margin: 0 0 28px;
+      grid-column: 2;
+    }
+    @media (max-width: 720px) {
+      .section-header { grid-template-columns: 1fr; gap: 6px; }
+      .section-lede { grid-column: 1; }
+    }
+
+    /* ─── primary trio (kits + reference) ───── */
+    .primary-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--color-rule);
+      border: 1px solid var(--color-rule);
+    }
+    @media (max-width: 880px) { .primary-grid { grid-template-columns: 1fr; } }
+
+    .primary-card {
+      background: var(--color-bg-elevated);
+      padding: 36px 32px 32px;
+      display: flex; flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      min-height: 320px;
+      transition: background .15s;
+      position: relative;
+    }
+    .primary-card:hover { background: var(--color-bg-muted); }
+    .primary-card-num {
+      font-family: var(--font-mono);
+      font-size: .68rem; letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 14px;
+    }
+    .primary-card-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.7rem;
+      letter-spacing: -.012em;
+      line-height: 1.1;
+      color: var(--color-ink);
+      margin: 0 0 12px;
+    }
+    .primary-card-sub {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.5;
+      color: var(--color-ink-muted);
+      flex: 1;
+      margin: 0;
+    }
+    .primary-card-stat {
+      display: flex; gap: 18px; margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--color-rule);
+    }
+    .primary-card-stat-item {
+      display: flex; flex-direction: column;
+    }
+    .primary-card-stat-label {
+      font-family: var(--font-mono);
+      font-size: .62rem; letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--color-ink-subtle);
+    }
+    .primary-card-stat-value {
+      font-family: var(--font-mono);
+      font-size: .92rem; font-weight: 500;
+      color: var(--color-ink);
+      margin-top: 2px;
+    }
+    .primary-card-arrow {
+      font-family: var(--font-mono);
+      font-size: .7rem; letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--color-ink);
+      margin-top: 18px;
+    }
+
+    /* ─── card grid (foundations / docs) ───── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 1px;
+      background: var(--color-rule);
+      border: 1px solid var(--color-rule);
+    }
+    .card {
+      background: var(--color-bg-elevated);
+      padding: 22px 22px 18px;
+      display: flex; flex-direction: column;
+      text-decoration: none;
+      color: inherit;
+      min-height: 140px;
+      transition: background .15s;
+    }
+    .card:hover { background: var(--color-bg-muted); }
+    .card-letter {
+      font-family: var(--font-mono);
+      font-size: .68rem; letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--color-ink-subtle);
+      margin-bottom: 8px;
+    }
+    .card-title {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.08rem;
+      letter-spacing: -.005em;
+      color: var(--color-ink);
+      margin: 0 0 4px;
+    }
+    .card-sub {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: .9rem;
+      line-height: 1.45;
+      color: var(--color-ink-muted);
+      flex: 1;
+      margin: 0;
+    }
+
+    /* ─── docs lockup ──────────────────────── */
+    .docs-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--color-rule);
+      border: 1px solid var(--color-rule);
+    }
+    @media (max-width: 720px) { .docs-grid { grid-template-columns: 1fr; } }
+    .doc {
+      background: var(--color-bg-elevated);
+      padding: 24px 24px 20px;
+      display: flex; gap: 18px; align-items: flex-start;
+      text-decoration: none; color: inherit;
+      transition: background .15s;
+    }
+    .doc:hover { background: var(--color-bg-muted); }
+    .doc-icon {
+      flex: 0 0 36px;
+      width: 36px; height: 44px;
+      border: 1px solid var(--color-ink);
+      background: var(--color-bg);
+      position: relative;
+    }
+    .doc-icon::before {
+      content: "";
+      position: absolute; inset: 6px;
+      border-top: 1px solid var(--color-ink);
+      border-bottom: 1px solid var(--color-ink);
+    }
+    .doc-icon-md::after {
+      content: "MD";
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-mono);
+      font-size: .56rem; letter-spacing: .12em;
+      color: var(--color-accent);
+    }
+    .doc-meta { flex: 1; }
+    .doc-name {
+      font-family: var(--font-mono);
+      font-size: .82rem; letter-spacing: .04em;
+      color: var(--color-ink);
+      margin: 0 0 4px;
+    }
+    .doc-sub {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: .92rem; line-height: 1.45;
+      color: var(--color-ink-muted);
+      margin: 0;
+    }
+
+    /* ─── footer / kolofon ──────────────────── */
+    .footer {
+      margin-top: clamp(80px, 12vw, 140px);
+      padding-top: 28px;
+      border-top: 1px solid var(--color-rule);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 24px; align-items: baseline;
+    }
+    .footer-line {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: .98rem;
+      color: var(--color-ink-muted);
+      margin: 0;
+    }
+    .footer-mono {
+      font-family: var(--font-mono);
+      font-size: .68rem; letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--color-ink-subtle);
+      text-align: right;
+    }
+    @media (max-width: 600px) {
+      .footer { grid-template-columns: 1fr; }
+      .footer-mono { text-align: left; }
+    }
+
+    /* dark mode auto */
+    @media (prefers-color-scheme: dark) {
+      body { background: var(--color-bg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+
+    <!-- ─── colophon ─────────────────────────── -->
+    <header class="colophon">
+      <div class="colophon-mark">
+        <svg width="44" height="44" viewBox="0 0 64 64" aria-hidden="true">
+          <text x="6" y="48" font-family="Source Serif 4 Variable, Source Serif 4, Charter, Iowan Old Style, Georgia, serif" font-weight="600" font-size="48" letter-spacing="-1.6" fill="currentColor">oe</text>
+          <circle cx="49" cy="46" r="4.4" fill="#b91c1c" />
+        </svg>
+        <div class="colophon-mark-text">
+          <span class="colophon-name">Editorial Silence</span>
+          <span class="colophon-sub">Tasarım Sistemi · v1.0</span>
+        </div>
+      </div>
+      <div class="colophon-meta">
+        ozanefeoglu.com<br />
+        <b>ADR‑016</b> · The Field Dossier
+      </div>
+    </header>
+
+    <!-- ─── masthead ─────────────────────────── -->
+    <section class="masthead">
+      <p class="masthead-eyebrow">Sayı 01 · Kasım 2025</p>
+      <h1>Bağırmaz; sessizliğinde güvenir.</h1>
+      <p class="masthead-lede">
+        Ozan Efeoğlu'nun kişisel yayın platformu için bir editöryal tasarım sistemi. Türkçe ciddi, sade, kazınmış. Saha gazeteciliğinin hızını ve görsel arşivin ağırlığını taşımak üzere — pikselin değil, içeriğin önde olduğu — kâğıt diliyle yazılmıştır.
+      </p>
+      <div class="masthead-tags">
+        <span class="masthead-tag">Türkçe</span>
+        <span class="masthead-tag">WCAG AA</span>
+        <span class="masthead-tag">ASVS L2</span>
+        <span class="masthead-tag">Core Web Vitals</span>
+        <span class="masthead-tag">prefers‑reduced‑motion</span>
+      </div>
+    </section>
+
+    <!-- ─── 01 — sahneler ────────────────────── -->
+    <section class="section">
+      <header class="section-header">
+        <span class="section-num">Bölüm 01</span>
+        <h2 class="section-title">Sahneler &amp; referans</h2>
+      </header>
+      <p class="section-lede">
+        İki UI kit — biri okuyucu, biri editör için — ve bir el kitabı. Sahneler tıklanabilir; el kitabı sahnelerin kurallarını yazar.
+      </p>
+
+      <div class="primary-grid">
+        <a href="ui_kits/public/index.html" class="primary-card">
+          <span class="primary-card-num">01 · Sahneler</span>
+          <h3 class="primary-card-title">Public site.</h3>
+          <p class="primary-card-sub">Yazılar, görüntü arşivi, hakkımda, iletişim — okuyucunun karşılaştığı 13 sahne. Hukuksal sayfalar, hata sahneleri ve boş durumlar dahil.</p>
+          <div class="primary-card-stat">
+            <div class="primary-card-stat-item"><span class="primary-card-stat-label">Sahne</span><span class="primary-card-stat-value">13</span></div>
+            <div class="primary-card-stat-item"><span class="primary-card-stat-label">Yüzey</span><span class="primary-card-stat-value">/yazılar · /goruntu</span></div>
+          </div>
+          <p class="primary-card-arrow">Aç →</p>
+        </a>
+        <a href="ui_kits/admin/index.html" class="primary-card">
+          <span class="primary-card-num">02 · Sahneler</span>
+          <h3 class="primary-card-title">Yazı Masası.</h3>
+          <p class="primary-card-sub">CMS paneli — editörün masası. Yazılar, fotoğraf kütüphanesi, kullanıcılar, oturumlar, iki‑aşamalı doğrulama ve yedekleme. 15 sahne.</p>
+          <div class="primary-card-stat">
+            <div class="primary-card-stat-item"><span class="primary-card-stat-label">Sahne</span><span class="primary-card-stat-value">15</span></div>
+            <div class="primary-card-stat-item"><span class="primary-card-stat-label">Modül</span><span class="primary-card-stat-value">8</span></div>
+          </div>
+          <p class="primary-card-arrow">Aç →</p>
+        </a>
+        <a href="reference/index.html" class="primary-card">
+          <span class="primary-card-num">03 · El kitabı</span>
+          <h3 class="primary-card-title">Referans.</h3>
+          <p class="primary-card-sub">Sahnelerin kuralları. Etkileşim altılısı, on bileşenin API'si, üç yazı ailesi, modular punto skalası, motion süreleri — hepsi tek yerde.</p>
+          <div class="primary-card-stat">
+            <div class="primary-card-stat-item"><span class="primary-card-stat-label">Sayfa</span><span class="primary-card-stat-value">3</span></div>
+            <div class="primary-card-stat-item"><span class="primary-card-stat-label">Belirteç</span><span class="primary-card-stat-value">60+</span></div>
+          </div>
+          <p class="primary-card-arrow">Aç →</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- ─── 02 — temeller ─────────────────────── -->
+    <section class="section">
+      <header class="section-header">
+        <span class="section-num">Bölüm 02</span>
+        <h2 class="section-title">Temeller</h2>
+      </header>
+      <p class="section-lede">
+        Sahnelerin kurulduğu zemin — her biri kendi kartı. Renkler, yazı, ızgara, boşluk ve bileşenler ayrı kartlarda incelenir.
+      </p>
+
+      <div class="card-grid">
+
+        <a href="preview/palette-3color.html" class="card">
+          <span class="card-letter">A · Palet</span>
+          <h3 class="card-title">Üç renk paleti</h3>
+          <p class="card-sub">Kâğıt, mürekkep, damga.</p>
+        </a>
+        <a href="preview/palette-paper-scale.html" class="card">
+          <span class="card-letter">B · Palet</span>
+          <h3 class="card-title">Kâğıt skalası</h3>
+          <p class="card-sub">11 basamak — 50'den 950'ye.</p>
+        </a>
+        <a href="preview/palette-semantic.html" class="card">
+          <span class="card-letter">C · Palet</span>
+          <h3 class="card-title">Anlamsal renkler</h3>
+          <p class="card-sub">Token aliasları — bg, ink, accent.</p>
+        </a>
+
+        <a href="preview/type-families.html" class="card">
+          <span class="card-letter">D · Tipografi</span>
+          <h3 class="card-title">Yazı aileleri</h3>
+          <p class="card-sub">Source Serif 4 · IBM Plex Sans · Mono.</p>
+        </a>
+        <a href="preview/type-scale.html" class="card">
+          <span class="card-letter">E · Tipografi</span>
+          <h3 class="card-title">Punto skalası</h3>
+          <p class="card-sub">Modular 1.2 — 11 basamak.</p>
+        </a>
+        <a href="preview/type-display.html" class="card">
+          <span class="card-letter">F · Tipografi</span>
+          <h3 class="card-title">Display</h3>
+          <p class="card-sub">Başlık ve hero örnekleri.</p>
+        </a>
+        <a href="preview/type-pullquote.html" class="card">
+          <span class="card-letter">G · Tipografi</span>
+          <h3 class="card-title">Pull‑quote</h3>
+          <p class="card-sub">Alıntı tipografisi.</p>
+        </a>
+        <a href="preview/type-atoms.html" class="card">
+          <span class="card-letter">H · Tipografi</span>
+          <h3 class="card-title">Yazı atomları</h3>
+          <p class="card-sub">Eyebrow, kicker, lede, byline.</p>
+        </a>
+
+        <a href="preview/spacing-rhythm.html" class="card">
+          <span class="card-letter">I · Boşluk</span>
+          <h3 class="card-title">Ritim</h3>
+          <p class="card-sub">Üç ölçek — satır · alt bölüm · bölüm.</p>
+        </a>
+        <a href="preview/spacing-radius.html" class="card">
+          <span class="card-letter">J · Boşluk</span>
+          <h3 class="card-title">Köşe yarıçapı</h3>
+          <p class="card-sub">Neredeyse kare — 1 → 8px.</p>
+        </a>
+        <a href="preview/spacing-rules.html" class="card">
+          <span class="card-letter">K · Boşluk</span>
+          <h3 class="card-title">Çizgi sistemi</h3>
+          <p class="card-sub">Hairline, rule, division.</p>
+        </a>
+        <a href="preview/grid-12col.html" class="card">
+          <span class="card-letter">L · Yerleşim</span>
+          <h3 class="card-title">12 kolon ızgarası</h3>
+          <p class="card-sub">Dosya ızgarası — yerleşim sistemi.</p>
+        </a>
+
+        <a href="preview/components-buttons.html" class="card">
+          <span class="card-letter">M · Bileşen</span>
+          <h3 class="card-title">Düğmeler</h3>
+          <p class="card-sub">Btn — primary · secondary · quiet.</p>
+        </a>
+        <a href="preview/components-forms.html" class="card">
+          <span class="card-letter">N · Bileşen</span>
+          <h3 class="card-title">Formlar</h3>
+          <p class="card-sub">Field, label, hint, hata durumu.</p>
+        </a>
+        <a href="preview/components-flash.html" class="card">
+          <span class="card-letter">O · Bileşen</span>
+          <h3 class="card-title">Flash mesajlar</h3>
+          <p class="card-sub">Bilgi, başarı, uyarı, hata.</p>
+        </a>
+        <a href="preview/components-channel.html" class="card">
+          <span class="card-letter">P · Bileşen</span>
+          <h3 class="card-title">Kanal şeritleri</h3>
+          <p class="card-sub">Yazı / görüntü kanal başlıkları.</p>
+        </a>
+        <a href="preview/components-marginalia.html" class="card">
+          <span class="card-letter">Q · Bileşen</span>
+          <h3 class="card-title">Kenar notu</h3>
+          <p class="card-sub">Marginalia — kenar açıklaması.</p>
+        </a>
+        <a href="preview/components-writing-row.html" class="card">
+          <span class="card-letter">R · Bileşen</span>
+          <h3 class="card-title">Yazı satırı</h3>
+          <p class="card-sub">İndeks öğesi — başlık · meta · özet.</p>
+        </a>
+
+      </div>
+    </section>
+
+    <!-- ─── 03 — dokümanlar ──────────────────── -->
+    <section class="section">
+      <header class="section-header">
+        <span class="section-num">Bölüm 03</span>
+        <h2 class="section-title">Dokümanlar</h2>
+      </header>
+      <p class="section-lede">
+        Sistemin kurucu metinleri. Sahneler ve kartlar bunları okuduğunuzu varsayar.
+      </p>
+
+      <div class="docs-grid">
+        <a href="README.md" class="doc">
+          <div class="doc-icon doc-icon-md"></div>
+          <div class="doc-meta">
+            <p class="doc-name">README.md</p>
+            <p class="doc-sub">Sistemin onboarding rehberi — neyi nereden alırsınız, ne için kullanırsınız.</p>
+          </div>
+        </a>
+        <a href="SKILL.md" class="doc">
+          <div class="doc-icon doc-icon-md"></div>
+          <div class="doc-meta">
+            <p class="doc-name">SKILL.md</p>
+            <p class="doc-sub">Beceri manifestosu — Claude Code ile uyumlu, makinelerin okuduğu özet.</p>
+          </div>
+        </a>
+        <a href="reference/ADR-016-field-dossier.md" class="doc">
+          <div class="doc-icon doc-icon-md"></div>
+          <div class="doc-meta">
+            <p class="doc-name">ADR‑016 — Field Dossier</p>
+            <p class="doc-sub">Editorial Silence'ın felsefe ve karar metni — neden bu sistem, neden bu sertlikte.</p>
+          </div>
+        </a>
+        <a href="reference/LOGO_PHILOSOPHY.md" class="doc">
+          <div class="doc-icon doc-icon-md"></div>
+          <div class="doc-meta">
+            <p class="doc-name">LOGO_PHILOSOPHY.md</p>
+            <p class="doc-sub">Damga ve kâğıt — logonun anlamı, sembol envanteri, yasaklar.</p>
+          </div>
+        </a>
+      </div>
+    </section>
+
+    <!-- ─── footer ──────────────────────────── -->
+    <footer class="footer">
+      <p class="footer-line">
+        Hazırlayan: yazı işleri. Hata bulursanız söyleyin — düzeltilecek bir şey her zaman vardır.
+      </p>
+      <p class="footer-mono">
+        v1.0 · 2025<br />Editorial Silence
+      </p>
+    </footer>
+
+  </div>
+</body>
+</html>

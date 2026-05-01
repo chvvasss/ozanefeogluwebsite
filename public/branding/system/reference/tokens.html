@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Belirteçler — Editorial Silence</title>
+  <link rel="stylesheet" href="../colors_and_type.css" />
+  <link rel="stylesheet" href="_ref.css" />
+</head>
+<body>
+  <div class="ref-shell">
+    <aside class="ref-side">
+      <a href="../index.html" class="ref-mark">
+        <svg width="36" height="36" viewBox="0 0 64 64" aria-hidden="true">
+          <text x="6" y="48" font-family="Source Serif 4 Variable, Source Serif 4, Charter, Iowan Old Style, Georgia, serif" font-weight="600" font-size="48" letter-spacing="-1.6" fill="currentColor">oe</text>
+          <circle cx="49" cy="46" r="4.4" fill="#b91c1c" />
+        </svg>
+        <span class="ref-mark-text">
+          <span class="ref-mark-name">Editorial Silence</span>
+          <span class="ref-mark-sub">v1.0 · referans</span>
+        </span>
+      </a>
+
+      <p class="ref-side-eyebrow">Bölümler</p>
+      <nav class="ref-pages" aria-label="Referans sayfaları">
+        <a href="states.html">Durumlar</a>
+        <a href="components.html">Bileşenler</a>
+        <a href="tokens.html" aria-current="page">Belirteçler</a>
+      </nav>
+
+      <p class="ref-side-eyebrow">Bu sayfa</p>
+      <ol class="ref-toc">
+        <li><a href="#colors"><span class="ref-toc-num">01</span><span>Renkler</span></a></li>
+        <li><a href="#semantic"><span class="ref-toc-num">02</span><span>Anlamsal renkler</span></a></li>
+        <li><a href="#type"><span class="ref-toc-num">03</span><span>Tipografi</span></a></li>
+        <li><a href="#scale"><span class="ref-toc-num">04</span><span>Punto skalası</span></a></li>
+        <li><a href="#tracking"><span class="ref-toc-num">05</span><span>Harf aralığı</span></a></li>
+        <li><a href="#radius"><span class="ref-toc-num">06</span><span>Köşe yarıçapı</span></a></li>
+        <li><a href="#spacing"><span class="ref-toc-num">07</span><span>Boşluk ritmi</span></a></li>
+        <li><a href="#controls"><span class="ref-toc-num">08</span><span>Kontroller</span></a></li>
+        <li><a href="#motion"><span class="ref-toc-num">09</span><span>Hareket</span></a></li>
+      </ol>
+    </aside>
+
+    <main class="ref-main">
+      <header class="ref-hero">
+        <p class="ref-eyebrow">Referans · 05</p>
+        <h1 class="ref-title">Belirteçler.</h1>
+        <p class="ref-lede">
+          Editorial Silence'ın bütün sayısal kimliği. Her renk, her punto, her milisaniye burada bir kez tanımlanır — ve sahnelerin hepsi buradan beslenir. CSS değişkenleridir; sahnelerde isimle çağrılır, sayıyla değil.
+        </p>
+      </header>
+
+      <!-- ─── 01 PALETTE ─── -->
+      <section class="ref-section" id="colors">
+        <p class="ref-section-eyebrow">01 · Palet</p>
+        <h2>Renk skalası.</h2>
+        <p>İki skala — kâğıt (50→950) ve damga (200→800). Bütün başka renkler buradan türetilmiş anlamsal aliaslardır.</p>
+
+        <h3><span class="num">01a</span>Kâğıt — gazete grisi sıcak beyaz</h3>
+        <div class="swatch-row">
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-paper-50);"></div><div class="swatch-meta"><span class="swatch-name">paper-50</span><span class="swatch-value">#faf9f5</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-paper-100);"></div><div class="swatch-meta"><span class="swatch-name">paper-100</span><span class="swatch-value">#f4f3ed</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-paper-200);"></div><div class="swatch-meta"><span class="swatch-name">paper-200</span><span class="swatch-value">#e8e6dc</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-paper-300);"></div><div class="swatch-meta"><span class="swatch-name">paper-300</span><span class="swatch-value">#d0cbbd</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-paper-400);"></div><div class="swatch-meta"><span class="swatch-name">paper-400</span><span class="swatch-value">#9f9889</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-paper-500);"></div><div class="swatch-meta"><span class="swatch-name">paper-500</span><span class="swatch-value">#686252</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-paper-600);"></div><div class="swatch-meta"><span class="swatch-name">paper-600</span><span class="swatch-value">#46413a</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-paper-700);"></div><div class="swatch-meta"><span class="swatch-name">paper-700</span><span class="swatch-value">#2e2a25</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-paper-800);"></div><div class="swatch-meta"><span class="swatch-name">paper-800</span><span class="swatch-value">#1c1915</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-paper-900);"></div><div class="swatch-meta"><span class="swatch-name">paper-900</span><span class="swatch-value">#14110d</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-paper-950);"></div><div class="swatch-meta"><span class="swatch-name">paper-950</span><span class="swatch-value">#08060a</span></div></div>
+        </div>
+
+        <h3><span class="num">01b</span>Damga — sansür kırmızısı</h3>
+        <div class="swatch-row">
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-red-200);"></div><div class="swatch-meta"><span class="swatch-name">red-200</span><span class="swatch-value">#f0b5bb</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-red-300);"></div><div class="swatch-meta"><span class="swatch-name">red-300</span><span class="swatch-value">#e37d85</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-red-400);"></div><div class="swatch-meta"><span class="swatch-name">red-400</span><span class="swatch-value">#e64558</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-red-500);"></div><div class="swatch-meta"><span class="swatch-name">red-500</span><span class="swatch-value">#c41e3a</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-red-600);"></div><div class="swatch-meta"><span class="swatch-name">red-600</span><span class="swatch-value">#a31629</span></div></div>
+          <div class="swatch" style="position: relative;"><div class="swatch-chip" style="background: var(--color-red-700);"></div><div class="swatch-meta"><span class="swatch-name">red-700 ◀ damga</span><span class="swatch-value">#b91c1c</span></div></div>
+          <div class="swatch"><div class="swatch-chip" style="background: var(--color-red-800);"></div><div class="swatch-meta"><span class="swatch-name">red-800</span><span class="swatch-value">#550812</span></div></div>
+        </div>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 02 SEMANTIC ─── -->
+      <section class="ref-section" id="semantic">
+        <p class="ref-section-eyebrow">02 · Anlamsal</p>
+        <h2>Anlamsal renkler.</h2>
+        <p>Sahnelerde ham paleti çağırmayın. Bunun yerine bu aliasları kullanın — açık ve koyu temada doğru değere kendiliğinden çevrilir.</p>
+
+        <table class="tokens-table">
+          <thead><tr><th></th><th>Belirteç</th><th>Açık tema</th><th>Kullanım</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tok-sample" style="background: var(--color-bg);"></span></td><td class="tok-name">--color-bg</td><td class="tok-value">paper-100</td><td>Sayfa zemini.</td></tr>
+            <tr><td><span class="tok-sample" style="background: var(--color-bg-elevated);"></span></td><td class="tok-name">--color-bg-elevated</td><td class="tok-value">#fffdf6</td><td>Kart, panel, modal — kâğıdın üstündeki kâğıt.</td></tr>
+            <tr><td><span class="tok-sample" style="background: var(--color-bg-muted);"></span></td><td class="tok-name">--color-bg-muted</td><td class="tok-value">paper-200</td><td>Hover, alt başlık zemini, kod bloğu.</td></tr>
+            <tr><td><span class="tok-sample" style="background: var(--color-bg-sunken);"></span></td><td class="tok-name">--color-bg-sunken</td><td class="tok-value">paper-300</td><td>İçeri çökmüş alan; nadiren kullanılır.</td></tr>
+            <tr><td><span class="tok-sample" style="background: var(--color-ink);"></span></td><td class="tok-name">--color-ink</td><td class="tok-value">#141310</td><td>Mürekkep — başlıklar ve gövde metni.</td></tr>
+            <tr><td><span class="tok-sample" style="background: var(--color-ink-muted);"></span></td><td class="tok-name">--color-ink-muted</td><td class="tok-value">paper-600</td><td>İkincil metin — alt başlık, yardımcı.</td></tr>
+            <tr><td><span class="tok-sample" style="background: var(--color-ink-subtle);"></span></td><td class="tok-name">--color-ink-subtle</td><td class="tok-value">paper-500</td><td>Üçüncül — meta veriler, zaman damgaları.</td></tr>
+            <tr><td><span class="tok-sample" style="background: var(--color-rule);"></span></td><td class="tok-name">--color-rule</td><td class="tok-value">paper-300</td><td>İnce çizgi — tablo satırları, ayıraçlar.</td></tr>
+            <tr><td><span class="tok-sample" style="background: var(--color-rule-strong);"></span></td><td class="tok-name">--color-rule-strong</td><td class="tok-value">paper-400</td><td>Kalın çizgi — kart kenarı, input border.</td></tr>
+            <tr><td><span class="tok-sample" style="background: var(--color-accent);"></span></td><td class="tok-name">--color-accent</td><td class="tok-value">red-700 ◀</td><td>Damga. Linkler, focus, primary aksiyon.</td></tr>
+            <tr><td><span class="tok-sample" style="background: var(--color-success);"></span></td><td class="tok-name">--color-success</td><td class="tok-value">#4a6b3a</td><td>Yayında, başarılı, doğrulanmış.</td></tr>
+            <tr><td><span class="tok-sample" style="background: var(--color-warning);"></span></td><td class="tok-name">--color-warning</td><td class="tok-value">#8a6a2c</td><td>Taslak, dikkat, çevrimdışı.</td></tr>
+            <tr><td><span class="tok-sample" style="background: var(--color-danger);"></span></td><td class="tok-name">--color-danger</td><td class="tok-value">#883028</td><td>Hata, silme onayı, yıkıcı aksiyon.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 03 TYPE ─── -->
+      <section class="ref-section" id="type">
+        <p class="ref-section-eyebrow">03 · Tipografi</p>
+        <h2>Yazı aileleri.</h2>
+        <p>Üç aile, her biri belirgin bir görev için. Sistem fontlarını fallback olarak değil, bilinçli alternatif olarak tutuyoruz.</p>
+
+        <table class="tokens-table">
+          <thead><tr><th>Belirteç</th><th>Aile</th><th>Görev</th></tr></thead>
+          <tbody>
+            <tr>
+              <td class="tok-name">--font-display</td>
+              <td><span style="font-family: var(--font-display); font-size: 1.15rem;">Source Serif 4 Variable</span></td>
+              <td>Başlıklar, lede, italik gövde — editöryal ses.</td>
+            </tr>
+            <tr>
+              <td class="tok-name">--font-sans</td>
+              <td><span style="font-family: var(--font-sans); font-size: 1.05rem;">IBM Plex Sans Variable</span></td>
+              <td>UI metni, form etiketleri, yardımcı metin.</td>
+            </tr>
+            <tr>
+              <td class="tok-name">--font-mono</td>
+              <td><span style="font-family: var(--font-mono); font-size: 1rem;">IBM Plex Mono</span></td>
+              <td>Eyebrow, zaman damgası, sayı, kod, dosya adı.</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 04 TYPE SCALE ─── -->
+      <section class="ref-section" id="scale">
+        <p class="ref-section-eyebrow">04 · Tipografi</p>
+        <h2>Punto skalası — modular 1.2.</h2>
+        <p>Modular ölçek 1.2 oranında genişler. UI'ya yetecek kadar, editoryal başlıklara da çıkabilen 11 basamak.</p>
+
+        <table class="tokens-table">
+          <thead><tr><th>Belirteç</th><th>Değer</th><th>Örnek</th></tr></thead>
+          <tbody>
+            <tr><td class="tok-name">--text-xs</td><td class="tok-value">0.78rem</td><td style="font-size: var(--text-xs); font-family: var(--font-display); color: var(--color-ink);">Editorial Silence — küçük yardımcı</td></tr>
+            <tr><td class="tok-name">--text-sm</td><td class="tok-value">0.875rem</td><td style="font-size: var(--text-sm); font-family: var(--font-display); color: var(--color-ink);">Editorial Silence — küçük gövde</td></tr>
+            <tr><td class="tok-name">--text-base</td><td class="tok-value">1rem</td><td style="font-size: var(--text-base); font-family: var(--font-display); color: var(--color-ink);">Editorial Silence — gövde</td></tr>
+            <tr><td class="tok-name">--text-md</td><td class="tok-value">1.125rem</td><td style="font-size: var(--text-md); font-family: var(--font-display); color: var(--color-ink);">Editorial Silence — okuma</td></tr>
+            <tr><td class="tok-name">--text-lg</td><td class="tok-value">1.35rem</td><td style="font-size: var(--text-lg); font-family: var(--font-display); color: var(--color-ink);">Editorial Silence — lede</td></tr>
+            <tr><td class="tok-name">--text-xl</td><td class="tok-value">1.62rem</td><td style="font-size: var(--text-xl); font-family: var(--font-display); color: var(--color-ink);">Editorial Silence — alt başlık</td></tr>
+            <tr><td class="tok-name">--text-2xl</td><td class="tok-value">1.95rem</td><td style="font-size: var(--text-2xl); font-family: var(--font-display); color: var(--color-ink); font-weight: 600; letter-spacing: -.01em;">Yazı işleri — h2</td></tr>
+            <tr><td class="tok-name">--text-3xl</td><td class="tok-value">2.34rem</td><td style="font-size: var(--text-3xl); font-family: var(--font-display); color: var(--color-ink); font-weight: 600; letter-spacing: -.015em;">Yazı işleri — h1</td></tr>
+            <tr><td class="tok-name">--text-4xl</td><td class="tok-value">2.81rem</td><td style="font-size: var(--text-4xl); font-family: var(--font-display); color: var(--color-ink); font-weight: 600; letter-spacing: -.02em;">Editorial</td></tr>
+            <tr><td class="tok-name">--text-5xl</td><td class="tok-value">3.37rem</td><td style="font-size: var(--text-5xl); font-family: var(--font-display); color: var(--color-ink); font-weight: 600; letter-spacing: -.025em; line-height: 1;">Editorial</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 05 TRACKING ─── -->
+      <section class="ref-section" id="tracking">
+        <p class="ref-section-eyebrow">05 · Tipografi</p>
+        <h2>Harf aralığı.</h2>
+        <p>Başlık ne kadar büyükse o kadar sıkışır; küçük mono ne kadar küçükse o kadar açılır. Kural: ekrandaki optik sıklık aynı kalmalı.</p>
+
+        <table class="tokens-table">
+          <thead><tr><th>Belirteç</th><th>Değer</th><th>Kullanım</th></tr></thead>
+          <tbody>
+            <tr><td class="tok-name">--tracking-tightest</td><td class="tok-value">-0.04em</td><td>Hero başlık (text‑6xl ve üstü).</td></tr>
+            <tr><td class="tok-name">--tracking-tighter</td><td class="tok-value">-0.02em</td><td>Sayfa başlığı (text‑4xl/5xl).</td></tr>
+            <tr><td class="tok-name">--tracking-tight</td><td class="tok-value">-0.01em</td><td>Bölüm başlığı (text‑2xl/3xl).</td></tr>
+            <tr><td class="tok-name">--tracking-normal</td><td class="tok-value">0</td><td>Gövde metni — varsayılan.</td></tr>
+            <tr><td class="tok-name">--tracking-wide</td><td class="tok-value">0.025em</td><td>Küçük gövde — okunabilirlik.</td></tr>
+            <tr><td class="tok-name">--tracking-wider</td><td class="tok-value">0.1em</td><td>Eyebrow, mono caps.</td></tr>
+            <tr><td class="tok-name">--tracking-caps</td><td class="tok-value">0.18em</td><td>Mono uppercase — bölüm başlığı.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 06 RADIUS ─── -->
+      <section class="ref-section" id="radius">
+        <p class="ref-section-eyebrow">06 · Geometri</p>
+        <h2>Köşe yarıçapı — neredeyse kare.</h2>
+        <p>Kâğıt kesilir, yuvarlanmaz. En büyük yarıçap 8 piksel — onu da yalnızca form kontrolleri ve buton köşeleri görür.</p>
+
+        <div class="preview-frame" style="display: flex; gap: 22px; flex-wrap: wrap; align-items: flex-end;">
+          <div style="text-align: center;">
+            <div style="width: 80px; height: 80px; background: var(--color-paper-300); border: 1px solid var(--color-rule-strong); border-radius: var(--radius-xs);"></div>
+            <p style="font-family: var(--font-mono); font-size: .68rem; letter-spacing: .14em; color: var(--color-ink-subtle); margin: 8px 0 0;">--radius-xs · 1px</p>
+          </div>
+          <div style="text-align: center;">
+            <div style="width: 80px; height: 80px; background: var(--color-paper-300); border: 1px solid var(--color-rule-strong); border-radius: var(--radius-sm);"></div>
+            <p style="font-family: var(--font-mono); font-size: .68rem; letter-spacing: .14em; color: var(--color-ink-subtle); margin: 8px 0 0;">--radius-sm · 2px</p>
+          </div>
+          <div style="text-align: center;">
+            <div style="width: 80px; height: 80px; background: var(--color-paper-300); border: 1px solid var(--color-rule-strong); border-radius: var(--radius-md);"></div>
+            <p style="font-family: var(--font-mono); font-size: .68rem; letter-spacing: .14em; color: var(--color-ink-subtle); margin: 8px 0 0;">--radius-md · 4px</p>
+          </div>
+          <div style="text-align: center;">
+            <div style="width: 80px; height: 80px; background: var(--color-paper-300); border: 1px solid var(--color-rule-strong); border-radius: var(--radius-lg);"></div>
+            <p style="font-family: var(--font-mono); font-size: .68rem; letter-spacing: .14em; color: var(--color-ink-subtle); margin: 8px 0 0;">--radius-lg · 8px</p>
+          </div>
+        </div>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 07 SPACING ─── -->
+      <section class="ref-section" id="spacing">
+        <p class="ref-section-eyebrow">07 · Yerleşim</p>
+        <h2>Boşluk ritmi.</h2>
+        <p>Sahne içi boşluklar üç ölçekte sabittir — satır, alt bölüm, bölüm. Hepsi viewport'a duyarlı (clamp), dolayısıyla mobilde sıkışır, masaüstünde nefes alır.</p>
+
+        <table class="tokens-table">
+          <thead><tr><th>Belirteç</th><th>Değer</th><th>Kullanım</th></tr></thead>
+          <tbody>
+            <tr><td class="tok-name">--space-row</td><td class="tok-value">clamp(1rem, 1.6vw, 1.5rem)</td><td>Satır arası — paragraflar, liste öğeleri.</td></tr>
+            <tr><td class="tok-name">--space-subsection</td><td class="tok-value">clamp(2rem, 4vw, 3.5rem)</td><td>Alt bölüm arası — h3 + içerik blokları.</td></tr>
+            <tr><td class="tok-name">--space-section</td><td class="tok-value">clamp(4rem, 9vw, 8rem)</td><td>Bölüm arası — h2'ler arası nefes.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 08 CONTROLS ─── -->
+      <section class="ref-section" id="controls">
+        <p class="ref-section-eyebrow">08 · Kontroller</p>
+        <h2>Form kontrolleri.</h2>
+        <p>Düğme ve giriş yüksekliği üç basamakta sabittir. Mobilde minimum dokunma alanı 44 piksel — <code>--control-h-lg</code>.</p>
+
+        <table class="tokens-table">
+          <thead><tr><th>Belirteç</th><th>Değer</th><th>Kullanım</th></tr></thead>
+          <tbody>
+            <tr><td class="tok-name">--control-h-sm</td><td class="tok-value">2rem (32px)</td><td>Yoğun tablolarda satır içi düğmeler.</td></tr>
+            <tr><td class="tok-name">--control-h</td><td class="tok-value">2.25rem (36px)</td><td>Varsayılan masaüstü.</td></tr>
+            <tr><td class="tok-name">--control-h-lg</td><td class="tok-value">2.75rem (44px)</td><td>Mobil dokunma — minimum hedef.</td></tr>
+            <tr><td class="tok-name">--control-px-sm</td><td class="tok-value">0.75rem</td><td>Küçük düğme yatay padding.</td></tr>
+            <tr><td class="tok-name">--control-px</td><td class="tok-value">1.1rem</td><td>Varsayılan yatay padding.</td></tr>
+            <tr><td class="tok-name">--control-px-lg</td><td class="tok-value">1.5rem</td><td>Büyük primary buton.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── 09 MOTION ─── -->
+      <section class="ref-section" id="motion">
+        <p class="ref-section-eyebrow">09 · Hareket</p>
+        <h2>Süreler.</h2>
+        <p>Editöryal motion: çoğu geçiş 120ms, sayfa düzeyi 240ms, hiçbir zaman 320ms üstü değil. <code>prefers-reduced-motion</code> tüm değerleri sıfırlar.</p>
+
+        <table class="tokens-table">
+          <thead><tr><th>Belirteç</th><th>Değer</th><th>Kullanım</th></tr></thead>
+          <tbody>
+            <tr><td class="tok-name">--motion-fast</td><td class="tok-value">120ms</td><td>Hover, focus, active — refleks geri bildirim.</td></tr>
+            <tr><td class="tok-name">--motion-base</td><td class="tok-value">200ms</td><td>Bileşen geçişleri — modal, dropdown.</td></tr>
+            <tr><td class="tok-name">--motion-slow</td><td class="tok-value">320ms</td><td>Sayfa düzeyinde geçiş — nadiren.</td></tr>
+            <tr><td class="tok-name">--easing-standard</td><td class="tok-value">cubic-bezier(.2, .0, .0, 1)</td><td>Varsayılan; soft start, kararlı son.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="disclosure-box mt-8" style="max-width: 720px;">
+          <p>
+            <strong>Hareketten azaltma.</strong> Tüm sahnelerde <code>@media (prefers-reduced-motion: reduce)</code> kuralı vardır. Geçişler 0.01s'ye iner; pulse animasyonları durur. Editorial Silence'ın editoryal sesi sessizliği zaten benimser, bu kural onun teknik karşılığıdır.
+          </p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>

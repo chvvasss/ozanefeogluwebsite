@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Bileşenler — Editorial Silence</title>
+  <link rel="stylesheet" href="../colors_and_type.css" />
+  <link rel="stylesheet" href="_ref.css" />
+</head>
+<body>
+  <div class="ref-shell">
+    <aside class="ref-side">
+      <a href="../index.html" class="ref-mark">
+        <svg width="36" height="36" viewBox="0 0 64 64" aria-hidden="true">
+          <text x="6" y="48" font-family="Source Serif 4 Variable, Source Serif 4, Charter, Iowan Old Style, Georgia, serif" font-weight="600" font-size="48" letter-spacing="-1.6" fill="currentColor">oe</text>
+          <circle cx="49" cy="46" r="4.4" fill="#b91c1c" />
+        </svg>
+        <span class="ref-mark-text">
+          <span class="ref-mark-name">Editorial Silence</span>
+          <span class="ref-mark-sub">v1.0 · referans</span>
+        </span>
+      </a>
+
+      <p class="ref-side-eyebrow">Bölümler</p>
+      <nav class="ref-pages" aria-label="Referans sayfaları">
+        <a href="states.html">Durumlar</a>
+        <a href="components.html" aria-current="page">Bileşenler</a>
+        <a href="tokens.html">Belirteçler</a>
+      </nav>
+
+      <p class="ref-side-eyebrow">Bu sayfa</p>
+      <ol class="ref-toc">
+        <li><a href="#btn"><span class="ref-toc-num">01</span><span>Btn</span></a></li>
+        <li><a href="#field"><span class="ref-toc-num">02</span><span>Field</span></a></li>
+        <li><a href="#eyebrow"><span class="ref-toc-num">03</span><span>Eyebrow</span></a></li>
+        <li><a href="#tag"><span class="ref-toc-num">04</span><span>Tag</span></a></li>
+        <li><a href="#chip"><span class="ref-toc-num">05</span><span>Chip</span></a></li>
+        <li><a href="#statuspip"><span class="ref-toc-num">06</span><span>StatusPip</span></a></li>
+        <li><a href="#linkquiet"><span class="ref-toc-num">07</span><span>LinkQuiet</span></a></li>
+        <li><a href="#disclosure"><span class="ref-toc-num">08</span><span>DisclosureBox</span></a></li>
+        <li><a href="#dossier"><span class="ref-toc-num">09</span><span>DossierGrid</span></a></li>
+        <li><a href="#statgrid"><span class="ref-toc-num">10</span><span>StatGrid</span></a></li>
+      </ol>
+    </aside>
+
+    <main class="ref-main">
+      <header class="ref-hero">
+        <p class="ref-eyebrow">Referans · 04</p>
+        <h1 class="ref-title">Bileşenler.</h1>
+        <p class="ref-lede">
+          Editorial Silence'ın atomları. Her bileşen — ne işe yarar, hangi prop'ları alır, nereden gelir, ne zaman kullanılır. Yeni bir sahne kurarken önce buraya bakılır; ikinci kez kutu çizilmez.
+        </p>
+      </header>
+
+      <!-- ─── Btn ─── -->
+      <section class="ref-section" id="btn">
+        <p class="ref-section-eyebrow">01 · Etkileşim</p>
+        <h2>Btn — düğme.</h2>
+        <p>Birincil aksiyon, ikincil aksiyon, hayalet ve tehlike — dört ses tonu. Sayfada en fazla bir adet birincil olur; geri kalanı ikincil veya hayalettir.</p>
+
+        <div class="preview-frame" style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <button class="btn">Yayımla</button>
+          <button class="btn btn--secondary">Taslak kaydet</button>
+          <button class="btn btn--ghost">İptal</button>
+          <button class="btn btn--danger">Arşivden sil</button>
+          <button class="btn btn--sm">Küçük</button>
+          <button class="btn btn--lg">Büyük</button>
+        </div>
+
+        <h3>Prop'lar</h3>
+        <table class="api-table">
+          <thead><tr><th>Prop</th><th>Tip</th><th>Varsayılan</th><th>Açıklama</th></tr></thead>
+          <tbody>
+            <tr><td class="api-prop">variant</td><td class="api-type">"primary" | "secondary" | "ghost" | "danger"</td><td class="api-default">"primary"</td><td>Aksiyon ağırlığı. Sayfada bir tane primary.</td></tr>
+            <tr><td class="api-prop">size</td><td class="api-type">"sm" | undefined | "lg"</td><td class="api-default">undefined</td><td>Yükseklik 28 / 36 / 44 px.</td></tr>
+            <tr><td class="api-prop">onClick</td><td class="api-type">() =&gt; void</td><td class="api-default">—</td><td>Tıklama olayı. Async fonksiyonlarda yükleme durumunu siz yönetin.</td></tr>
+            <tr><td class="api-prop">disabled</td><td class="api-type">boolean</td><td class="api-default">false</td><td>Erişilemez kılar; opacity .4.</td></tr>
+          </tbody>
+        </table>
+
+        <div class="do-dont">
+          <div class="do-cell"><p>Tek primary butonu sayfanın sonunda — beklenen aksiyon. Etrafındakiler ikincil veya hayalet.</p></div>
+          <div class="dont-cell"><p>Üç primary buton yan yana. Hangisinin "asıl" eylem olduğu kayboluyor.</p></div>
+        </div>
+
+        <pre class="code-block"><span class="com">// import — primitives.jsx zaten yüklü</span>
+&lt;<span class="kw">Btn</span>&gt;Yayımla&lt;/Btn&gt;
+&lt;<span class="kw">Btn</span> variant=<span class="str">"secondary"</span>&gt;Taslak kaydet&lt;/Btn&gt;
+&lt;<span class="kw">Btn</span> variant=<span class="str">"danger"</span> size=<span class="str">"sm"</span>&gt;Sil&lt;/Btn&gt;</pre>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── Field ─── -->
+      <section class="ref-section" id="field">
+        <p class="ref-section-eyebrow">02 · Form</p>
+        <h2>Field — etiketli alan.</h2>
+        <p>Form satırı için sarmalayıcı: etiket + içerik + ipucu / hata. İçeriği siz yazarsınız (input, select, textarea) — Field sadece tipografiyi ve hizalamayı verir.</p>
+
+        <div class="preview-frame" style="max-width: 360px;">
+          <div class="field">
+            <label class="field-label">Konum</label>
+            <input class="input" value="Hatay" />
+            <span class="field-hint">Yazının çekildiği şehir veya köy.</span>
+          </div>
+        </div>
+
+        <h3>Prop'lar</h3>
+        <table class="api-table">
+          <thead><tr><th>Prop</th><th>Tip</th><th>Varsayılan</th><th>Açıklama</th></tr></thead>
+          <tbody>
+            <tr><td class="api-prop">label</td><td class="api-type">string</td><td class="api-default">—</td><td>Üst etiket. Atlamayın — erişilebilirlik gerekli.</td></tr>
+            <tr><td class="api-prop">hint</td><td class="api-type">string</td><td class="api-default">—</td><td>Altta ipucu. Hata varsa göstermez.</td></tr>
+            <tr><td class="api-prop">error</td><td class="api-type">string</td><td class="api-default">—</td><td>Hata mesajı. hint'in yerini alır.</td></tr>
+            <tr><td class="api-prop">children</td><td class="api-type">ReactNode</td><td class="api-default">—</td><td>Genelde <code>&lt;input class="input" /&gt;</code> ya da <code>&lt;select class="input" /&gt;</code>.</td></tr>
+          </tbody>
+        </table>
+
+        <pre class="code-block">&lt;<span class="kw">Field</span> label=<span class="str">"E‑posta"</span> error=<span class="str">"Geçerli bir adres giriniz"</span>&gt;
+  &lt;input className=<span class="str">"input"</span> type=<span class="str">"email"</span> /&gt;
+&lt;/Field&gt;</pre>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── Eyebrow ─── -->
+      <section class="ref-section" id="eyebrow">
+        <p class="ref-section-eyebrow">03 · Tipografi</p>
+        <h2>Eyebrow — gözlük.</h2>
+        <p>Bir başlığın hemen üstünde duran, küçük, mono, harfler arası açık etiket. Sahnenin nerede durduğunu söyler — "yayın · medya", "saha defteri · 016".</p>
+
+        <div class="preview-frame">
+          <p class="eyebrow" style="margin: 0 0 8px;">Yayın · medya</p>
+          <h3 style="font-family: var(--font-display); font-weight: 600; font-size: 1.6rem; margin: 0; color: var(--color-ink);">Fotoğraflar</h3>
+        </div>
+
+        <table class="api-table">
+          <thead><tr><th>Prop</th><th>Tip</th><th>Varsayılan</th><th>Açıklama</th></tr></thead>
+          <tbody>
+            <tr><td class="api-prop">children</td><td class="api-type">string</td><td class="api-default">—</td><td>Bir veya iki kelime + " · " + bir kelime daha.</td></tr>
+            <tr><td class="api-prop">className</td><td class="api-type">string</td><td class="api-default">""</td><td>Ek sınıf — genelde <code>"mb-2"</code> veya <code>"mb-3"</code>.</td></tr>
+          </tbody>
+        </table>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── Tag ─── -->
+      <section class="ref-section" id="tag">
+        <p class="ref-section-eyebrow">04 · İşaret</p>
+        <h2>Tag — etiket.</h2>
+        <p>Yazıya, fotoğrafa, kullanıcıya iliştirilen küçük sınıflandırma. Yuvarlak köşesiz, ince çerçeveli, 1 punto altında.</p>
+
+        <div class="preview-frame" style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <span class="tag">saha</span>
+          <span class="tag">defter</span>
+          <span class="tag">mahalle</span>
+          <span class="tag">röportaj</span>
+        </div>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── Chip ─── -->
+      <section class="ref-section" id="chip">
+        <p class="ref-section-eyebrow">05 · Filtre</p>
+        <h2>Chip — filtre düğmesi.</h2>
+        <p>Tablo veya liste üstünde duran, tıklanabilen filtre. <code>aria-pressed</code> ile aktif/pasif tutulur. Yuvarlak hatlı — Tag'in interaktif kuzeni.</p>
+
+        <div class="preview-frame" style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button class="chip" aria-pressed="true" style="background: var(--color-ink); color: var(--color-paper-50); border-color: var(--color-ink);">Hepsi</button>
+          <button class="chip" aria-pressed="false">Saha</button>
+          <button class="chip" aria-pressed="false">Atölye</button>
+          <button class="chip" aria-pressed="false">Notlar</button>
+        </div>
+
+        <pre class="code-block">&lt;<span class="kw">button</span> className=<span class="str">"chip"</span> aria-pressed={active}&gt;
+  Saha &lt;<span class="kw">span</span> className=<span class="str">"chip-count"</span>&gt;14&lt;/span&gt;
+&lt;/button&gt;</pre>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── StatusPip ─── -->
+      <section class="ref-section" id="statuspip">
+        <p class="ref-section-eyebrow">06 · İşaret</p>
+        <h2>StatusPip — durum noktası.</h2>
+        <p>Tabloda satır durumunu gösteren küçük renkli nokta + etiket. Renk yalnızca anlamlı durumlarda kullanılır; sıradan etiket için Tag tercih edilir.</p>
+
+        <div class="preview-frame" style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <span class="status-pip" data-status="published">Yayında</span>
+          <span class="status-pip" data-status="draft">Taslak</span>
+          <span class="status-pip" data-status="scheduled">Zamanlandı</span>
+          <span class="status-pip" data-status="archived">Arşivde</span>
+          <span class="status-pip" data-status="new">Yeni</span>
+          <span class="status-pip" data-status="resolved">Kapatıldı</span>
+        </div>
+
+        <pre class="code-block">&lt;<span class="kw">span</span> className=<span class="str">"status-pip"</span> data-status=<span class="str">"published"</span>&gt;Yayında&lt;/span&gt;</pre>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── LinkQuiet ─── -->
+      <section class="ref-section" id="linkquiet">
+        <p class="ref-section-eyebrow">07 · Bağlantı</p>
+        <h2>LinkQuiet — sessiz bağlantı.</h2>
+        <p>Tablo satırının sağında, sahne sonunda ya da kart altında duran, altı çizgisiz, mono, "ok" ile biten bağlantı. Kalın değildir — okurun gözüne batmaz.</p>
+
+        <div class="preview-frame" style="display: flex; gap: 24px; flex-wrap: wrap;">
+          <a class="link-quiet" href="#">Düzenle →</a>
+          <a class="link-quiet" href="#">Arşivde gör →</a>
+          <a class="link-quiet" href="#">Tüm yazılar →</a>
+        </div>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── DisclosureBox ─── -->
+      <section class="ref-section" id="disclosure">
+        <p class="ref-section-eyebrow">08 · İçerik</p>
+        <h2>DisclosureBox — kutucuk.</h2>
+        <p>Sayfa içinde yardımcı not, hukuksal uyarı veya editöryal açıklama için kutu. Sol kenarda kalın aksent çizgisi, italik gövde — sahnenin akışını bozmaz, gözü çekmez.</p>
+
+        <div class="preview-frame">
+          <div class="disclosure-box" style="max-width: 640px;">
+            <p>
+              <strong>Saklama önerisi.</strong> Yedek kodlarınızı şifre kasanıza kaydedin ya da yazdırıp arşiv klasörüne koyun. Bu sayfayı kapatınca kodlar tekrar gösterilmez.
+            </p>
+          </div>
+        </div>
+
+        <pre class="code-block">&lt;<span class="kw">div</span> className=<span class="str">"disclosure-box"</span>&gt;
+  &lt;<span class="kw">p</span>&gt;&lt;strong&gt;Başlık.&lt;/strong&gt; Gövde metni — italik...&lt;/p&gt;
+&lt;/div&gt;</pre>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── DossierGrid ─── -->
+      <section class="ref-section" id="dossier">
+        <p class="ref-section-eyebrow">09 · Yerleşim</p>
+        <h2>DossierGrid — 12 kolonlu dosya ızgarası.</h2>
+        <p>Tüm sahnelerin omurgası. <code>.dossier-grid</code> sarmalayıcı, içine <code>.dg-1</code> ile <code>.dg-12</code> arası kolon yayar. 760px altında tek kolona düşer.</p>
+
+        <div class="preview-frame">
+          <div class="dossier-grid" style="row-gap: 8px;">
+            <div class="dg-7" style="background: var(--color-paper-100); border: 1px solid var(--color-rule); padding: 16px; font-family: var(--font-mono); font-size: .72rem; color: var(--color-ink-muted);">.dg-7 — gövde</div>
+            <div class="dg-4" style="background: var(--color-paper-100); border: 1px solid var(--color-rule); padding: 16px; font-family: var(--font-mono); font-size: .72rem; color: var(--color-ink-muted); grid-column-start: 9;">.dg-4 — yan</div>
+            <div class="dg-12" style="background: var(--color-paper-100); border: 1px solid var(--color-rule); padding: 16px; font-family: var(--font-mono); font-size: .72rem; color: var(--color-ink-muted);">.dg-12 — tam genişlik</div>
+          </div>
+        </div>
+      </section>
+
+      <hr class="ref-rule" />
+
+      <!-- ─── StatGrid ─── -->
+      <section class="ref-section" id="statgrid">
+        <p class="ref-section-eyebrow">10 · Yerleşim</p>
+        <h2>StatGrid — sayı paneli.</h2>
+        <p>Yönetim paneli sahnelerinde dört rakamı yan yana koyan ızgara. Stat değeri büyük serif, etiket küçük mono, delta tek satır editöryal not.</p>
+
+        <div class="preview-frame">
+          <div class="stat-grid" style="border: 1px solid var(--color-rule);">
+            <div class="stat-cell">
+              <p class="stat-label">Yayındaki</p>
+              <p class="stat-value">31</p>
+              <p class="stat-delta">son 30 gün</p>
+            </div>
+            <div class="stat-cell">
+              <p class="stat-label">Taslak</p>
+              <p class="stat-value">4</p>
+              <p class="stat-delta stat-delta--up">+2 bu hafta</p>
+            </div>
+            <div class="stat-cell">
+              <p class="stat-label">Toplam okuma</p>
+              <p class="stat-value">8.412</p>
+              <p class="stat-delta">son 7 gün</p>
+            </div>
+            <div class="stat-cell">
+              <p class="stat-label">Mesaj</p>
+              <p class="stat-value">4</p>
+              <p class="stat-delta stat-delta--up">cevaplanmamış</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+</body>
+</html>

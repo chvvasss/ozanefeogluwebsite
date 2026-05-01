@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Referans — Editorial Silence</title>
+  <link rel="stylesheet" href="../colors_and_type.css" />
+  <link rel="stylesheet" href="_ref.css" />
+  <style>
+    .ref-hub {
+      max-width: 980px; margin: 0 auto;
+      padding: 80px 56px 96px;
+    }
+    @media (max-width: 760px) { .ref-hub { padding: 56px 28px 80px; } }
+    .ref-hub-hero {
+      border-bottom: 2px solid var(--color-ink);
+      padding-bottom: 36px; margin-bottom: 56px;
+    }
+    .ref-hub-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--color-rule);
+      border: 1px solid var(--color-rule);
+    }
+    @media (max-width: 760px) { .ref-hub-grid { grid-template-columns: 1fr; } }
+    .ref-hub-card {
+      background: var(--color-bg-elevated);
+      padding: 36px 32px 28px;
+      display: flex; flex-direction: column;
+      text-decoration: none; color: inherit;
+      min-height: 280px;
+      transition: background .15s;
+    }
+    .ref-hub-card:hover { background: var(--color-bg-muted); }
+    .ref-hub-card-num {
+      font-family: var(--font-mono); font-size: .68rem;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--color-accent); margin-bottom: 14px;
+    }
+    .ref-hub-card-title {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: 1.6rem; letter-spacing: -.01em;
+      color: var(--color-ink); margin: 0 0 10px;
+    }
+    .ref-hub-card-sub {
+      font-family: var(--font-display); font-style: italic;
+      font-size: .98rem; line-height: 1.5;
+      color: var(--color-ink-muted);
+      flex: 1;
+    }
+    .ref-hub-card-arrow {
+      font-family: var(--font-mono); font-size: .72rem;
+      letter-spacing: .14em; text-transform: uppercase;
+      color: var(--color-ink); margin-top: 24px;
+    }
+    .ref-hub-back {
+      font-family: var(--font-mono); font-size: .68rem;
+      letter-spacing: .22em; text-transform: uppercase;
+      color: var(--color-ink-subtle); text-decoration: none;
+      margin-bottom: 32px; display: inline-block;
+    }
+    .ref-hub-back:hover { color: var(--color-ink); }
+
+    .ref-hub-section {
+      margin-top: 72px;
+    }
+    .ref-hub-section h2 {
+      font-family: var(--font-display); font-weight: 600;
+      font-size: 1.4rem; color: var(--color-ink); margin: 0 0 16px;
+    }
+    .ref-hub-section ul {
+      list-style: none; margin: 0; padding: 0;
+      display: grid; grid-template-columns: repeat(2, 1fr);
+      gap: 1px; background: var(--color-rule);
+      border: 1px solid var(--color-rule);
+    }
+    @media (max-width: 600px) { .ref-hub-section ul { grid-template-columns: 1fr; } }
+    .ref-hub-section li { background: var(--color-bg-elevated); }
+    .ref-hub-section a {
+      display: flex; gap: 14px; align-items: baseline;
+      padding: 14px 18px; text-decoration: none; color: inherit;
+    }
+    .ref-hub-section a:hover { background: var(--color-bg-muted); }
+    .ref-hub-section .num {
+      font-family: var(--font-mono); font-size: .7rem;
+      letter-spacing: .14em; color: var(--color-ink-subtle);
+      flex: 0 0 28px;
+    }
+    .ref-hub-section .label {
+      font-family: var(--font-display); font-size: .98rem;
+      color: var(--color-ink); flex: 1;
+    }
+    .ref-hub-section .meta {
+      font-family: var(--font-mono); font-size: .66rem;
+      letter-spacing: .14em; color: var(--color-ink-subtle);
+      text-transform: uppercase;
+    }
+  </style>
+</head>
+<body>
+  <div class="ref-hub">
+    <a href="../index.html" class="ref-hub-back">← Tasarım sistemi indeksi</a>
+
+    <header class="ref-hub-hero">
+      <p style="font-family: var(--font-mono); font-size: .68rem; letter-spacing: .22em; text-transform: uppercase; color: var(--color-accent); margin: 0;">Editorial Silence · Referans</p>
+      <h1 style="font-family: var(--font-display); font-weight: 600; font-size: clamp(2.4rem, 5vw, 3.6rem); letter-spacing: -.015em; line-height: 1.05; color: var(--color-ink); margin: 14px 0 0;">El kitabı.</h1>
+      <p style="font-family: var(--font-display); font-style: italic; font-size: 1.2rem; line-height: 1.55; color: var(--color-ink-muted); max-width: 60ch; margin: 18px 0 0;">
+        Sahneler nasıl çalışır — hangi durumlardan geçer, hangi bileşenlerle kurulur, hangi belirteçlerden beslenir. Yeni bir sayfa yazmadan önce burada bir göz atış kuraldır, lüks değil.
+      </p>
+    </header>
+
+    <div class="ref-hub-grid">
+      <a href="states.html" class="ref-hub-card">
+        <span class="ref-hub-card-num">03 · Durumlar</span>
+        <h2 class="ref-hub-card-title">Durumlar</h2>
+        <p class="ref-hub-card-sub">Etkileşim altılısı (idle/hover/active/focus/disabled/loading) ve gövde altılısı (boş/yükleniyor/hata/başarılı/çevrimdışı/silinmiş). Her senaryo için tek bir editöryal cümle.</p>
+        <p class="ref-hub-card-arrow">Aç →</p>
+      </a>
+      <a href="components.html" class="ref-hub-card">
+        <span class="ref-hub-card-num">04 · Bileşenler</span>
+        <h2 class="ref-hub-card-title">Bileşenler</h2>
+        <p class="ref-hub-card-sub">Btn, Field, Eyebrow, Tag, Chip, StatusPip, LinkQuiet, DisclosureBox, DossierGrid, StatGrid. On atomun prop'ları, varyantları ve "yapın / yapmayın" örnekleri.</p>
+        <p class="ref-hub-card-arrow">Aç →</p>
+      </a>
+      <a href="tokens.html" class="ref-hub-card">
+        <span class="ref-hub-card-num">05 · Belirteçler</span>
+        <h2 class="ref-hub-card-title">Belirteçler</h2>
+        <p class="ref-hub-card-sub">Renk skalaları, anlamsal aliaslar, üç yazı ailesi, modular 1.2 punto skalası, harf aralığı, köşe yarıçapı, boşluk ritmi, kontrol yükseklikleri, motion süreleri.</p>
+        <p class="ref-hub-card-arrow">Aç →</p>
+      </a>
+    </div>
+
+    <section class="ref-hub-section">
+      <h2>Sahneler — UI kitleri</h2>
+      <ul>
+        <li><a href="../ui_kits/public/index.html"><span class="num">01</span><span class="label">Public site</span><span class="meta">13 sahne</span></a></li>
+        <li><a href="../ui_kits/admin/index.html"><span class="num">02</span><span class="label">Admin paneli</span><span class="meta">15 sahne</span></a></li>
+      </ul>
+    </section>
+
+    <section class="ref-hub-section">
+      <h2>Tasarım sistemi kartları</h2>
+      <ul>
+        <li><a href="../preview/palette-3color.html"><span class="num">A</span><span class="label">Üç renk paleti</span><span class="meta">Renk sistemi</span></a></li>
+        <li><a href="../preview/palette-paper-scale.html"><span class="num">B</span><span class="label">Kâğıt skalası</span><span class="meta">11 basamak</span></a></li>
+        <li><a href="../preview/palette-semantic.html"><span class="num">C</span><span class="label">Anlamsal renkler</span><span class="meta">Token aliasları</span></a></li>
+        <li><a href="../preview/type-families.html"><span class="num">D</span><span class="label">Yazı aileleri</span><span class="meta">Tipografi</span></a></li>
+        <li><a href="../preview/type-scale.html"><span class="num">E</span><span class="label">Punto skalası</span><span class="meta">Modular 1.2</span></a></li>
+        <li><a href="../preview/type-display.html"><span class="num">F</span><span class="label">Display & başlık</span><span class="meta">Editöryal ses</span></a></li>
+        <li><a href="../preview/type-pullquote.html"><span class="num">G</span><span class="label">Pull‑quote</span><span class="meta">Alıntı tipografisi</span></a></li>
+        <li><a href="../preview/type-atoms.html"><span class="num">H</span><span class="label">Yazı atomları</span><span class="meta">Eyebrow, kicker, lede</span></a></li>
+        <li><a href="../preview/spacing-rhythm.html"><span class="num">I</span><span class="label">Boşluk ritmi</span><span class="meta">3 ölçek</span></a></li>
+        <li><a href="../preview/spacing-radius.html"><span class="num">J</span><span class="label">Köşe yarıçapı</span><span class="meta">4 basamak</span></a></li>
+        <li><a href="../preview/spacing-rules.html"><span class="num">K</span><span class="label">Çizgi sistemi</span><span class="meta">Hairline, rule, division</span></a></li>
+        <li><a href="../preview/grid-12col.html"><span class="num">L</span><span class="label">12 kolon ızgarası</span><span class="meta">Yerleşim</span></a></li>
+        <li><a href="../preview/components-buttons.html"><span class="num">M</span><span class="label">Düğmeler</span><span class="meta">Btn varyantları</span></a></li>
+        <li><a href="../preview/components-forms.html"><span class="num">N</span><span class="label">Formlar</span><span class="meta">Field, label, hint</span></a></li>
+        <li><a href="../preview/components-flash.html"><span class="num">O</span><span class="label">Flash mesajlar</span><span class="meta">4 ton</span></a></li>
+        <li><a href="../preview/components-channel.html"><span class="num">P</span><span class="label">Kanal şeritleri</span><span class="meta">Yazı / görüntü</span></a></li>
+        <li><a href="../preview/components-marginalia.html"><span class="num">Q</span><span class="label">Kenar notu</span><span class="meta">Marginalia</span></a></li>
+        <li><a href="../preview/components-writing-row.html"><span class="num">R</span><span class="label">Yazı satırı</span><span class="meta">İndeks öğesi</span></a></li>
+      </ul>
+    </section>
+  </div>
+</body>
+</html>

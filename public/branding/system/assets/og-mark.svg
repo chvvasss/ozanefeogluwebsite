@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Ozan Efeoğlu — Editorial Silence">
+  <rect width="1200" height="630" fill="#faf9f5"></rect>
+  <text x="80" y="76" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="14" letter-spacing="3.6" fill="#46413a">EDITORIAL  SILENCE  ·  GAZETECİLİK  ·  2026</text>
+  <text x="1120" y="76" text-anchor="end" font-family="IBM Plex Mono, ui-monospace, monospace" font-size="14" letter-spacing="3.6" fill="#46413a">İST · TR</text>
+  <line x1="80" y1="92" x2="1120" y2="92" stroke="#141310" stroke-width="1.4"></line>
+  <text x="80" y="380" font-family="Source Serif 4, Charter, Iowan Old Style, Georgia, serif" font-weight="700" font-size="156" letter-spacing="-3" fill="#141310">Ozan Efeoğlu<tspan dx="6" fill="#b91c1c">.</tspan></text>
+  <line x1="80" y1="510" x2="1120" y2="510" stroke="#141310" stroke-width="1.4"></line>
+  <text x="80" y="554" font-family="Source Serif 4 Variable, Charter, Georgia, serif" font-style="italic" font-size="32" fill="#46413a">— gazeteci, yazar, foto‑muhabir.</text>
+</svg>

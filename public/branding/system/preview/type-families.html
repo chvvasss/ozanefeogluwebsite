@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8">
+<link rel="stylesheet" href="_card.css">
+<style>
+.fams { display:grid; gap: 18px; margin-top: 18px; }
+.f { padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.f:last-child { border-bottom: 0; }
+.flbl { font-family:var(--font-mono); font-size:.66rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-subtle); }
+.fnme { font-size:1.25rem; margin: 6px 0 4px; }
+.fsmp-serif { font-family: var(--font-display); font-size: 2rem; line-height: 1; letter-spacing:-0.01em; }
+.fsmp-sans  { font-family: var(--font-sans); font-size: 1.7rem; line-height: 1; }
+.fsmp-mono  { font-family: var(--font-mono); font-size: 1.2rem; line-height: 1.1; letter-spacing: 0.06em; }
+.fmeta { font-family: var(--font-mono); font-size:.66rem; color:var(--ink-muted); margin-top:4px; }
+</style></head>
+<body>
+<div class="card" style="height:auto;">
+  <p class="eyebrow">Type families · 3 voices</p>
+  <div class="fams">
+    <div class="f">
+      <p class="flbl">Display · serif</p>
+      <p class="fnme" style="font-family:var(--font-display); font-weight:600;">Source Serif 4 Variable</p>
+      <p class="fsmp-serif">Sessiz dosya, ağırlıklı söz <em style="font-style:italic">— ışıkta okunur.</em></p>
+      <p class="fmeta">opsz 8–60 · weight 400/600/700 · italic · SIL OFL 1.1</p>
+    </div>
+    <div class="f">
+      <p class="flbl">Body · sans</p>
+      <p class="fnme" style="font-family:var(--font-sans); font-weight:500;">IBM Plex Sans Variable</p>
+      <p class="fsmp-sans">Türkçe karakterler düzgün biner: ğ ı ş ç ö ü İ.</p>
+      <p class="fmeta">weight 400/500/600 · variable · gövde metni için</p>
+    </div>
+    <div class="f">
+      <p class="flbl">Mono · eyebrow / dateline / colophon</p>
+      <p class="fnme" style="font-family:var(--font-mono); font-weight:600;">IBM Plex Mono</p>
+      <p class="fsmp-mono">İSTANBUL · 2026-04-26 · MUHABİR</p>
+      <p class="fmeta">weight 400–700 · all-caps · tracking 0.18em</p>
+    </div>
+  </div>
+</div>
+</body></html>

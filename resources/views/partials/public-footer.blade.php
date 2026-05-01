@@ -91,6 +91,11 @@
 
     <div class="page-wrap py-5 flex flex-wrap items-center justify-between gap-3 text-xs font-mono text-[var(--color-ink-subtle)] border-t border-[var(--color-rule)]">
         <span>© {{ now()->format('Y') }} {{ site_setting('identity.name') }}</span>
-        <span class="uppercase tracking-[0.2em]">{{ strtoupper(site_setting('identity.base')) }}</span>
+        <span class="flex items-center gap-4">
+            <a href="/branding/system/" target="_blank" rel="noopener"
+               class="uppercase tracking-[0.2em] hover:text-[var(--color-ink)] transition-colors no-underline"
+               title="Editorial Silence — marka rehberi">Kolofon</a>
+            <span class="uppercase tracking-[0.2em]">{{ strtoupper(site_setting('identity.base')) }}</span>
+        </span>
     </div>
 </footer>

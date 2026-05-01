@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="tr"><head><meta charset="utf-8">
+<link rel="stylesheet" href="_card.css">
+<style>
+.list { display:grid; gap:14px; margin-top:14px; }
+.row { padding:10px 0; border-bottom:1px solid var(--rule); display:grid; grid-template-columns: 130px 1fr; gap: 18px; align-items:baseline; }
+.lbl { font-family:var(--font-mono); font-size:.62rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-subtle); }
+.eb { font-family:var(--font-mono); font-size:.78rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-subtle); font-weight:600; }
+.kk { font-family:var(--font-mono); font-size:.78rem; letter-spacing:.2em; text-transform:uppercase; color:var(--ink); font-weight:700; }
+.kka { font-family:var(--font-mono); font-size:.78rem; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); font-weight:700; }
+.dl { font-family:var(--font-mono); font-size:.78rem; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-muted); font-weight:500; }
+.dot { color:var(--accent); font-weight:700; padding-inline:0.45em; }
+.std { font-family:var(--font-display); font-style:italic; font-weight:400; font-size:1.1rem; line-height:1.45; color:var(--ink); max-width:46ch; }
+</style></head>
+<body>
+<div class="card" style="height:auto;">
+  <p class="eyebrow">Editorial atoms · voice</p>
+  <div class="list">
+    <div class="row"><span class="lbl">.eyebrow</span><span class="eb">Saha · 016 dosya</span></div>
+    <div class="row"><span class="lbl">.kicker</span><span class="kk">Röportaj · Hatay</span></div>
+    <div class="row"><span class="lbl">.kicker--accent</span><span class="kka">Son dosya <span class="dot">·</span> İSTANBUL</span></div>
+    <div class="row"><span class="lbl">.dateline</span><span class="dl">26 Nisan 2026 <span class="dot">·</span> Saha yazısı <span class="dot">·</span> 14 dk</span></div>
+    <div class="row"><span class="lbl">.standfirst</span><span class="std">Hatay'da bir kahvenin tezgâhında, kasa makinesinin ses çıkarmadığı saatlerde, bir başka şehir kuruluyordu.</span></div>
+  </div>
+</div>
+</body></html>

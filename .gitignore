@@ -72,6 +72,11 @@ backup/
 .secrets.baseline
 gitleaks-report.json
 
+# Brand handoff packages (intermediate artifacts; system/ kept)
+docs/branding/handoff/fonts.zip
+docs/branding/handoff/photography.zip
+docs/branding/handoff/content.zip
+
 # Misc
 homestead.json
 homestead.yaml
