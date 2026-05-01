@@ -1,7 +1,15 @@
 <aside class="admin-sidebar" :data-open="sidebarOpen">
-    <a href="{{ route('admin.dashboard') }}" class="admin-brand no-underline">
-        <span class="admin-brand-dot"></span>
-        Ozan Efeoğlu<span class="text-[var(--color-ink-subtle)] font-[var(--font-sans)] text-xs ml-1 tracking-[0.2em] uppercase">yazı masası</span>
+    <a href="{{ route('admin.dashboard') }}" class="admin-brand no-underline inline-flex items-center gap-2.5">
+        {{-- Editorial Silence v2 mark · currentColor → theme-aware --}}
+        <svg width="22" height="22" viewBox="0 0 64 64" aria-hidden="true" class="shrink-0">
+            <text x="6" y="48"
+                  font-family="'Source Serif 4 Variable', 'Source Serif 4', Charter, Georgia, serif"
+                  font-weight="600" font-size="48" letter-spacing="-1.6"
+                  style="font-variation-settings: 'opsz' 48;"
+                  fill="currentColor">oe</text>
+            <circle cx="49" cy="46" r="4.4" fill="#b91c1c"/>
+        </svg>
+        <span>Ozan Efeoğlu<span class="text-[var(--color-ink-subtle)] font-[var(--font-sans)] text-xs ml-1 tracking-[0.2em] uppercase">yazı masası</span></span>
     </a>
 
     <p class="admin-nav-group">Yayın</p>

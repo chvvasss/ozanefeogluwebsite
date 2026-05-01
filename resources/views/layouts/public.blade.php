@@ -9,7 +9,7 @@
     @php
         $pageTitle = $title ?? site_setting('identity.name').' — '.site_setting('identity.role_primary');
         $pageDesc  = $description ?? site_setting('identity.description');
-        $pageOgImage = $ogImage ?? site_setting('seo.og_image_url') ?? null;
+        $pageOgImage = $ogImage ?? site_setting('seo.og_image_url') ?? url('/branding/og-mark.svg');
         $pageOgType = $ogType ?? 'website';
         $pageCanonical = $canonical ?? url()->current();
     @endphp
@@ -38,11 +38,13 @@
         <meta name="twitter:image" content="{{ $pageOgImage }}">
     @endif
 
-    {{-- Favicon system — Editorial Silence brand v1.0 --}}
+    {{-- Brand · Editorial Silence v2 (Yalın İmza) --}}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="icon" href="/favicon.ico" type="image/x-icon" sizes="any"><!-- legacy fallback -->
     <link rel="apple-touch-icon" href="/branding/apple-touch-icon.svg">
+    <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#faf9f5">
+    <meta name="application-name" content="{{ site_setting('identity.name') }}">
+    <meta name="apple-mobile-web-app-title" content="{{ site_setting('identity.name') }}">
 
     {{-- RSS alternate — only rendered when feed actually exists --}}
     @if (site_setting('features.feed_enabled'))

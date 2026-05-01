@@ -9,6 +9,12 @@
 
     <title>{{ $title ?? 'Admin' }} · ozanefeoglu.com</title>
 
+    {{-- Brand · Editorial Silence v2 (Yalın İmza) --}}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/branding/apple-touch-icon.svg">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#faf9f5">
+
     <script>
         (function () {
             try {
