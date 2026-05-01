@@ -16,3 +16,29 @@ Schedule::command('contact:prune-expired')
     ->dailyAt('03:30')
     ->onOneServer()
     ->withoutOverlapping();
+
+// Backup retention sweep — drops zips older than BACKUP_KEEP_LATEST (14 days).
+Schedule::command('backup:clean')
+    ->dailyAt('01:55')
+    ->onOneServer()
+    ->withoutOverlapping();
+
+// Daily DB-only backup — 02:00 Istanbul (low traffic window).
+// Lightweight (~150 KB) so we can keep many points-in-time without disk pain.
+Schedule::command('backup:run --only-db')
+    ->dailyAt('02:00')
+    ->onOneServer()
+    ->withoutOverlapping();
+
+// Weekly full backup (DB + .env + media when BACKUP_INCLUDE_MEDIA=true).
+// Sunday 03:00. Separates from the daily cycle so we don't double-backup.
+Schedule::command('backup:run')
+    ->weeklyOn(0, '03:00')
+    ->onOneServer()
+    ->withoutOverlapping();
+
+// Spatie health monitor — alerts on stale / missing / oversized backups
+// via mail (config/backup.php > notifications). Daily 04:00.
+Schedule::command('backup:monitor')
+    ->dailyAt('04:00')
+    ->onOneServer();

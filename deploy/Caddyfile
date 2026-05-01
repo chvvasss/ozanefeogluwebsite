@@ -1,0 +1,81 @@
+# =============================================================================
+# Caddy 2 — ozanefeoglu.com
+# Production-grade config: automatic HTTPS, HTTP/3, brotli, security defaults.
+# Drop into /etc/caddy/Caddyfile and `systemctl reload caddy`.
+# =============================================================================
+
+{
+	# Email for Let's Encrypt registration
+	email yagizemirbaki61@gmail.com
+
+	# Logging — one line per request, rotated daily
+	log {
+		output file /var/log/caddy/access.log {
+			roll_size 100mb
+			roll_keep 14
+			roll_keep_for 720h
+		}
+		format json
+	}
+
+	# HTTP/3 (QUIC) is on by default in Caddy 2
+}
+
+# =============================================================================
+# Apex domain
+# =============================================================================
+ozanefeoglu.com, www.ozanefeoglu.com {
+	root * /var/www/ozanefeoglu.com/public
+
+	encode zstd br gzip
+
+	# PHP-FPM via unix socket
+	php_fastcgi unix//run/php/php8.3-fpm.sock {
+		# Production sane defaults
+		env APP_ENV production
+	}
+
+	# Cache static assets aggressively (Vite hashes filenames)
+	@hashed path_regexp ^/build/.*\.[a-f0-9]{8,}\.(css|js|woff2|svg|png|webp|avif|jpg)$
+	header @hashed Cache-Control "public, max-age=31536000, immutable"
+
+	# Cache other static assets briefly
+	@static path *.css *.js *.png *.jpg *.jpeg *.gif *.ico *.svg *.webp *.avif *.woff2 *.webmanifest
+	header @static Cache-Control "public, max-age=3600"
+
+	# Brand SVGs: edge-cache 1 day
+	@brand path /favicon.svg /branding/*.svg /branding/*.png
+	header @brand Cache-Control "public, max-age=86400, immutable"
+
+	# Block .git, .env, vendor, node_modules from being served
+	@blocked {
+		path /.git/*
+		path /.env*
+		path /storage/*
+		path /vendor/*
+		path /node_modules/*
+		path /tests/*
+		path /database/*
+		path /docs/*
+		path /artisan
+		path /composer.*
+		path /package*.json
+	}
+	respond @blocked 404
+
+	# Security headers (additional belt over SecurityHeaders middleware)
+	header {
+		# HSTS — 2 years, preload (set after you've verified everything works)
+		Strict-Transport-Security "max-age=63072000; includeSubDomains; preload"
+		# Disable Permissions-Policy fingerprinting surface
+		Permissions-Policy "interest-cohort=(), browsing-topics=()"
+		# Defer to upstream X-Frame-Options
+		-Server
+	}
+
+	file_server
+
+	# Force www → apex (canonical)
+	@www host www.ozanefeoglu.com
+	redir @www https://ozanefeoglu.com{uri} permanent
+}

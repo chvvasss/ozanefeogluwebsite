@@ -1,0 +1,51 @@
+# =============================================================================
+# systemd unit — Laravel queue worker for ozanefeoglu.com
+# Install: cp deploy/laravel-queue.service /etc/systemd/system/
+#          systemctl daemon-reload
+#          systemctl enable --now laravel-queue
+# Restart on deploy: systemctl restart laravel-queue
+# =============================================================================
+
+[Unit]
+Description=Laravel queue worker for ozanefeoglu.com
+After=redis-server.service mysql.service network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=www-data
+Group=www-data
+WorkingDirectory=/var/www/ozanefeoglu.com
+
+# --tries=3              retry transient failures up to 3x
+# --max-time=3600        respawn worker every hour to release memory leaks
+# --memory=192           kill worker if RSS exceeds 192 MB
+# --sleep=3              wait 3s when queue is empty
+# --backoff=5            5s between retries
+# --timeout=120          job hard kill if longer than 2 minutes
+ExecStart=/usr/bin/php /var/www/ozanefeoglu.com/artisan queue:work \
+    --queue=high,default,low \
+    --tries=3 \
+    --max-time=3600 \
+    --memory=192 \
+    --sleep=3 \
+    --backoff=5 \
+    --timeout=120
+
+Restart=always
+RestartSec=5
+KillMode=process
+KillSignal=SIGTERM
+TimeoutStopSec=180
+
+# Resource limits
+LimitNOFILE=65536
+MemoryMax=256M
+
+# Hardening
+NoNewPrivileges=true
+ProtectSystem=full
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target

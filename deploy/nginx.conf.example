@@ -1,0 +1,91 @@
+# =============================================================================
+# Nginx — ozanefeoglu.com (alternative to Caddy)
+# Drop into /etc/nginx/sites-available/ozanefeoglu.com.conf
+# Pair with certbot: `certbot --nginx -d ozanefeoglu.com -d www.ozanefeoglu.com`
+# =============================================================================
+
+# HTTP → HTTPS redirect
+server {
+    listen 80;
+    listen [::]:80;
+    server_name ozanefeoglu.com www.ozanefeoglu.com;
+    return 301 https://ozanefeoglu.com$request_uri;
+}
+
+# www → apex redirect (HTTPS)
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name www.ozanefeoglu.com;
+
+    ssl_certificate     /etc/letsencrypt/live/ozanefeoglu.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ozanefeoglu.com/privkey.pem;
+
+    return 301 https://ozanefeoglu.com$request_uri;
+}
+
+# Apex (canonical)
+server {
+    listen 443 ssl http2;
+    listen [::]:443 ssl http2;
+    server_name ozanefeoglu.com;
+    root /var/www/ozanefeoglu.com/public;
+    index index.php;
+
+    ssl_certificate     /etc/letsencrypt/live/ozanefeoglu.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/ozanefeoglu.com/privkey.pem;
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_prefer_server_ciphers on;
+
+    # HSTS — 2 years, preload (after verifying)
+    add_header Strict-Transport-Security "max-age=63072000; includeSubDomains; preload" always;
+    add_header Permissions-Policy "interest-cohort=(), browsing-topics=()" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+
+    # Brotli + gzip
+    gzip on;
+    gzip_types text/plain text/css application/javascript application/json image/svg+xml;
+    gzip_min_length 256;
+
+    # Block sensitive paths
+    location ~ /\.(env|git) { deny all; return 404; }
+    location ~ ^/(storage/framework|vendor|node_modules|tests|database|docs)/ { deny all; return 404; }
+    location ~ /(artisan|composer\.|package.*\.json)$ { deny all; return 404; }
+
+    # Cache hashed Vite assets aggressively (filenames change on rebuild)
+    location ~* ^/build/.+\.[a-f0-9]{8,}\.(css|js|woff2|svg|png|webp|avif|jpg)$ {
+        expires 1y;
+        add_header Cache-Control "public, immutable";
+        try_files $uri =404;
+    }
+
+    # Brand SVGs
+    location ~ ^/(favicon\.svg|branding/.+\.svg) {
+        expires 1d;
+        add_header Cache-Control "public, immutable";
+        try_files $uri =404;
+    }
+
+    # Other static assets
+    location ~* \.(css|js|png|jpg|jpeg|gif|ico|svg|webp|avif|woff2|webmanifest)$ {
+        expires 1h;
+        add_header Cache-Control "public";
+        try_files $uri =404;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.php?$query_string;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $realpath_root$fastcgi_script_name;
+        include fastcgi_params;
+        fastcgi_read_timeout 60;
+    }
+
+    # Body size for photo uploads (matches MEDIA_MAX_FILE_SIZE)
+    client_max_body_size 100M;
+}
